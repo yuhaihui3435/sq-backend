@@ -1,0 +1,11 @@
+////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2018. 沈阳东睿科技有限公司.版权所有.
+// SHENYANG NEURAY TECHNOLOGY CO.,LTD. All Rights Reserved
+////////////////////////////////////////////////////////////////////////////////
+
+package com.neuray.wp.core;
+
+import org.beetl.sql.core.mapper.BaseMapper;
+
+public interface BaseDao<T> extends BaseMapper<T> {
+}
