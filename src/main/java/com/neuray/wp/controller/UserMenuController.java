@@ -50,7 +50,7 @@ public class UserMenuController extends BaseController {
      * @param condition
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/page")
     public PageQuery page(@RequestBody UserMenu condition) {
         PageQuery pageQuery = new PageQuery();
@@ -124,7 +124,7 @@ public class UserMenuController extends BaseController {
      * @param id
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/view/{id}")
     public UserMenu view(@PathVariable("id") Long id) {
         UserMenu userMenu = userMenuService.one("userMenu.sample", UserMenu.builder().id(id).build());
@@ -137,7 +137,7 @@ public class UserMenuController extends BaseController {
      * @param param :
      * @return : java.lang.Long[]
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/queryMenuByUser")
     public Long[] queryMenuByUser(@RequestBody Map<String, String> param) {
         List<SysMenuRight> list = new ArrayList<SysMenuRight>();
@@ -190,7 +190,7 @@ public class UserMenuController extends BaseController {
      * @param param :
      * @return : java.util.List<com.neuray.wp.entity.UserMenu>
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/queryUserMenuByUser")
     public List<UserMenu> queryUserMenuByUser(@RequestBody Map<String, String> param) {
         return userMenuService.queryMenuByUser(param.get("userId"));

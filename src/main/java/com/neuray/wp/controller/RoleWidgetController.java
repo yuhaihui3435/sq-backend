@@ -40,7 +40,7 @@ public class RoleWidgetController extends BaseController {
      * @param condition
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/page")
     public PageQuery page(@RequestBody RoleWidget condition) {
         PageQuery pageQuery = new PageQuery();
@@ -114,7 +114,7 @@ public class RoleWidgetController extends BaseController {
      * @param id
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/view/{id}")
     public RoleWidget view(@PathVariable("id") Long id) {
         RoleWidget roleWidget = roleWidgetService.one("roleWidget.sample", RoleWidget.builder().id(id).build());

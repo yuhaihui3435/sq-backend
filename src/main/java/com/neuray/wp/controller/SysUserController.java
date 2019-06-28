@@ -85,7 +85,7 @@ public class SysUserController extends BaseController {
      * @param condition
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY,reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY,reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/page")
     public PageQuery page(@RequestBody SysUser condition) {
         PageQuery pageQuery = new PageQuery();
@@ -212,7 +212,7 @@ public class SysUserController extends BaseController {
     @PostMapping("/del")
     public RespBody del(@RequestBody Map<String, String> param) {
         RespBody respBody = new RespBody();
-        if (StrUtil.isBlank(param.get("ids"))) throw new LogicException("删除操作失败，缺少删除数据");
+        if (StrUtil.isBlank(param.get("ids"))) {throw new LogicException("删除操作失败，缺少删除数据");}
         String[] idArray = StrUtil.split(param.get("ids"), ",");
         for (String id : idArray) {
             SysUser sysUser = sysUserService.one(Long.parseLong(id));
@@ -270,12 +270,13 @@ public class SysUserController extends BaseController {
      * @param id
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY,reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY,reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/oneContainRelation/{id}")
     public SysUser oneContainRelation(@PathVariable("id") Long id) {
         SysUser sysUser = sysUserService.one("sysUser.selectContainRelation", SysUser.builder().id(id).build());
-        if (sysUser.getDeptId() != null)
+        if (sysUser.getDeptId() != null) {
             sysUser.set("ownDept", deptService.one("dept.sample", Dept.builder().id(sysUser.getDeptId()).build()));
+        }
         return sysUser;
     }
 
@@ -403,31 +404,23 @@ public class SysUserController extends BaseController {
     @RequestMapping("/upload")
     public Result upload(@RequestParam("avatar") MultipartFile picture, HttpServletRequest request) {
         String picPath = StrUtil.isNotBlank(picUserPath) ? picUserPath : ClassUtils.getDefaultClassLoader().getResource("").getPath() + "/upload/userPic/";
-        log.info(picPath);
-        if (!FileUtil.exist(picPath)) FileUtil.mkdir(picPath);
+        if (!FileUtil.exist(picPath)) {FileUtil.mkdir(picPath);}
         //获取原始文件名称(包含格式)
         String originalFileName = picture.getOriginalFilename();
-        System.out.println("原始文件名称：" + originalFileName);
         //获取文件类型，以最后一个`.`为标识
         String type = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
-        System.out.println("文件类型：" + type);
         //获取文件名称（不包含格式）
 //        String name = "sysAvatar";
         //设置文件新名称: 当前时间+文件名称（不包含格式）
-        Date d = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         String fileName = currLoginUser().getLoginname() + "." + type;
-        System.out.println("新文件名称：" + fileName);
         //在指定路径下创建一个文件
         File targetFile = new File(picPath, fileName);
         //将文件保存到服务器指定位置
         try {
             picture.transferTo(targetFile);
-            System.out.println("上传成功");
             return new Result(true, fileName);
         } catch (IOException e) {
-            System.out.println("上传失败");
-            e.printStackTrace();
+            log.error("头像上传成功");
             return new Result(false, fileName);
         }
     }
@@ -441,9 +434,9 @@ public class SysUserController extends BaseController {
      */
     @GetMapping(value = "/loadPic")
     public void loadPic(@RequestParam(name = "picName", defaultValue = "") String picName, HttpServletResponse response) {
-        String picPath = "";
+        String picPath ;
         if (StringUtils.isNotBlank(picName) && !"null".equals(picName)) {
-            picPath = StrUtil.isNotBlank(picUserPath) ? picUserPath : ClassUtils.getDefaultClassLoader().getResource("").getPath() + "/upload/userpic/";
+            picPath = StrUtil.isNotBlank(picUserPath) ? picUserPath : ClassUtils.getDefaultClassLoader().getResource("").getPath() + "/upload/userPic/";
         } else {
             SysConf sysConf = cacheService.getSysConf("sysAvatar");
             picName = sysConf.getScVal();
@@ -451,6 +444,7 @@ public class SysUserController extends BaseController {
         }
         ServletOutputStream out = null;
         FileInputStream ips = null;
+
         try {
             ips = new FileInputStream(new File(picPath + picName));
             response.setContentType("multipart/form-data");
@@ -494,7 +488,5 @@ public class SysUserController extends BaseController {
         return respBody;
     }
 
-    public static void main(String[] args) {
-        System.out.printf(SecureUtil.hmacMd5(PWD_SECURE_KEY).digestHex("CPJ002"));
-    }
+
 }

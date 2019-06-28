@@ -63,7 +63,7 @@ public class LoginController extends BaseController {
 
     public static final String SYSUSER_LOGIN_CACHE_NAME = "sysUser_login_info_";
 
-    @LogDog(logType = Consts.LOGTYPE.LOGIN, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.LOGIN, reqSource = Consts.REQSOURCE.INNER)
     @RequestMapping("/login")
     public RespBody login(@RequestBody LoginUser loginUser) {
         String ipPwd = loginUser.getPwd();
@@ -219,7 +219,7 @@ public class LoginController extends BaseController {
         return respBody;
     }
 
-    @LogDog(logType = Consts.LOGTYPE.LOGOUT, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.LOGOUT, reqSource = Consts.REQSOURCE.INNER)
     @GetMapping("/logout")
     public RespBody logout(HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader("token");

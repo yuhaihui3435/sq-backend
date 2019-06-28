@@ -40,7 +40,7 @@ public class SysMenuRightController extends BaseController {
      * @param condition
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/page")
     public Map page(@RequestBody SysMenuRight condition) throws Exception {
         Map map = new HashMap();
@@ -84,7 +84,7 @@ public class SysMenuRightController extends BaseController {
      * @param condition :
      * @return : org.beetl.sql.core.engine.PageQuery
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/pageItem")
     public PageQuery pageItem(@RequestBody SysMenuRight condition) {
         PageQuery pageQuery = new PageQuery();
@@ -138,7 +138,7 @@ public class SysMenuRightController extends BaseController {
             return respBody;
         }
         sysMenuRight.setUpBy(currLoginUser().getId());
-        sysMenuRightService.updateTplById(sysMenuRight);
+        sysMenuRightService.update(sysMenuRight);
         respBody.setMsg("更新系统菜单成功");
         return respBody;
     }
@@ -171,7 +171,7 @@ public class SysMenuRightController extends BaseController {
      * @param id
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/view/{id}")
     public SysMenuRight view(@PathVariable("id") Long id) {
         SysMenuRight sysMenuRight = sysMenuRightService.one("sysMenuRight.sample", SysMenuRight.builder().id(id).build());

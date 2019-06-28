@@ -42,7 +42,7 @@ public class SysResRightController extends BaseController {
      * @param condition
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/page")
     public Map page(@RequestBody SysResRight condition) throws Exception {
         Map map = new HashMap();
@@ -84,7 +84,7 @@ public class SysResRightController extends BaseController {
      * @param condition :
      * @return : org.beetl.sql.core.engine.PageQuery
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/pageItem")
     public PageQuery pageItem(@RequestBody SysResRight condition) {
         PageQuery pageQuery = new PageQuery();
@@ -183,7 +183,7 @@ public class SysResRightController extends BaseController {
      * @param id
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/view/{id}")
     public SysResRight view(@PathVariable("id") Long id) {
         SysResRight sysResRight = sysResRightService.one("sysResRight.sample", SysResRight.builder().id(id).build());

@@ -58,7 +58,7 @@ public class SysRoleController extends BaseController {
     @Autowired
     private UserWidgetService userWidgetService;
 
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/query")
     public List<SysRole> query(@RequestBody SysRole condition) {
         return sysRoleService.many("sysRole.sample", condition);
@@ -70,7 +70,7 @@ public class SysRoleController extends BaseController {
      * @param condition
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/page")
     public PageQuery page(@RequestBody SysRole condition) {
         PageQuery pageQuery = new PageQuery();
@@ -170,7 +170,7 @@ public class SysRoleController extends BaseController {
      * @param id
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/view/{id}")
     public SysRole view(@PathVariable("id") Long id) {
         SysRole sysRole = sysRoleService.one("sysRole.sample", SysRole.builder().id(id).build());
@@ -324,7 +324,7 @@ public class SysRoleController extends BaseController {
      * @param param :
      * @return : java.lang.Long[]
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/queryMenuByRole")
     public Long[] queryMenuByRole(@RequestBody Map<String, String> param) {
         List<SysMenuRight> list = new ArrayList<SysMenuRight>();
@@ -342,7 +342,7 @@ public class SysRoleController extends BaseController {
      * @param param :
      * @return : java.util.List<com.neuray.wp.entity.SysMenuRight>
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/queryMenuObjByRole")
     public List<RoleMenu> queryMenuObjByRole(@RequestBody Map<String, String> param) {
         return roleMenuService.queryMenuByRole(param.get("roleId"));
@@ -354,7 +354,7 @@ public class SysRoleController extends BaseController {
      * @param param :
      * @return : java.lang.Long[]
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/queryResByRole")
     public Long[] queryResByRole(@RequestBody Map<String, String> param) {
         List<SysResRight> list = new ArrayList<SysResRight>();
@@ -372,7 +372,7 @@ public class SysRoleController extends BaseController {
      * @param param :
      * @return : java.util.List<com.neuray.wp.entity.SysResRight>
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/queryResObjByRole")
     public List<RoleRes> queryResObjByRole(@RequestBody Map<String, String> param) {
         return roleResService.queryResByRole(param.get("roleId"));
@@ -384,7 +384,7 @@ public class SysRoleController extends BaseController {
      * @param param :
      * @return : java.lang.Long[]
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/queryWidgetByRole")
     public Long[] queryWidgetByRole(@RequestBody Map<String, String> param) {
         List<Widget> list = new ArrayList<Widget>();
@@ -402,7 +402,7 @@ public class SysRoleController extends BaseController {
      * @param param :
      * @return : java.util.List<com.neuray.wp.entity.Widget>
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/queryWidgetObjByRole")
     public List<RoleWidget> queryWidgetObjByRole(@RequestBody Map<String, String> param) {
         return roleWidgetService.queryWidgetObjByRole(param.get("roleId"));
@@ -414,7 +414,7 @@ public class SysRoleController extends BaseController {
      * @param param :
      * @return : java.util.List<com.neuray.wp.entity.UserWidget>
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/queryUserWidgetByUserId")
     public List<UserWidget> queryUserWidgetByUserId(@RequestBody Map<String, String> param) {
         return userWidgetService.queryWidgetLinkByUserId(Long.parseLong(param.get("userId")));

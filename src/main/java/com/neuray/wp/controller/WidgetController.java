@@ -33,7 +33,7 @@ public class WidgetController extends BaseController {
     @Autowired
     private WidgetService widgetService;
 
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/query")
     public List<Widget> query(@RequestBody Widget condition) {
         return widgetService.many("widget.sample", condition);
@@ -45,7 +45,7 @@ public class WidgetController extends BaseController {
      * @param condition
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/page")
     public PageQuery page(@RequestBody Widget condition) {
         PageQuery pageQuery = new PageQuery();
@@ -133,7 +133,7 @@ public class WidgetController extends BaseController {
      * @param id
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/view/{id}")
     public Widget view(@PathVariable("id") Long id) {
         Widget widget = widgetService.one("widget.sample", Widget.builder().id(id).build());

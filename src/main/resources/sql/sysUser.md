@@ -95,7 +95,7 @@ selectDeptBySysUserId
     (select SU_NAME from SYS_USER_T  where ID=ud.UP_BY) as upByName,
     (select SU_NAME from SYS_USER_T  where ID=ud.DE_BY) as deByName
     from USER_DEPT_T ud left join DEPT_T d on ud.DEPT_ID=d.ID where ud.SYS_USER_ID=#userId#  and d.STATUS='00'
-    and to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'yyyy-MM-dd HH24:mi:ss')>=ud.EFFECT and (to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'yyyy-MM-dd HH24:mi:ss')<=ud.EXPIRED or ud.EXPIRED IS NULL) and d.DE_BY is null and ud.DE_AT is null
+    and str_to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'%Y-%m-%d %T')>=ud.EFFECT and (str_to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'%Y-%m-%d %T')<=ud.EXPIRED or ud.EXPIRED IS NULL) and d.DE_BY is null and ud.DE_AT is null
 selectSysRoleBySysUserId    
 ===
 *查询用户相关角色
@@ -106,7 +106,7 @@ selectSysRoleBySysUserId
     (select SU_NAME from SYS_USER_T  where ID=ru.UP_BY) as upByName,
     (select SU_NAME from SYS_USER_T  where ID=ru.DE_BY) as deByName
     from ROLE_USER_T ru left join SYS_ROLE_T r on ru.SYS_ROLE_ID=r.ID where ru.SYS_USER_ID=#userId#  and r.STATUS='00'
-    and to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'yyyy-MM-dd HH24:mi:ss')>=ru.EFFECT and (to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'yyyy-MM-dd HH24:mi:ss')<=ru.EXPIRED or ru.EXPIRED IS NULL) and r.DE_BY is null and ru.DE_AT is null 
+    and str_to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'%Y-%m-%d %T')>=ru.EFFECT and (str_to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'%Y-%m-%d %T')<=ru.EXPIRED or ru.EXPIRED IS NULL) and r.DE_BY is null and ru.DE_AT is null 
 selectOwnDeptBySysUserId
 ===
 *查询用户原始机构
@@ -121,7 +121,7 @@ selectPostBySysUserId
     (select SU_NAME from SYS_USER_T  where ID=up.CR_BY) as crByName,
     (select SU_NAME from SYS_USER_T  where ID=up.UP_BY) as upByName,
     (select SU_NAME from SYS_USER_T  where ID=up.DE_BY) as deByName
-    from USER_POST_T up left join POST_T p on up.POST_ID=P.ID where up.SYS_USER_ID=#userId#  and p.STATUS='00'
+    from USER_POST_T up left join POST_T p on up.POST_ID=p.ID where up.SYS_USER_ID=#userId#  and p.STATUS='00'
     and p.DE_BY is null and up.DE_AT is null 
 selectWidgetBySysUserId
 ===
@@ -134,5 +134,5 @@ selectWidgetBySysUserId
     (select SU_NAME from SYS_USER_T  where ID=uw.DE_BY) as deByName
     from USER_WIDGET_T uw left join WIDGET_T w on uw.WIDGET_ID=w.ID where uw.SYS_USER_ID=#userId# and w.STATUS='00'
     and w.DE_AT is null and uw.DE_AT is null 
-    and to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'yyyy-MM-dd HH24:mi:ss')>=uw.EFFECT and (to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'yyyy-MM-dd HH24:mi:ss')<=uw.EXPIRED or uw.EXPIRED IS NULL)
+    and str_to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'%Y-%m-%d %T')>=uw.EFFECT and (str_to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'%Y-%m-%d %T')<=uw.EXPIRED or uw.EXPIRED IS NULL)
 

@@ -180,9 +180,7 @@ public class SysMonitoringController extends BaseController {
     }
 
 
-    public static void main(String[] args) {
 
-    }
 
 
     private BigDecimal queryMetrics(String name){

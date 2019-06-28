@@ -54,6 +54,7 @@ queryMenuByUser
     where rm.sys_user_id=#userId#
       and m.id is not null
       and rm.de_at is null
+      and m.display='0'
      order by m.qn
 
 condition

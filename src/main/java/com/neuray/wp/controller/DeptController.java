@@ -46,7 +46,7 @@ public class DeptController extends BaseController {
      * @param condition :
      * @return : java.util.List<com.neuray.wp.entity.Dept>
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/query")
     public List<Dept> query(@RequestBody Dept condition) {
         return deptService.many("dept.sample", condition);
@@ -57,7 +57,7 @@ public class DeptController extends BaseController {
      *
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/page")
     public Map page() throws Exception {
         Map map = new HashMap();
@@ -98,7 +98,7 @@ public class DeptController extends BaseController {
      * @param condition :
      * @return : org.beetl.sql.core.engine.PageQuery
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/pageItem")
     public PageQuery page(@RequestBody Dept condition) {
         PageQuery pageQuery = new PageQuery();
@@ -190,7 +190,7 @@ public class DeptController extends BaseController {
      * @param id
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/view/{id}")
     public Dept view(@PathVariable("id") Long id) {
         Dept dept = deptService.one("dept.sample", Dept.builder().id(id).build());
@@ -203,7 +203,7 @@ public class DeptController extends BaseController {
      * @param id
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/oneContainSysRole/{id}")
     public Dept oneContainSysRole(@PathVariable("id") Long id) {
         Dept dept = deptService.one("dept.selectContainRelation", Dept.builder().id(id).build());
@@ -245,7 +245,7 @@ public class DeptController extends BaseController {
      * @param sysUserId
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/queryDeptBySysUserId/{sysUserId}")
     public List<Dept> queryDeptBySysUserId(@PathVariable("sysUserId") Long sysUserId) {
         Map<String, Object> param = new HashMap<>();

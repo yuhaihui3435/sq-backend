@@ -39,7 +39,7 @@ public class RoleResController extends BaseController {
      * @param condition
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/page")
     public PageQuery page(@RequestBody RoleRes condition) {
         PageQuery pageQuery = new PageQuery();
@@ -114,7 +114,7 @@ public class RoleResController extends BaseController {
      * @param id
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/view/{id}")
     public RoleRes view(@PathVariable("id") Long id) {
         RoleRes roleRes = roleResService.one("roleRes.sample", RoleRes.builder().id(id).build());

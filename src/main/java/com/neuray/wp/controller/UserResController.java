@@ -46,7 +46,7 @@ public class UserResController extends BaseController {
      * @param condition
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/page")
     public PageQuery page(@RequestBody UserRes condition) {
         PageQuery pageQuery = new PageQuery();
@@ -121,7 +121,7 @@ public class UserResController extends BaseController {
      * @param id
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/view/{id}")
     public UserRes view(@PathVariable("id") Long id) {
         UserRes userRes = userResService.one("userRes.sample", UserRes.builder().id(id).build());
@@ -134,7 +134,7 @@ public class UserResController extends BaseController {
      * @param param :
      * @return : java.lang.Long[]
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/queryResByUser")
     public Long[] queryResByUser(@RequestBody Map<String, String> param) {
         List<SysResRight> list = new ArrayList<SysResRight>();
@@ -187,7 +187,7 @@ public class UserResController extends BaseController {
      * @param param :
      * @return : java.util.List<com.neuray.wp.entity.UserRes>
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/queryUserResByUser")
     public List<UserRes> queryUserResByUser(@RequestBody Map<String, String> param) {
         return userResService.queryResByUser(param.get("userId"));

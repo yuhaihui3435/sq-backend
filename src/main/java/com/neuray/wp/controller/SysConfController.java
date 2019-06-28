@@ -151,7 +151,7 @@ public class SysConfController extends BaseController {
      * @param id
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY,reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY,reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/view/{id}")
     public RespBody del(@PathVariable("id") Long id) {
         RespBody respBody = new RespBody();
@@ -265,8 +265,5 @@ public class SysConfController extends BaseController {
         }
     }
 
-    public static void main(String[] args) {
-        FileUtil.mkdir("D:\\abc\\bcd\\aaa\\");
-    }
 
 }

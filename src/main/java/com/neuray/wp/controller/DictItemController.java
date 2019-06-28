@@ -46,7 +46,7 @@ public class DictItemController extends BaseController {
      * @param condition
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/page")
     public PageQuery page(@RequestBody DictItem condition) {
         PageQuery pageQuery = new PageQuery();
@@ -64,7 +64,7 @@ public class DictItemController extends BaseController {
      * @param param :
      * @return : java.util.List<com.neuray.wp.entity.DictItem>
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/listByType")
     public List<DictItem> listByType(@RequestBody Map<String, String> param) {
         String dictVal = param.get("dictVal");
@@ -162,7 +162,7 @@ public class DictItemController extends BaseController {
      * @param id
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/view/{id}")
     public DictItem view(@PathVariable("id") Long id) {
         DictItem dictItem = dictItemService.one("dictItem.sample", DictItem.builder().id(id).build());

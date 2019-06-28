@@ -49,7 +49,7 @@ UserWidgetController extends BaseController {
      * @param condition
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/page")
     public PageQuery page(@RequestBody UserWidget condition) {
         PageQuery pageQuery = new PageQuery();
@@ -123,7 +123,7 @@ UserWidgetController extends BaseController {
      * @param id
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/view/{id}")
     public UserWidget view(@PathVariable("id") Long id) {
         UserWidget userWidget = userWidgetService.one("userWidget.sample", UserWidget.builder().id(id).build());
@@ -136,7 +136,7 @@ UserWidgetController extends BaseController {
      * @param param :
      * @return : com.neuray.wp.core.RespBody
      */
-    @LogDog(logType = Consts.LOGTYPE.UPDATE, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.UPDATE, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/layoutWidget")
     public RespBody layoutWidget(@RequestBody Map<String, List<UserWidgetDto>> param) {
         RespBody respBody = new RespBody();
@@ -159,7 +159,7 @@ UserWidgetController extends BaseController {
      * @param param :
      * @return : java.lang.Long[]
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/queryWidgetByUser")
     public Long[] queryWidgetByUser(@RequestBody Map<String, String> param) {
         List<Widget> list = new ArrayList<Widget>();
@@ -216,7 +216,7 @@ UserWidgetController extends BaseController {
      * @param param :
      * @return : java.util.List<com.neuray.wp.entity.UserWidget>
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/queryUserWidgetByUser")
     public List<UserWidget> queryUserWidgetByUser(@RequestBody Map<String, String> param) {
         return userWidgetService.queryUserWidgetByUser(param.get("userId"));

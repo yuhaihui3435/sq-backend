@@ -41,7 +41,7 @@ public class DictController extends BaseController {
      *
      * @return : java.util.List<com.neuray.wp.entity.Dict>
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/page")
     public Map page() {
         Map map = new HashMap();
@@ -148,7 +148,7 @@ public class DictController extends BaseController {
      * @param id
      * @return
      */
-    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
+//    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/view/{id}")
     public RespBody view(@PathVariable("id") Long id) {
         RespBody respBody = new RespBody();

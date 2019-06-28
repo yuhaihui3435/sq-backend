@@ -5,7 +5,7 @@ sample
 	(select SU_NAME from SYS_USER_T  where ID=dept.CR_BY) as crByName,
 	(select SU_NAME from SYS_USER_T  where ID=dept.UP_BY) as upByName,
 	(select SU_NAME from SYS_USER_T  where ID=dept.DE_BY) as deByName,
-	(select dept_name from dept_t where id=dept.parent_id) as parentName
+	(select dept_name from DEPT_T where id=dept.parent_id) as parentName
 	from DEPT_T dept where  #use("condition")#
 	@orm.many({"id":"deptId"},"dept.selectSysRoleByDeptId","SysRole");
 
@@ -16,7 +16,7 @@ special
     	(select SU_NAME from SYS_USER_T  where ID=dept.CR_BY) as crByName,
     	(select SU_NAME from SYS_USER_T  where ID=dept.UP_BY) as upByName,
     	(select SU_NAME from SYS_USER_T  where ID=dept.DE_BY) as deByName,
-    	(select dept_name from dept_t where id=dept.parent_id) as parentName
+    	(select dept_name from DEPT_T where id=dept.parent_id) as parentName
     	from DEPT_T dept where  #use("scondition")#
     	
 
@@ -147,7 +147,7 @@ selectSysRoleByDeptId
     (select SU_NAME from SYS_USER_T  where ID=dr.UP_BY) as upByName,
     (select SU_NAME from SYS_USER_T  where ID=dr.DE_BY) as deByName
     from DEPT_ROLE_T dr left join SYS_ROLE_T sr on dr.ROLE_ID=sr.ID where dr.DEPT_ID=#deptId#  and sr.STATUS='00'
-    and to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'yyyy-MM-dd HH24:mi:ss')>=dr.EFFECT and (to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'yyyy-MM-dd HH24:mi:ss')<=dr.EXPIRED or dr.EXPIRED IS NULL) and dr.DE_BY is null and sr.DE_AT is null
+    and str_to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'%Y-%m-%d %T')>=dr.EFFECT and (str_to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'%Y-%m-%d %T')<=dr.EXPIRED or dr.EXPIRED IS NULL) and dr.DE_BY is null and sr.DE_AT is null
 
 selectBySysUserId
 ===
@@ -157,5 +157,5 @@ selectBySysUserId
     (select SU_NAME from SYS_USER_T  where ID=dept.UP_BY) as upByName,
     (select SU_NAME from SYS_USER_T  where ID=dept.DE_BY) as deByName
     from DEPT_T dept left join USER_DEPT_T ud on dept.ID=ud.DEPT_ID where ud.SYS_USER_ID=#sysUserId# and dept.DE_AT is null 
-    and dept.STATUS='00' and ud.DE_AT is null and to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'yyyy-MM-dd HH24:mi:ss')>=ud.EFFECT and (to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'yyyy-MM-dd HH24:mi:ss')<=ud.EXPIRED or ud.EXPIRED IS NULL)
+    and dept.STATUS='00' and ud.DE_AT is null and str_to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'%Y-%m-%d %T')>=ud.EFFECT and (str_to_date(#now,dateFormat='yyyy-MM-dd HH:mm:ss'#,'%Y-%m-%d %T')<=ud.EXPIRED or ud.EXPIRED IS NULL)
     @orm.many({"id":"deptId"},"dept.selectSysRoleByDeptId","SysRole");
