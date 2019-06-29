@@ -44,7 +44,7 @@ public class NrsCorsFilter implements Filter {
             //跨域处理
             response.addHeader("Access-Control-Allow-Origin", origin);
             response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-            response.addHeader("Access-Control-Allow-Headers", "x-requested-with,Content-Type,Origin,Accept,token");
+            response.addHeader("Access-Control-Allow-Headers", "x-requested-with,Content-Type,Origin,Accept,token,systoken");
             response.addHeader("Access-Control-Allow-Credentials", "true");
         }
         filterChain.doFilter(servletRequest,servletResponse);
