@@ -48,4 +48,18 @@ public class Column extends BaseEntity {
 
     private Long parentId;
 
+    private Integer order;//顺序
+
+    private String keys;//关键字 ，
+
+    private String describe;//描述
+
+    private String thumbnail;//缩略图
+
+    private String mgtStyle;//管理方式  列表，封面
+
+    private String listTpl;//列表模板
+
+    private String detailTpl;//详细模板
+
 }
