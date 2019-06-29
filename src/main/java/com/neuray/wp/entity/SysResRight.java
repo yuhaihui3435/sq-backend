@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.beetl.sql.core.annotatoin.AssignID;
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.SeqID;
 import org.beetl.sql.core.annotatoin.Table;
 import com.neuray.wp.core.BaseEntity;
@@ -34,7 +35,7 @@ public class SysResRight extends BaseEntity {
     @NotBlank(message = "资源编码必填")
     private String code;
 
-    @AssignID
+    @AutoID
     private Long id;
 
     //资源类型

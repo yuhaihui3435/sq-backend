@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.beetl.sql.core.annotatoin.AssignID;
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.SeqID;
 import org.beetl.sql.core.annotatoin.Table;
 
@@ -35,7 +36,7 @@ public class SysRole extends BaseEntity {
     private Long upBy;
 
     //主键
-    @AssignID
+    @AutoID
     private Long id;
 
     //创建人

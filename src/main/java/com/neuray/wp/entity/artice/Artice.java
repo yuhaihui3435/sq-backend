@@ -27,7 +27,7 @@ public class Artice extends BaseEntity{
     @Tolerate
     public Artice(){}
 
-                  @AssignID
+                  @AutoID
                   private Long id;
 
         private Long readingTime ;

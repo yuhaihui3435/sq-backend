@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.beetl.sql.core.annotatoin.AssignID;
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.SeqID;
 import org.beetl.sql.core.annotatoin.Table;
 
@@ -55,7 +56,7 @@ public class Post extends BaseEntity {
     @NotBlank(message = "职位名称必填")
     private String postName;
 
-    @AssignID
+    @AutoID
     private Long id;
 
     //状态-00:正常:01停用

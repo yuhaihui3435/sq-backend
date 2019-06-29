@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.beetl.sql.core.annotatoin.AssignID;
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.SeqID;
 import org.beetl.sql.core.annotatoin.Table;
 import com.neuray.wp.core.BaseEntity;
@@ -27,7 +28,7 @@ import javax.validation.constraints.*;
 @Table(name = "ROLE_WIDGET_T")
 public class RoleWidget extends BaseEntity {
 
-    @AssignID
+    @AutoID
     private Long id;
 
     @Tolerate

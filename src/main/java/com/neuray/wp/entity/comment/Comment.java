@@ -29,7 +29,7 @@ public class Comment extends BaseEntity{
 
         private Long commentBy ;
 
-                  @AssignID
+                  @AutoID
                   private Long id;
 
         private Long targetId ;

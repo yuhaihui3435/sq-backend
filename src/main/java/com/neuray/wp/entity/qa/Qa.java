@@ -37,7 +37,7 @@ public class Qa extends BaseEntity{
 
         private String anonymous ;
 
-                  @AssignID
+                  @AutoID
                   private Long id;
 
         private Date crAt ;

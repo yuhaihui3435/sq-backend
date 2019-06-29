@@ -27,7 +27,7 @@ public class ArticeRelatedCount extends BaseEntity {
     public ArticeRelatedCount() {
     }
 
-    @AssignID
+    @AutoID
     private Long id;
 
     @NotBlank(message = "必填")

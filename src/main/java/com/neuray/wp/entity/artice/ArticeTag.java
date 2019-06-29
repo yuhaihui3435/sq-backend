@@ -28,7 +28,7 @@ public class ArticeTag extends BaseEntity {
     public ArticeTag() {
     }
 
-    @AssignID
+    @AutoID
     private Long id;
 
     @NotBlank(message = "必填")

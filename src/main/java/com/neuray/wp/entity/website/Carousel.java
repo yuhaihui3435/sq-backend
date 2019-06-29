@@ -26,7 +26,7 @@ public class Carousel extends BaseEntity {
     public Carousel() {
     }
 
-    @AssignID
+    @AutoID
     private Long id;
 
     private String title;//标题

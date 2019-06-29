@@ -33,7 +33,7 @@ public class UserCollect extends BaseEntity {
 
     @NotBlank(message = "必填")
     private Long targetId;
-    @AssignID
+    @AutoID
     private Long id;
 
     private Date crAt;

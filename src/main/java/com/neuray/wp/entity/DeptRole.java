@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.beetl.sql.core.annotatoin.AssignID;
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.SeqID;
 import org.beetl.sql.core.annotatoin.Table;
 
@@ -28,7 +29,7 @@ public class DeptRole extends BaseEntity {
     @Tolerate
     public DeptRole() {
     }
-    @AssignID
+    @AutoID
     private Long id;
 
     private Long crBy;

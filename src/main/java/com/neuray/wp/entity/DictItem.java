@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.beetl.sql.core.annotatoin.AssignID;
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.SeqID;
 import org.beetl.sql.core.annotatoin.Table;
 import com.neuray.wp.core.BaseEntity;
@@ -29,7 +30,7 @@ public class DictItem extends BaseEntity {
     public DictItem() {
     }
 
-    @AssignID
+    @AutoID
     private Long id;
     //删除人
     private Long deBy;

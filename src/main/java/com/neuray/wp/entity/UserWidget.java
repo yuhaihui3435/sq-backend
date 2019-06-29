@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.beetl.sql.core.annotatoin.AssignID;
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.SeqID;
 import org.beetl.sql.core.annotatoin.Table;
 
@@ -52,7 +53,7 @@ public class UserWidget extends BaseEntity {
 
     private Long crBy;
 
-    @AssignID
+    @AutoID
     private Long id;
 
     private Date crAt;

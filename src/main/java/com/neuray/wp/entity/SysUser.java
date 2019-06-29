@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.beetl.sql.core.annotatoin.AssignID;
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.SeqID;
 import org.beetl.sql.core.annotatoin.Table;
 import org.springframework.data.annotation.Transient;
@@ -43,7 +44,7 @@ public class SysUser extends BaseEntity {
     //删除人
     private Long deBy;
 
-    @AssignID
+    @AutoID
     private Long id;
 
     //EMAIL

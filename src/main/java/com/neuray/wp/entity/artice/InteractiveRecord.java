@@ -27,7 +27,7 @@ public class InteractiveRecord extends BaseEntity{
     @Tolerate
     public InteractiveRecord(){}
 
-                  @AssignID
+                  @AutoID
                   private Long id;
 
         private Long targetId ;

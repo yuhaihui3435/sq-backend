@@ -5,45 +5,45 @@
 package com.neuray.wp.entity;
 
 
+import com.neuray.wp.core.BaseEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
-import org.beetl.sql.core.annotatoin.AssignID;
-import org.beetl.sql.core.annotatoin.SeqID;
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.Table;
-import com.neuray.wp.core.BaseEntity;
-import com.neuray.wp.Consts;
-import java.util.*;
-import javax.validation.constraints.*;
+
+import java.util.Date;
+
 /*
-* 用户职位
-* gen by xtf 2019-01-25
-*
-*/
+ * 用户职位
+ * gen by xtf 2019-01-25
+ *
+ */
 @Data
 @Builder
-@Table(name="USER_POST_T")
-public class UserPost extends BaseEntity{
+@Table(name = "USER_POST_T")
+public class UserPost extends BaseEntity {
     @Tolerate
-    public UserPost(){}
+    public UserPost() {
+    }
 
-        private Date deAt ;
+    private Date deAt;
 
-        private Long crBy ;
+    private Long crBy;
 
-        private Long postId ;
+    private Long postId;
 
-        private Long upBy ;
+    private Long upBy;
 
-        private Long deBy ;
+    private Long deBy;
 
-        private Date upAt ;
+    private Date upAt;
 
-        private Long sysUserId ;
+    private Long sysUserId;
 
-        private Date crAt ;
+    private Date crAt;
 
-    @AssignID
-                  private Long id;
+    @AutoID
+    private Long id;
 
 }

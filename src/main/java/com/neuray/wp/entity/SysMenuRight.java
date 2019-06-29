@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.beetl.sql.core.annotatoin.AssignID;
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.SeqID;
 import org.beetl.sql.core.annotatoin.Table;
 import com.neuray.wp.core.BaseEntity;
@@ -74,7 +75,7 @@ public class SysMenuRight extends BaseEntity {
 //    @NotNull(message = "上级菜单必填")
     private Long parentId;
 
-    @AssignID
+    @AutoID
     private Long id;
 
     //菜单顺序号

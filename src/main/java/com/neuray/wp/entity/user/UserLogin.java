@@ -27,7 +27,7 @@ public class UserLogin extends BaseEntity{
     @Tolerate
     public UserLogin(){}
 
-                  @AssignID
+                  @AutoID
                   private Long id;
 
         private String wxOpenId ;

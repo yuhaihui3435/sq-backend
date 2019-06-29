@@ -30,7 +30,7 @@ public class Column extends BaseEntity {
 
     private Long deBy;
 
-    @AssignID
+    @AutoID
     private Long id;
 
     private Long crBy;

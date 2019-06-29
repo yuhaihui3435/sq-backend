@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.beetl.sql.core.annotatoin.AssignID;
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.SeqID;
 import org.beetl.sql.core.annotatoin.Table;
 import com.neuray.wp.core.BaseEntity;
@@ -41,7 +42,7 @@ public class OperationLog extends BaseEntity {
 
     private Date crAt;
 
-    @AssignID
+    @AutoID
     private Long id;
 
     private Date upAt;

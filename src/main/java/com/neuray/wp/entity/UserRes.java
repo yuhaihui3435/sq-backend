@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.beetl.sql.core.annotatoin.AssignID;
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.SeqID;
 import org.beetl.sql.core.annotatoin.Table;
 import com.neuray.wp.core.BaseEntity;
@@ -43,7 +44,7 @@ public class UserRes extends BaseEntity {
     @NotBlank(message = "必填")
     private Date effect;
 
-    @AssignID
+    @AutoID
     private Long id;
 
     private Long deBy;

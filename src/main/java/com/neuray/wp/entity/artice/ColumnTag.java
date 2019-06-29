@@ -27,7 +27,7 @@ public class ColumnTag extends BaseEntity {
     public ColumnTag() {
     }
 
-    @AssignID
+    @AutoID
     private Long id;
 
     @NotBlank(message = "必填")

@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.beetl.sql.core.annotatoin.AssignID;
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.SeqID;
 import org.beetl.sql.core.annotatoin.Table;
 
@@ -29,7 +30,7 @@ public class Dict extends BaseEntity {
     public Dict() {
     }
 
-    @AssignID
+    @AutoID
     private Long id;
     //字典值
     @NotBlank(message = "字典值必填")

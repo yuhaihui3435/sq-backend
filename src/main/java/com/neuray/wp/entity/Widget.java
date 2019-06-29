@@ -12,6 +12,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.beetl.sql.core.annotatoin.AssignID;
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.SeqID;
 import org.beetl.sql.core.annotatoin.Table;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class Widget extends BaseEntity {
     //组件默认高度
     private Long defH;
 
-    @AssignID
+    @AutoID
     private Long id;
 
     //编号
