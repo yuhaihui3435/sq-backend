@@ -5,60 +5,69 @@
 package com.neuray.wp.entity.user;
 
 
+import com.neuray.wp.Consts;
+import com.neuray.wp.core.BaseEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
-
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.Table;
-import com.neuray.wp.core.BaseEntity;
-import com.neuray.wp.Consts;
-import java.util.*;
-import javax.validation.constraints.*;
-import org.beetl.sql.core.annotatoin.AssignID;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import java.util.Date;
+
 /*
-* 用户登录信息
-* gen by xtf 2019-06-27
-*
-*/
+ * 用户登录信息
+ * gen by xtf 2019-06-27
+ *
+ */
 @Data
 @Builder
-@Table(name="USER_LOGIN_T")
-public class UserLogin extends BaseEntity{
+@Table(name = "USER_LOGIN_T")
+public class UserLogin extends BaseEntity {
     @Tolerate
-    public UserLogin(){}
+    public UserLogin() {
+    }
 
-                  @AutoID
-                  private Long id;
+    @AutoID
+    private Long id;
 
-        private String wxOpenId ;
+    private String wxOpenId;
 
-        @NotBlank(message = "必填")        private String pwd ;
+    @NotBlank(message = "必填")
+    private String pwd;
 
-        private Date upAt ;
+    private Date upAt;
 
-        @NotBlank(message = "必填")           @Pattern(regexp="^$|^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$",message="手机号码不正确")
-        private String phone ;
+    @NotBlank(message = "必填")
+    @Pattern(regexp = "^$|^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$", message = "手机号码不正确")
+    private String phone;
 
-        @NotBlank(message = "必填")           @Email(message = "必须是Email格式")
-        private String email ;
+    @NotBlank(message = "必填")
+    @Email(message = "必须是Email格式")
+    private String email;
 
-        private String qqOpenId ;
+    private String qqOpenId;
 
-        @NotBlank(message = "必填")           @Pattern(regexp="^$|[A-Za-z0-9_\\-]+",message="必须是字母或者数字")
-        private String account ;
+    @NotBlank(message = "必填")
+    @Pattern(regexp = "^$|[A-Za-z0-9_\\-]+", message = "必须是字母或者数字")
+    private String account;
 
-        @NotBlank(message = "必填")        private String status ;
+    @NotBlank(message = "必填")
+    private String status;
 
-            public String getStatusStr(){
-                            return Consts.STATUS.getVal(this.status);
-                        }
+    public String getStatusStr() {
+        return Consts.STATUS.getVal(this.status);
+    }
 
-        private Long upBy ;
+    private Long upBy;
 
-        private Date deAt ;
+    private Date deAt;
 
-        private Date crAt ;
+    private Date crAt;
 
-        private Long deBy ;
+    private Long deBy;
 
 }

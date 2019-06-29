@@ -5,39 +5,39 @@
 package com.neuray.wp.entity.artice;
 
 
+import com.neuray.wp.core.BaseEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
-
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.Table;
-import com.neuray.wp.core.BaseEntity;
-import com.neuray.wp.Consts;
-import java.util.*;
-import javax.validation.constraints.*;
-import org.beetl.sql.core.annotatoin.AssignID;
+
+import java.util.Date;
+
 /*
-* 互动
-* gen by xtf 2019-06-27
-*
-*/
+ * 互动
+ * gen by xtf 2019-06-27
+ *
+ */
 @Data
 @Builder
-@Table(name="INTERACTIVE_RECORD_T")
-public class InteractiveRecord extends BaseEntity{
+@Table(name = "INTERACTIVE_RECORD_T")
+public class InteractiveRecord extends BaseEntity {
     @Tolerate
-    public InteractiveRecord(){}
+    public InteractiveRecord() {
+    }
 
-                  @AutoID
-                  private Long id;
+    @AutoID
+    private Long id;
 
-        private Long targetId ;
+    private Long targetId;
 
-        private String type ;
+    private String type;
 
-        private Long userLoginId ;
+    private Long userLoginId;
 
-        private String targetType ;
+    private String targetType;
 
-        private Date crAt ;
+    private Date crAt;
 
 }

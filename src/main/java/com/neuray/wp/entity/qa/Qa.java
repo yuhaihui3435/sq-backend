@@ -5,41 +5,45 @@
 package com.neuray.wp.entity.qa;
 
 
+import com.neuray.wp.core.BaseEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
-
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.Table;
-import com.neuray.wp.core.BaseEntity;
-import com.neuray.wp.Consts;
-import java.util.*;
-import javax.validation.constraints.*;
-import org.beetl.sql.core.annotatoin.AssignID;
+
+import javax.validation.constraints.NotBlank;
+import java.util.Date;
+
 /*
-* 问答
-* gen by xtf 2019-06-27
-*
-*/
+ * 问答
+ * gen by xtf 2019-06-27
+ *
+ */
 @Data
 @Builder
-@Table(name="QA_T")
-public class Qa extends BaseEntity{
+@Table(name = "QA_T")
+public class Qa extends BaseEntity {
     @Tolerate
-    public Qa(){}
+    public Qa() {
+    }
 
-        @NotBlank(message = "必填")        private Long authorId ;
+    @NotBlank(message = "必填")
+    private Long authorId;
 
-        @NotBlank(message = "必填")        private String title ;
+    @NotBlank(message = "必填")
+    private String title;
 
-        @NotBlank(message = "必填")        private String content ;
+    @NotBlank(message = "必填")
+    private String content;
 
-        private String reportStatus ;
+    private String reportStatus;
 
-        private String anonymous ;
+    private String anonymous;
 
-                  @AutoID
-                  private Long id;
+    @AutoID
+    private Long id;
 
-        private Date crAt ;
+    private Date crAt;
 
 }

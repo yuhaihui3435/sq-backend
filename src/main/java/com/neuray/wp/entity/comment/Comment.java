@@ -5,43 +5,43 @@
 package com.neuray.wp.entity.comment;
 
 
+import com.neuray.wp.core.BaseEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
-
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.Table;
-import com.neuray.wp.core.BaseEntity;
-import com.neuray.wp.Consts;
-import java.util.*;
-import javax.validation.constraints.*;
-import org.beetl.sql.core.annotatoin.AssignID;
+
+import java.util.Date;
+
 /*
-* 评论
-* gen by xtf 2019-06-27
-*
-*/
+ * 评论
+ * gen by xtf 2019-06-27
+ *
+ */
 @Data
 @Builder
-@Table(name="COMMENT_T")
-public class Comment extends BaseEntity{
+@Table(name = "COMMENT_T")
+public class Comment extends BaseEntity {
     @Tolerate
-    public Comment(){}
+    public Comment() {
+    }
 
-        private Long commentBy ;
+    private Long commentBy;
 
-                  @AutoID
-                  private Long id;
+    @AutoID
+    private Long id;
 
-        private Long targetId ;
+    private Long targetId;
 
-        private String content ;
+    private String content;
 
-        private Date commentAt ;
+    private Date commentAt;
 
-        private Long parentId ;
+    private Long parentId;
 
-        private String anonymous ;
+    private String anonymous;
 
-        private String type ;
+    private String type;
 
 }
