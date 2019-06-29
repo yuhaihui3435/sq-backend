@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>com.ibeetl</groupId>
 			<artifactId>beetl-framework-starter</artifactId>
-			<version>1.1.67.RELEASE</version>
+			<version>1.2.6.RELEASE</version>
 		</dependency>
 		<!-- api 服务 -->
 		<dependency>

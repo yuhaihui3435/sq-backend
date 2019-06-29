@@ -15,6 +15,7 @@ import org.beetl.sql.core.annotatoin.Table;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.List;
 
 /*
  * 栏目
@@ -62,5 +63,10 @@ public class Column extends BaseEntity {
     private String listTpl;//列表模板
 
     private String detailTpl;//详细模板
+
+
+    private List<Column> children;
+
+    private Column parent;
 
 }
