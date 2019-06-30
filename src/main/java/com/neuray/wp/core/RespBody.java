@@ -7,10 +7,12 @@ package com.neuray.wp.core;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Tolerate;
 
 /**
  * JSON返回数据容器
  */
+@Builder
 public class RespBody<T> {
 
     /**
@@ -48,6 +50,7 @@ public class RespBody<T> {
     /**
      * JSON返回数据容器（默认返回成功状态码）
      */
+    @Tolerate
     public RespBody() {
 
         this.code = SUCCESS;
@@ -60,6 +63,7 @@ public class RespBody<T> {
      * @param msg  返回消息
      * @param code 返回码
      */
+    @Tolerate
     public RespBody(String msg, int code) {
 
         this.code = code;

@@ -1,7 +1,12 @@
 package com.neuray.wp.kits;
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 public class AppKit {
 
@@ -35,5 +40,11 @@ public class AppKit {
             }
         }
         return null;
+    }
+    //检查图片存储目录中有没有当日的存储目录
+    public static String checkPicDir(String picRoot){
+        String today=DateUtil.format(new Date(),DatePattern.PURE_DATE_FORMAT);
+        String todayDir= StrUtil.endWith(picRoot,StrUtil.C_BACKSLASH)?picRoot:picRoot+StrUtil.C_BACKSLASH+today+StrUtil.C_BACKSLASH;
+        return todayDir;
     }
 }

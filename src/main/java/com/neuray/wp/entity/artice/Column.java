@@ -5,7 +5,12 @@
 package com.neuray.wp.entity.artice;
 
 
+import cn.hutool.core.bean.BeanUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.neuray.wp.core.BaseEntity;
+import com.neuray.wp.kits.SpringKit;
+import com.neuray.wp.service.CacheService;
+import com.neuray.wp.service.artice.ColumnService;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
@@ -14,8 +19,7 @@ import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.Table;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /*
  * 栏目
@@ -26,9 +30,9 @@ import java.util.List;
 @Builder
 @Table(name = "COLUMN_T")
 public class Column extends BaseEntity {
+
     @Tolerate
-    public Column() {
-    }
+    public Column(){}
 
     private Long deBy;
 
@@ -68,5 +72,25 @@ public class Column extends BaseEntity {
     private List<Column> children;
 
     private Column parent;
+
+//    public List<Map> getChildren(){
+//        List<Column> list= columnService.many("artice.column.sample",Column.builder().parentId(this.id).build());
+//        List<Map> result=new ArrayList<>();
+//
+//        list.stream().forEach(column -> {
+//            result.add(BeanUtil.beanToMap(column));
+//        });
+//        return result;
+//    }
+//
+//    public Map getParent(){
+//        if(parentId!=null) {
+//            Column column = columnService.one(this.parentId);
+//            return BeanUtil.beanToMap(column);
+//        }else{
+//            return null;
+//        }
+//
+//    }
 
 }

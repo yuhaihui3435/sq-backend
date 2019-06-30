@@ -51,7 +51,7 @@ public class SysMenuRight extends BaseEntity {
     private Long crBy;
 
     //菜单图标
-    @NotBlank(message = "菜单图标必填")
+//    @NotBlank(message = "菜单图标必填")
     private String smIcon;
 
     //删除时间

@@ -37,7 +37,7 @@ public class ColumnController extends BaseController {
          */
         @PostMapping("/query")
         public List<Column> query(@RequestBody Column condition) {
-            return columnService.many("column.sample", condition);
+            return columnService.many("artice.column.sample", condition);
         }
     /**
      *
@@ -52,7 +52,7 @@ public class ColumnController extends BaseController {
         pageQuery.setPageSize(condition.getRows());
         pageQuery.setOrderBy(condition.getOrderBy());
         pageQuery.setParas(condition);
-        pageQuery = columnService.page("column.sample", pageQuery);
+        pageQuery = columnService.page("artice.column.sample", pageQuery);
         return pageQuery;
     }
 
@@ -130,8 +130,19 @@ public class ColumnController extends BaseController {
     */
     @PostMapping("/view/{id}")
     public Column view(@PathVariable("id") Long id) {
-        Column column=columnService.one("column.sample",Column.builder().id(id).build());
+        Column column=columnService.one("artice.column.sample",Column.builder().id(id).build());
         return column;
+    }
+
+    /**
+     * 顶级全数据查询，为树形渲染使用
+     * @return
+     */
+    @GetMapping("/topLevelAllData")
+    public List<Column> topLevelAllData(){
+        List<Column> columns=columnService.many("artice.column.topLevelAllData",new Column());
+        columnService.recursive(columns);
+        return columns;
     }
 
 }

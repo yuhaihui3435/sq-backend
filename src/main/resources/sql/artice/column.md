@@ -1,70 +1,80 @@
 sample
 ===
 
-	select #use("cols")# from COLUMN_T column where  #use("condition")#
+	select #use("cols")# from COLUMN_T cln where  #use("condition")#
 
 sample$count
 ===
-    select count(1) from COLUMN_T column where #use("condition")#
+    select count(1) from COLUMN_T cln where #use("condition")#
 
 cols
 ===
-	column.ID,column.DE_AT,column.PARENT_ID,column.DE_BY,column.UP_AT,column.CR_BY,column.CR_AT,column.UP_BY,column.NAME,column.ORDER,column.KEYS,column.DESCRIBE,column.THUMBNAIL,column.MGT_STYLE,column.LIST_TPL,column.DETAIL_TPL
+	cln.ID,cln.DE_AT,cln.PARENT_ID,cln.DE_BY,cln.UP_AT,cln.CR_BY,cln.CR_AT,cln.UP_BY,cln.NAME,cln.ORDER,cln.KEYS,cln.DESCRIBE,cln.THUMBNAIL,cln.MGT_STYLE,cln.LIST_TPL,cln.DETAIL_TPL
 
 updateSample
 ===
 
-	column.ID=#id#,column.DE_AT=#deAt#,column.PARENT_ID=#parentId#,column.DE_BY=#deBy#,column.UP_AT=#upAt#,column.CR_BY=#crBy#,column.CR_AT=#crAt#,column.UP_BY=#upBy#,column.NAME=#name#,column.ORDER=#order#,column.KEYS=#keys#,column.DESCRIBE=#describe#,column.THUMBNAIL=#thumbnail#,column.MGT_STYLE=#mgtStyle#,column.LIST_TPL=#listTpl#,column.DETAIL_TPL=#detailTpl#
+	cln.ID=#id#,cln.DE_AT=#deAt#,cln.PARENT_ID=#parentId#,cln.DE_BY=#deBy#,cln.UP_AT=#upAt#,cln.CR_BY=#crBy#,cln.CR_AT=#crAt#,cln.UP_BY=#upBy#,cln.NAME=#name#,cln.ORDER=#order#,cln.KEYS=#keys#,cln.DESCRIBE=#describe#,cln.THUMBNAIL=#thumbnail#,cln.MGT_STYLE=#mgtStyle#,cln.LIST_TPL=#listTpl#,cln.DETAIL_TPL=#detailTpl#
 
 condition
 ===
 
-	1 = 1 and DE_AT is null
+	1 = 1 and cln.DE_AT is null
 	@if(!isEmpty(id)){
-	 and column.ID=#id#
+	 and cln.ID=#id#
 	@}
 	@if(!isEmpty(deAt)){
-	 and column.DE_AT=#deAt#
+	 and cln.DE_AT=#deAt#
 	@}
 	@if(!isEmpty(parentId)){
-	 and column.PARENT_ID=#parentId#
+	 and cln.PARENT_ID=#parentId#
 	@}
 	@if(!isEmpty(deBy)){
-	 and column.DE_BY=#deBy#
+	 and cln.DE_BY=#deBy#
 	@}
 	@if(!isEmpty(upAt)){
-	 and column.UP_AT=#upAt#
+	 and cln.UP_AT=#upAt#
 	@}
 	@if(!isEmpty(crBy)){
-	 and column.CR_BY=#crBy#
+	 and cln.CR_BY=#crBy#
 	@}
 	@if(!isEmpty(crAt)){
-	 and column.CR_AT=#crAt#
+	 and cln.CR_AT=#crAt#
 	@}
 	@if(!isEmpty(upBy)){
-	 and column.UP_BY=#upBy#
+	 and cln.UP_BY=#upBy#
 	@}
 	@if(!isEmpty(name)){
-	 and column.NAME=#name#
+	 and cln.NAME=#name#
 	@}
 	@if(!isEmpty(order)){
-     and column.ORDER=#order#
+     and cln.ORDER=#order#
     @}
     @if(!isEmpty(keys)){
-     and column.KEYS=#keys#
+     and cln.KEYS=#keys#
     @}
     @if(!isEmpty(describe)){
-     and column.DESCRIBE=#describe#
+     and cln.DESCRIBE=#describe#
     @}
     @if(!isEmpty(thumbnail)){
-     and column.THUMBNAIL=#thumbnail#
+     and cln.THUMBNAIL=#thumbnail#
     @}
     @if(!isEmpty(mgtStyle)){
-     and column.MGT_STYLE=#mgtStyle#
+     and cln.MGT_STYLE=#mgtStyle#
     @}
     @if(!isEmpty(listTpl)){
-     and column.LIST_TPL=#listTpl#
+     and cln.LIST_TPL=#listTpl#
     @}    
     @if(!isEmpty(detailTpl)){
-     and column.DETAIL_TPL=#detailTpl#
+     and cln.DETAIL_TPL=#detailTpl#
     @} 
+    
+ 
+topLevelAllData
+===
+-- 顶级数据 全数据查询，包括上级 和下级数据
+
+    select #use("cols")# 
+    from COLUMN_T cln where  #use("condition")# and cln.PARENT_ID is null order by cln.order
+    
+    

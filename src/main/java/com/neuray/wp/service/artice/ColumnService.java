@@ -35,5 +35,23 @@ public class ColumnService extends BaseService<Column> {
         return null;
     }
 
+    /**
+     * 递归查询
+     * @param columnList
+     */
+    public void recursive(List<Column> columnList){
+        columnList.stream().forEach(column -> {
+            if(column.getParentId()!=null) {
+                column.setParent(one(column.getParentId()));
+            }
+            List<Column> tmp=many("artice.column.sample",Column.builder().parentId(column.getId()).build());
+            if(!tmp.isEmpty()) {
+                recursive(tmp);
+                column.setChildren(tmp);
+            }
+
+        });
+    }
+
 
 }
