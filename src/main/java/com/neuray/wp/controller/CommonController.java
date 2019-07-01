@@ -3,8 +3,6 @@ package com.neuray.wp.controller;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
-import com.neuray.wp.Consts;
-import com.neuray.wp.annotation.LogDog;
 import com.neuray.wp.core.BaseController;
 import com.neuray.wp.core.LogicException;
 import com.neuray.wp.core.RespBody;
@@ -12,15 +10,11 @@ import com.neuray.wp.entity.*;
 import com.neuray.wp.kits.AppKit;
 import com.neuray.wp.service.CacheService;
 import com.neuray.wp.service.FileMapService;
-import com.neuray.wp.service.SysConfService;
 import lombok.extern.slf4j.Slf4j;
-import org.beetl.sql.core.annotatoin.AutoID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sun.net.www.protocol.file.FileURLConnection;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -88,11 +82,10 @@ public class CommonController extends BaseController {
      * @return
      */
     @RequestMapping("/uploadPic")
-    public RespBody uploadPic(@RequestParam("pic") MultipartFile pic, HttpServletRequest request){
+    public RespBody uploadPic(@RequestParam("pic") MultipartFile pic){
         if(FileUtil.exist(picRootPath)){
             FileUtil.mkdir(picRootPath);
         }
-        RespBody respBody=new RespBody();
         String todayDir=AppKit.checkPicDir(picRootPath);
         String fileId=UUID.fastUUID().toString(true);
         String originalFileName = pic.getOriginalFilename();

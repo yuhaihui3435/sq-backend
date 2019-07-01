@@ -74,7 +74,15 @@ topLevelAllData
 ===
 -- 顶级数据 全数据查询，包括上级 和下级数据
 
-    select #use("cols")# 
+    select #use("cols")#
+    @orm.many({"id":"columnId"},"artice.column.selectColumnTagDictItem","com.neuray.wp.entity.DictItem",{"alias":"tags"});
     from COLUMN_T cln where  #use("condition")# and cln.PARENT_ID is null order by cln.order
+    
+    
+selectColumnTagDictItem
+===
+-- 查询栏目关联的标签数据
+    
+    select di.*  from COLUMN_TAG_T ct left join DICT_ITEM_T di on ct.TAG_ID=di.id where ct.COLUMN_ID=#columnId#
     
     

@@ -46,6 +46,7 @@ queryMenuByRole
      )
       and m.id is not null
       and rm.de_at is null
+      and m.display='0'
      order by m.qn
 
 queryMenuByUser

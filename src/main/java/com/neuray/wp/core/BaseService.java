@@ -22,6 +22,14 @@ import java.util.Map;
 
 @Slf4j
 @Service
+/**
+ * 
+ * 时间 2019/7/1
+ * @author 小听风  
+ * @version v1.0
+ * @see 
+ * @since
+ */
 public abstract class BaseService<T> implements Serializable{
 
     @Autowired
@@ -55,7 +63,6 @@ public abstract class BaseService<T> implements Serializable{
      * @return
      */
     public List<T> tpl(T entity) {
-        List<T> ret = sqlManager.template(entity);
         return sqlManager.template(entity);
     }
 

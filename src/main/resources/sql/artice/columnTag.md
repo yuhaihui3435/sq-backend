@@ -19,7 +19,7 @@ updateSample
 condition
 ===
 
-	1 = 1 and DE_AT is null
+	1 = 1 
 	@if(!isEmpty(id)){
 	 and columnTag.ID=#id#
 	@}
