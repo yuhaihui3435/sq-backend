@@ -10,9 +10,11 @@ import cn.hutool.core.util.StrUtil;
 import com.neuray.wp.core.BaseController;
 import com.neuray.wp.entity.user.UserInfo;
 import com.neuray.wp.core.LogicException;
+import com.neuray.wp.entity.user.UserLogin;
 import com.neuray.wp.service.user.UserInfoService;
 import com.neuray.wp.core.RespBody;
 import com.neuray.wp.kits.ValidationKit;
+import com.neuray.wp.service.user.UserLoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class UserInfoController extends BaseController {
 
     @Autowired
     private UserInfoService userInfoService;
+    @Autowired
+    private UserLoginService userLoginService;
     /**
          *
          * 条件查询
@@ -98,7 +102,9 @@ public class UserInfoController extends BaseController {
         String[] idArray=StrUtil.split(param.get("ids"),",");
         for(String id:idArray){
             UserInfo userInfo=userInfoService.one(Long.parseLong(id));
-            userInfoService.updateTplById(userInfo);
+            UserLogin userLogin=userLoginService.one(userInfo.getLoginId());
+            userLogin.setDeAt(new Date());
+            userLoginService.updateTplById(userLogin);
         }
         respBody.setMsg("删除用户详细信息成功");
         return respBody;
@@ -112,7 +118,7 @@ public class UserInfoController extends BaseController {
     */
     @PostMapping("/view/{id}")
     public UserInfo view(@PathVariable("id") Long id) {
-        UserInfo userInfo=userInfoService.one("user.userInfo.sample",UserInfo.builder().id(id).build());
+        UserInfo userInfo=userInfoService.one("user.userInfo.selectUserAllData",UserInfo.builder().id(id).build());
         return userInfo;
     }
 
