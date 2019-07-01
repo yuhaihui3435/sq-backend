@@ -50,9 +50,8 @@ public class UserInfoController extends BaseController {
         PageQuery pageQuery = new PageQuery();
         pageQuery.setPageNumber(condition.getPage());
         pageQuery.setPageSize(condition.getRows());
-        pageQuery.setOrderBy(condition.getOrderBy());
         pageQuery.setParas(condition);
-        pageQuery = userInfoService.page("user.userInfo.sample", pageQuery);
+        pageQuery = userInfoService.page("user.userInfo.selectUserAllData", pageQuery);
         return pageQuery;
     }
 
