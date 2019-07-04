@@ -1,7 +1,24 @@
 sample
 ===
 
-	select #use("cols")#,(select SU_NAME from SYS_USER_T  where ID=artice.UP_BY) as upByName,(select SU_NAME from SYS_USER_T  where ID=artice.CR_BY) as crByName,(select SU_NAME from SYS_USER_T  where ID=artice.DE_BY) as deByName from ARTICE_T artice where  #use("condition")#
+	select #use("cols")#,
+	(select SU_NAME from SYS_USER_T  where ID=artice.UP_BY) as upByName,
+	(select SU_NAME from SYS_USER_T  where ID=artice.CR_BY) as crByName,
+	(select SU_NAME from SYS_USER_T  where ID=artice.DE_BY) as deByName 
+	from ARTICE_T artice LEFT JOIN artice_tag_t tag ON artice.ID=tag.ARTICE_ID where 
+	
+	@if(!isEmpty(tagId)){
+        	 1=1 and tag.tag_id in (
+        	    @for(id in tagId){
+                   #id#  #text(idLP.last?"":"," )#
+                @}
+             )
+             and
+        @}
+        
+        #use("condition")#
+        @orm.many({"id":"articeId"},"artice.articeTag.sample","ArticeTag");
+
 
 sample$count
 ===
@@ -19,7 +36,10 @@ updateSample
 condition
 ===
 
-	1 = 1 and DE_AT is null
+	 1=1 and DE_AT is null
+	
+	
+	
 	@if(!isEmpty(id)){
 	 and artice.ID=#id#
 	@}
@@ -29,14 +49,14 @@ condition
 	@if(!isEmpty(effect)){
 	 and artice.EFFECT=#effect#
 	@}
-	@if(!isEmpty(columnId)){
+	@if(!isEmpty(columnId)&&columnId!=0){
 	 and artice.COLUMN_ID=#columnId#
 	@}
 	@if(!isEmpty(tplName)){
 	 and artice.TPL_NAME=#tplName#
 	@}
 	@if(!isEmpty(title)){
-	 and artice.TITLE=#title#
+	 and (artice.TITLE like #'%'+title+'%'# )
 	@}
 	@if(!isEmpty(author)){
 	 and artice.AUTHOR=#author#
@@ -92,6 +112,7 @@ condition
 	@if(!isEmpty(summary)){
 	 and artice.SUMMARY=#summary#
 	@}
+	order by artice.UP_AT desc
 
 
 
