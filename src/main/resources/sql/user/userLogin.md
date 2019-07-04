@@ -9,12 +9,12 @@ sample$count
 
 cols
 ===
-	userLogin.ID,userLogin.WX_OPEN_ID,userLogin.PWD,userLogin.UP_AT,userLogin.PHONE,userLogin.EMAIL,userLogin.QQ_OPEN_ID,userLogin.ACCOUNT,userLogin.STATUS,userLogin.UP_BY,userLogin.DE_AT,userLogin.CR_AT,userLogin.DE_BY
+	userLogin.ID,userLogin.WX_OPEN_ID,userLogin.PWD,userLogin.UP_AT,userLogin.PHONE,userLogin.EMAIL,userLogin.QQ_OPEN_ID,userLogin.ACCOUNT,userLogin.STATUS,userLogin.UP_BY,userLogin.DE_AT,userLogin.CR_AT,userLogin.DE_BY,userLogin.TYPE
 
 updateSample
 ===
 
-	userLogin.ID=#id#,userLogin.WX_OPEN_ID=#wxOpenId#,userLogin.PWD=#pwd#,userLogin.UP_AT=#upAt#,userLogin.PHONE=#phone#,userLogin.EMAIL=#email#,userLogin.QQ_OPEN_ID=#qqOpenId#,userLogin.ACCOUNT=#account#,userLogin.STATUS=#status#,userLogin.UP_BY=#upBy#,userLogin.DE_AT=#deAt#,userLogin.CR_AT=#crAt#,userLogin.DE_BY=#deBy#
+	userLogin.ID=#id#,userLogin.WX_OPEN_ID=#wxOpenId#,userLogin.PWD=#pwd#,userLogin.UP_AT=#upAt#,userLogin.PHONE=#phone#,userLogin.EMAIL=#email#,userLogin.QQ_OPEN_ID=#qqOpenId#,userLogin.ACCOUNT=#account#,userLogin.STATUS=#status#,userLogin.UP_BY=#upBy#,userLogin.DE_AT=#deAt#,userLogin.CR_AT=#crAt#,userLogin.DE_BY=#deBy#,userLogin.TYPE=#type#
 
 condition
 ===
@@ -59,6 +59,9 @@ condition
 	@if(!isEmpty(deBy)){
 	 and userLogin.DE_BY=#deBy#
 	@}
+	@if(!isEmpty(type)){
+     and userLogin.TYPE=#type#
+    @}
 
 
 

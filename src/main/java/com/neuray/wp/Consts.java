@@ -107,4 +107,7 @@ public interface Consts {
             return label;
         }
     }
+    enum FILETYPE{
+        PIC,FILE,DOC,PDF,EXCEL;
+    }
 }

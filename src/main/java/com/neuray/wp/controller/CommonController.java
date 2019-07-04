@@ -3,6 +3,7 @@ package com.neuray.wp.controller;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
+import com.neuray.wp.Consts;
 import com.neuray.wp.core.BaseController;
 import com.neuray.wp.core.LogicException;
 import com.neuray.wp.core.RespBody;
@@ -95,7 +96,7 @@ public class CommonController extends BaseController {
         File file=FileUtil.file(newFilePath);
         try {
             pic.transferTo(file);
-            fileMapService.insert(FileMap.builder().fileId(fileId).path(newFilePath).build());
+            fileMapService.insert(FileMap.builder().fileId(fileId).path(newFilePath).ext(ext).type(Consts.FILETYPE.PIC.name()).build());
             return RespBody.builder().code(RespBody.SUCCESS).body(fileId).build();
         } catch (IOException e) {
             log.error("图片上传成功");

@@ -70,4 +70,6 @@ public class UserLogin extends BaseEntity {
 
     private Long deBy;
 
+    private String type;
+
 }
