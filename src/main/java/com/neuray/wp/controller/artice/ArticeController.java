@@ -176,6 +176,13 @@ public class ArticeController extends BaseController {
             artice.setDeAt(new Date());
             artice.setDeBy(currLoginUser().getId());
             articeService.updateTplById(artice);
+            //查询所有关系，删除
+            Map map = new HashMap();
+            map.put("articeId", artice.getId());
+            List<ArticeTag> articeTagList = articeTagService.manyWithMap("artice.articeTag.sample", map);
+            for (int i = 0; i < articeTagList.size(); i++) {
+                articeTagService.delByObject(articeTagList.get(i));
+            }
         }
         respBody.setMsg("删除文章成功");
         return respBody;
