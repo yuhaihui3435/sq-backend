@@ -19,7 +19,7 @@ public class AppWebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns("/login", "/createKaptcha", "/createKaptchaImg", "/cc/**", "/sysConf/loadPic", "/sysUser/loadPic");
+        registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns("/login", "/createKaptcha", "/createKaptchaImg", "/cc/**", "/sysConf/loadPic", "/sysUser/loadPic", "/carousel/loadPic", "/artice/loadPic");
 //        registry.addInterceptor(accessControlInterceptor).addPathPatterns("/**").excludePathPatterns("/login","/createKaptcha","/createKaptchaImg");
     }
 }

@@ -13,7 +13,9 @@ import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.Table;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 /*
  * 文章
@@ -31,15 +33,15 @@ public class Artice extends BaseEntity {
     @AutoID
     private Long id;
 
-    private Long readingTime;
+    private Long readingTime;//读取时间
 
-    @NotBlank(message = "必填")
-    private Date effect;
+    @NotNull(message = "生效时间必填")
+    private Date effect;//有效时间
 
-    @NotBlank(message = "必填")
-    private Long columnId;
+    @NotNull(message = "栏目必填")
+    private Long columnId;//栏目id
 
-    @NotBlank(message = "必填")
+    @NotBlank(message = "模版名称必填")
     private String tplName;
 
     public String getTplNameStr() {
@@ -47,7 +49,7 @@ public class Artice extends BaseEntity {
         return ret;
     }
 
-    @NotBlank(message = "必填")
+    @NotBlank(message = "标题必填")
     private String title;
 
     private Long author;
@@ -56,13 +58,13 @@ public class Artice extends BaseEntity {
 
     private Long upBy;
 
-    @NotBlank(message = "必填")
+    @NotBlank(message = "摘要英文必填")
     private String summaryEn;
 
-    @NotBlank(message = "必填")
+    @NotBlank(message = "内容必填")
     private String detail;
 
-    @NotBlank(message = "必填")
+    @NotBlank(message = "发布状态必填")
     private String publishStatus;
 
     public String getPublishStatusStr() {
@@ -89,7 +91,7 @@ public class Artice extends BaseEntity {
 
     private Date upAt;
 
-    @NotBlank(message = "必填")
+    @NotNull(message = "置顶顺序必填")
     private Integer top;
 
     public String getTopStr() {
@@ -112,5 +114,7 @@ public class Artice extends BaseEntity {
     private String detailEn;
 
     private String summary;
+
+    private List<Long> tagId;
 
 }
