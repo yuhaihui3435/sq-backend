@@ -65,6 +65,8 @@ condition
 	@if(!isEmpty(expiredAt)){
 	 and carousel.EXPIRED_AT=#expiredAt#
 	@}
+	
+	order by carousel.ORDER
 
 
 
