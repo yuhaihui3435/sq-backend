@@ -36,9 +36,9 @@ import javax.validation.ValidationException;
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-    @Value("{spring.servlet.multipart.max-file-size}")
+    @Value("${spring.servlet.multipart.max-file-size}")
     private String max_file_size;
-    @Value("{spring.servlet.multipart.max-request-size}")
+    @Value("${spring.servlet.multipart.max-request-size}")
     private String max_request_size;
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
