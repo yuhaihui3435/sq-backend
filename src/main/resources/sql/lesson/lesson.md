@@ -9,17 +9,23 @@ sample$count
 
 cols
 ===
-	lesson.CR_AT,lesson.NAME,lesson.STATUS,lesson.PROVICE,lesson.CITY,lesson.AREA,lesson.PRICE,lesson.ID,lesson.DE_BY,lesson.SITE,lesson.UP_AT,lesson.DESCRIBLE,lesson.DE_AT,lesson.CR_BY,lesson.PUBLICIZE,lesson.UP_BY,lesson.LESSON_AT,lesson.LESSON_STATUS,lesson.THE_WAY,lesson.DOCTOR_ID
+	lesson.LESSON_END_AT,lesson.LESSON_DAYS,lesson.CR_AT,lesson.NAME,lesson.STATUS,lesson.PROVICE,lesson.CITY,lesson.AREA,lesson.PRICE,lesson.ID,lesson.DE_BY,lesson.SITE,lesson.UP_AT,lesson.DESCRIBLE,lesson.DE_AT,lesson.CR_BY,lesson.PUBLICIZE,lesson.UP_BY,lesson.LESSON_AT,lesson.LESSON_STATUS,lesson.THE_WAY,lesson.DOCTOR_ID
 
 updateSample
 ===
 
-	lesson.CR_AT=#crAt#,lesson.NAME=#name#,lesson.STATUS=#status#,lesson.PROVICE=#provice#,lesson.CITY=#city#,lesson.AREA=#area#,lesson.PRICE=#price#,lesson.ID=#id#,lesson.DE_BY=#deBy#,lesson.SITE=#site#,lesson.UP_AT=#upAt#,lesson.DESCRIBLE=#describle#,lesson.DE_AT=#deAt#,lesson.CR_BY=#crBy#,lesson.PUBLICIZE=#publicize#,lesson.UP_BY=#upBy#,lesson.LESSON_AT=#lessonAt#,lesson.LESSON_STATUS=#lessonStatus#,lesson.THE_WAY=#theWay#,lesson.DOCTOR_ID=#doctorId#
+	lesson.LESSON_DAYS=#lessonDays#,lesson.LESSON_END_AT=#lessonEndAt#,lesson.CR_AT=#crAt#,lesson.NAME=#name#,lesson.STATUS=#status#,lesson.PROVICE=#provice#,lesson.CITY=#city#,lesson.AREA=#area#,lesson.PRICE=#price#,lesson.ID=#id#,lesson.DE_BY=#deBy#,lesson.SITE=#site#,lesson.UP_AT=#upAt#,lesson.DESCRIBLE=#describle#,lesson.DE_AT=#deAt#,lesson.CR_BY=#crBy#,lesson.PUBLICIZE=#publicize#,lesson.UP_BY=#upBy#,lesson.LESSON_AT=#lessonAt#,lesson.LESSON_STATUS=#lessonStatus#,lesson.THE_WAY=#theWay#,lesson.DOCTOR_ID=#doctorId#
 
 condition
 ===
 
 	1 = 1 and DE_AT is null
+    @if(!isEmpty(lessonEndAt)){
+     and lesson.LESSON_END_AT=#lessonEndAt#
+    @}	
+	@if(!isEmpty(lessonDays)){
+     and lesson.LESSON_DAYS=#lessonDays#
+    @}
 	@if(!isEmpty(crAt)){
 	 and lesson.CR_AT=#crAt#
 	@}
