@@ -4,9 +4,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 package com.neuray.wp;
+import cn.hutool.core.io.FileUtil;
 import com.neuray.wp.service.CacheService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -24,7 +26,8 @@ import org.springframework.stereotype.Component;
 public class AfterStartupRunner implements ApplicationRunner
 {
 
-
+    @Value("${pic.root.path}")
+    private String picRootPath;
     @Autowired
     private CacheService cacheService;
 
@@ -32,6 +35,9 @@ public class AfterStartupRunner implements ApplicationRunner
     public void run(ApplicationArguments args) throws Exception {
         cacheService.refreshDictCache();
         cacheService.refreshSysConfCache();
+        if (FileUtil.exist(picRootPath)) {
+            FileUtil.mkdir(picRootPath);
+        }
         log.info("::::::::::::::::系统启动成功::::::::::::::::");
     }
 
