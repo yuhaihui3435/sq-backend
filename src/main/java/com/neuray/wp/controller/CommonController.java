@@ -2,6 +2,7 @@ package com.neuray.wp.controller;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
+import cn.hutool.core.util.ImageUtil;
 import cn.hutool.core.util.StrUtil;
 import com.neuray.wp.Consts;
 import com.neuray.wp.core.BaseController;
@@ -30,6 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * 通用controller
@@ -44,6 +47,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/cc")
 public class CommonController extends BaseController {
+
+    public static final String SUFFIX_THUMBNAIL="_thumbnail";
 
     @Value("${pic.root.path}")
     private String picRootPath;
@@ -83,23 +88,30 @@ public class CommonController extends BaseController {
      * 上传图片
      *
      * @param pic
-     * @param request
+     *
      * @return
      */
     @RequestMapping("/uploadPic")
-    public RespBody uploadPic(@RequestParam("pic") MultipartFile pic) {
-        if (FileUtil.exist(picRootPath)) {
-            FileUtil.mkdir(picRootPath);
+    public RespBody uploadPic(@RequestParam("pic") MultipartFile pic,@RequestParam("dir") String dir) {
+        String todayDir;
+        if(StrUtil.isBlank(dir)) {
+             todayDir = AppKit.checkPicDir(picRootPath);
+        }else{
+            todayDir=picRootPath+dir+File.separator;
         }
-        String todayDir = AppKit.checkPicDir(picRootPath);
         String fileId = UUID.fastUUID().toString(true);
         String originalFileName = pic.getOriginalFilename();
         String ext = FileUtil.extName(originalFileName);
         String newFileName = fileId + StrUtil.C_DOT + ext;
+        String newFileNameThumbnail=fileId+SUFFIX_THUMBNAIL + StrUtil.C_DOT + ext;
         String newFilePath = todayDir + newFileName;
+        String newFilePathThumbnail=todayDir+newFileNameThumbnail;
+
         File file = FileUtil.file(newFilePath);
+        File file1=FileUtil.file(newFilePathThumbnail);
         try {
             pic.transferTo(file);
+            ImageUtil.scale(file,file1,0.2f);
             fileMapService.insert(FileMap.builder().fileId(fileId).path(newFilePath).ext(ext).type(Consts.FILETYPE.PIC.name()).build());
             return RespBody.builder().code(RespBody.SUCCESS).body(fileId).build();
         } catch (IOException e) {
@@ -116,11 +128,20 @@ public class CommonController extends BaseController {
      */
     @GetMapping("/loadPic/{fileId}")
     public void loadPic(@PathVariable("fileId") String fileId, HttpServletResponse response) {
-        FileMap fileMap = fileMapService.tplOne(FileMap.builder().fileId(fileId).build());
-        if (!FileUtil.exist(fileMap.getPath())) {
+        String orginName=fileId.replace(SUFFIX_THUMBNAIL,"");
+        FileMap fileMap = fileMapService.tplOne(FileMap.builder().fileId(orginName).build());
+        String path=null;
+        if(StrUtil.containsAny(fileId,SUFFIX_THUMBNAIL)){
+            String[] strs=StrUtil.split(fileMap.getPath(),StrUtil.DOT);
+            path=strs[0]+SUFFIX_THUMBNAIL+StrUtil.DOT+strs[1];
+        }else{
+            path=fileMap.getPath();
+        }
+
+        if (!FileUtil.exist(path)) {
             throw new LogicException("文件不存在!");
         }
-        try (FileInputStream fileInputStream = new FileInputStream(new File(fileMap.getPath()));
+        try (FileInputStream fileInputStream = new FileInputStream(new File(path));
              ServletOutputStream servletOutputStream = response.getOutputStream();) {
             response.setContentType("multipart/form-data");
             int i = 0;
@@ -129,9 +150,9 @@ public class CommonController extends BaseController {
                 servletOutputStream.write(buffer, 0, i);
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            log.error("图片{},不存在",fileMap.getPath());
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("图片{},读取失败发生了错误",fileMap.getPath());
         }
     }
 
@@ -140,12 +161,38 @@ public class CommonController extends BaseController {
         File[] dirs = FileUtil.ls(picRootPath);
         List<String> result = new ArrayList<>();
         for (File f : dirs
-        ) {
+                ) {
             if (f.isDirectory()) {
                 result.add(f.getName());
             }
         }
         return result;
+    }
+
+    @GetMapping("/loadPicDirImgs/{dir}")
+    public List<String> loadPicDirImgs(@PathVariable("dir") String dir) {
+        return FileUtil.listFileNames(picRootPath+dir).stream().map(str->{
+
+                return StrUtil.removeAll(str, StrUtil.C_DOT + FileUtil.extName(str));
+
+        }).filter(new Predicate<String>() {
+            @Override
+            public boolean test(String s) {
+                return StrUtil.containsAny(s,SUFFIX_THUMBNAIL);
+            }
+        }).collect(Collectors.toList());
+    }
+
+    @PostMapping("/createDir")
+    public RespBody createDir(@RequestBody Map<String,String> param) {
+        String path=picRootPath+param.get("dir");
+        if(!FileUtil.exist(path)){
+            FileUtil.mkdir(path);
+            return RespBody.builder().code(RespBody.SUCCESS).msg("文件夹创建成功").build();
+        }else{
+            return RespBody.builder().code(RespBody.BUSINESS_ERROR).msg("文件夹已经存在").build();
+        }
+
     }
 
 
