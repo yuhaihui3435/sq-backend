@@ -47,7 +47,7 @@ public class LoginController extends BaseController {
     public static final String USER_ID = "userId_";
 
     @Autowired
-    private CacheService cacheService;
+    private RedisCacheService redisCacheService;
     @Autowired
     private DefaultKaptcha defaultKaptcha;
     @Autowired
@@ -69,7 +69,7 @@ public class LoginController extends BaseController {
         String ipPwd = loginUser.getPwd();
         RespBody respBody = new RespBody();
         //检查是否登录启用了验证码
-        SysConf sysConf = cacheService.getSysConf("loginVcode");
+        SysConf sysConf = redisCacheService.getSysConf("loginVcode");
         String scVal = null;
         if (sysConf != null) {
             scVal = sysConf.getScVal();
@@ -102,7 +102,7 @@ public class LoginController extends BaseController {
             }
         }
         //开启短信码认证  需要配合短信发送平台，暂时没有实现。
-        sysConf = cacheService.getSysConf("loginSmscode");
+        sysConf = redisCacheService.getSysConf("loginSmscode");
         if (sysConf != null) {
             scVal = sysConf.getScVal();
             if (scVal.equals(Consts.ENABLESTATUS.YES.getVal())) {
@@ -122,7 +122,7 @@ public class LoginController extends BaseController {
         }
 
         String onlineUserToken = (String) redisTemplate.opsForValue().get(ONLINE_USER + sysUser.getId());//查看当前用户在线token
-        SysConf userOnlineTactics = (SysConf) cacheService.getSysConf("userOnlineTactics");
+        SysConf userOnlineTactics = (SysConf) redisCacheService.getSysConf("userOnlineTactics");
         if (userOnlineTactics.getScVal().equals("1")) {//先登录为主
             if (StrUtil.isNotBlank(onlineUserToken)) {
                 respBody.setCode(RespBody.BUSINESS_ERROR);
@@ -196,9 +196,9 @@ public class LoginController extends BaseController {
             String token = JwtKit.createJWT(UUID.fastUUID().toString(), map, -1L);//生成jwt token
             redisTemplate.opsForValue().set(ONLINE_USER + sysUser.getId(), token);
             redisTemplate.opsForValue().set(SYSUSER_LOGIN_CACHE_NAME + token, loginUser);
-            SysConf userOnlineDuration = cacheService.getSysConf("userOnlineDuration");
+            SysConf userOnlineDuration = redisCacheService.getSysConf("userOnlineDuration");
             if (loginUser.getRememberMe() != null && loginUser.getRememberMe()) {
-                SysConf userRememberMeDuration = cacheService.getSysConf("userRememberMeDuration");
+                SysConf userRememberMeDuration = redisCacheService.getSysConf("userRememberMeDuration");
                 redisTemplate.expire(SYSUSER_LOGIN_CACHE_NAME + token, StrUtil.isBlank(userRememberMeDuration.getScVal()) ? Long.parseLong(userOnlineDuration.getScVal()) : Long.parseLong(userRememberMeDuration.getScVal()), TimeUnit.MINUTES);
                 redisTemplate.expire(ONLINE_USER + sysUser.getId(), StrUtil.isBlank(userRememberMeDuration.getScVal()) ? Long.parseLong(userOnlineDuration.getScVal()) : Long.parseLong(userRememberMeDuration.getScVal()), TimeUnit.MINUTES);
             } else {

@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.neuray.wp.core.BaseEntity;
 import com.neuray.wp.entity.DictItem;
 import com.neuray.wp.kits.SpringKit;
-import com.neuray.wp.service.CacheService;
+import com.neuray.wp.service.RedisCacheService;
 import com.neuray.wp.service.artice.ColumnService;
 import lombok.Builder;
 import lombok.Data;

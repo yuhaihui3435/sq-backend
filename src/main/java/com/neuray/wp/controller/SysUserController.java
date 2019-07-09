@@ -64,7 +64,7 @@ public class SysUserController extends BaseController {
     @Autowired
     private RoleUserService roleUserService;
     @Autowired
-    private CacheService cacheService;
+    private RedisCacheService redisCacheService;
     @Autowired
     private UserWidgetService userWidgetService;
     @Autowired
@@ -438,7 +438,7 @@ public class SysUserController extends BaseController {
         if (StringUtils.isNotBlank(picName) && !"null".equals(picName)) {
             picPath = StrUtil.isNotBlank(picUserPath) ? picUserPath : ClassUtils.getDefaultClassLoader().getResource("").getPath() + "/upload/userPic/";
         } else {
-            SysConf sysConf = cacheService.getSysConf("sysAvatar");
+            SysConf sysConf = redisCacheService.getSysConf("sysAvatar");
             picName = sysConf.getScVal();
             picPath = StrUtil.isNotBlank(picRootPath) ? picRootPath : ClassUtils.getDefaultClassLoader().getResource("").getPath() + "/upload/";
         }

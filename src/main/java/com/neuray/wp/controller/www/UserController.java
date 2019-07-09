@@ -8,7 +8,7 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.neuray.wp.core.RespBody;
 import com.neuray.wp.entity.user.UserLogin;
-import com.neuray.wp.service.CacheService;
+import com.neuray.wp.service.RedisCacheService;
 import com.neuray.wp.service.user.UserInfoService;
 import com.neuray.wp.service.user.UserLoginService;
 import lombok.extern.log4j.Log4j2;
@@ -30,18 +30,49 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+    public static final String PREFIX_SMSCODE="SMSCODE_";
+
     @Autowired
     private UserInfoService userInfoService;
     @Autowired
     private UserLoginService userLoginService;
+    @Autowired
+    private RedisCacheService redisCacheService;
 
     @PostMapping("/register")
-    public String register(@ModelAttribute UserLogin userLogin,@RequestParam String smsCode){
+    @ResponseBody
+    public RespBody register(@ModelAttribute UserLogin userLogin,@RequestParam String smsCode){
         if(StrUtil.isBlank(userLogin.getPhone())){
-
+            return RespBody.builder().code(RespBody.BUSINESS_ERROR).msg("请填写手机号").build();
+        }
+        else if(StrUtil.isBlank(userLogin.getPwd())){
+            return RespBody.builder().code(RespBody.BUSINESS_ERROR).msg("请填写密码").build();
+        }else if(StrUtil.isBlank(smsCode)){
+            return RespBody.builder().code(RespBody.BUSINESS_ERROR).msg("请填写短信验证码").build();
+        }
+        String str=(String)redisCacheService.findVal(PREFIX_SMSCODE+userLogin.getPhone());
+        if(StrUtil.isBlank(str)){
+            return RespBody.builder().code(RespBody.BUSINESS_ERROR).msg("短信验证码过期").build();
+        }else if (!str.equals(smsCode)){
+            return RespBody.builder().code(RespBody.BUSINESS_ERROR).msg("短信验证码不正确").build();
         }
 
-        return "";
+        String account=RandomUtil.randomString(9);
+        Boolean bl=true;
+        while(bl) {
+            if (userLoginService.checkAccount(account, null).isEmpty()) {
+                bl=false;
+            }else{
+                account=RandomUtil.randomString(9);
+            }
+        }
+
+        userLogin.setAccount(account);
+
+
+
+
+        return null;
     }
 
     @GetMapping("/sendSmsCode/{phone}")

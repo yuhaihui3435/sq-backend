@@ -2,7 +2,7 @@ package com.neuray.wp.core;
 
 import com.neuray.wp.controller.LoginController;
 import com.neuray.wp.model.LoginUser;
-import com.neuray.wp.service.CacheService;
+import com.neuray.wp.service.RedisCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseController {
 
     @Autowired
-    protected CacheService cacheService;
+    protected RedisCacheService redisCacheService;
     @Autowired
     private RedisTemplate redisTemplate;
 

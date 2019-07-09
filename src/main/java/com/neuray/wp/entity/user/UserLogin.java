@@ -36,26 +36,21 @@ public class UserLogin extends BaseEntity {
 
     private String wxOpenId;
 
-    @NotBlank(message = "必填")
+
     private String pwd;
 
     private Date upAt;
 
-    @NotBlank(message = "必填")
+    @NotBlank(message = "手机号必填")
     @Pattern(regexp = "^$|^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$", message = "手机号码不正确")
     private String phone;
 
-    @NotBlank(message = "必填")
-    @Email(message = "必须是Email格式")
     private String email;
 
     private String qqOpenId;
 
-    @NotBlank(message = "必填")
-    @Pattern(regexp = "^$|[A-Za-z0-9_\\-]+", message = "必须是字母或者数字")
     private String account;
 
-    @NotBlank(message = "必填")
     private String status;
 
     public String getStatusStr() {

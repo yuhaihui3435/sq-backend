@@ -13,7 +13,7 @@ import com.neuray.wp.entity.DictItem;
 import com.neuray.wp.entity.FileMap;
 import com.neuray.wp.entity.SysConf;
 import com.neuray.wp.kits.AppKit;
-import com.neuray.wp.service.CacheService;
+import com.neuray.wp.service.RedisCacheService;
 import com.neuray.wp.service.FileMapService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +54,7 @@ public class CommonController extends BaseController {
     private String picRootPath;
 
     @Autowired
-    private CacheService cacheService;
+    private RedisCacheService redisCacheService;
 
     @Autowired
     private FileMapService fileMapService;
@@ -68,14 +68,14 @@ public class CommonController extends BaseController {
 //    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/getDictItemByDictVal")
     public List<DictItem> getDictItemByDictVal(@RequestBody Dict dict) {
-        return cacheService.getDictItemByDictVal(dict.getDictVal());
+        return redisCacheService.getDictItemByDictVal(dict.getDictVal());
     }
 
     //    @LogDog(logType = Consts.LOGTYPE.QUERY, reqSource = Consts.REQSOURCE.INNER)
     @PostMapping("/getAllSysConf")
     public Map<String, String> getAllSysConf() {
         Map<String, String> map = new HashMap<>();
-        List<SysConf> sysConfs = cacheService.getAllSysConf();
+        List<SysConf> sysConfs = redisCacheService.getAllSysConf();
         if (sysConfs != null) {
             sysConfs.stream().forEach(sysConf -> {
                 map.put(sysConf.getScKey(), sysConf.getScVal());
@@ -92,7 +92,7 @@ public class CommonController extends BaseController {
      * @return
      */
     @RequestMapping("/uploadPic")
-    public RespBody uploadPic(@RequestParam("pic") MultipartFile pic,@RequestParam("dir") String dir) {
+    public RespBody uploadPic(@RequestParam("pic") MultipartFile pic,@RequestParam(value = "dir",defaultValue = "") String dir) {
         String todayDir;
         if(StrUtil.isBlank(dir)) {
              todayDir = AppKit.checkPicDir(picRootPath);

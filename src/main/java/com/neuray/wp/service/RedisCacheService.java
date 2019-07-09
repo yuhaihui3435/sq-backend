@@ -12,10 +12,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
-public class CacheService implements Serializable{
+public class RedisCacheService implements Serializable{
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
@@ -93,6 +94,43 @@ public class CacheService implements Serializable{
 
     public List<SysConf> getAllSysConf(){
         return (List<SysConf>)redisTemplate.opsForValue().get(SYS_CONF_CACHE_NAME+"_all");
+    }
+
+    public Object findVal(String key){
+        return redisTemplate.opsForValue().get(key);
+    }
+
+    public void addVal(String key,Object val){
+        redisTemplate.opsForValue().set(key,val);
+    }
+
+    public void delVal(String key){
+        redisTemplate.delete(key);
+    }
+
+    public void expired(String key, long timeout, TimeUnit timeUnit){
+        redisTemplate.expire(key,timeout,timeUnit);
+    }
+
+    public Object findHVal(String hKey,String key){
+        return redisTemplate.opsForHash().get(hKey,key);
+    }
+
+    public void addHVal(String hKey,String key,Object val){
+        redisTemplate.opsForHash().put(hKey,key,val);
+    }
+
+    public void delHval(String hkey,Object... objects){
+        redisTemplate.opsForHash().delete(hkey,objects);
+    }
+
+
+    public boolean exist(String key){
+        return redisTemplate.hasKey(key);
+    }
+
+    public boolean existH(String hkey,String key){
+        return redisTemplate.opsForHash().hasKey(hkey,key);
     }
 
 }

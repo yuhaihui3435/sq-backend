@@ -16,7 +16,7 @@ import com.neuray.wp.core.RespBody;
 import com.neuray.wp.entity.Dict;
 import com.neuray.wp.entity.DictJson;
 import com.neuray.wp.kits.ValidationKit;
-import com.neuray.wp.service.CacheService;
+import com.neuray.wp.service.RedisCacheService;
 import com.neuray.wp.service.DictService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class DictController extends BaseController {
     @Autowired
     private DictService dictService;
     @Autowired
-    private CacheService cacheService;
+    private RedisCacheService redisCacheService;
 
     /**
      * 查询全部
@@ -90,7 +90,7 @@ public class DictController extends BaseController {
         dict.setUpAt(new Date());
         dict.setUpBy(currLoginUser().getId());
         dictService.insertAutoKey(dict);
-        cacheService.refreshDictCache();
+        redisCacheService.refreshDictCache();
         respBody.setMsg("新增数据字典成功");
         return respBody;
     }
@@ -116,7 +116,7 @@ public class DictController extends BaseController {
         dict.setUpAt(new Date());
         dict.setUpBy(currLoginUser().getId());
         dictService.updateTplById(dict);
-        cacheService.refreshDictCache();
+        redisCacheService.refreshDictCache();
         respBody.setMsg("更新数据字典成功");
         return respBody;
     }
@@ -137,7 +137,7 @@ public class DictController extends BaseController {
             dict.setDeBy(currLoginUser().getId());
             dictService.updateTplById(dict);
         }
-        cacheService.refreshDictCache();
+        redisCacheService.refreshDictCache();
         respBody.setMsg("删除数据字典成功");
         return respBody;
     }
