@@ -14,11 +14,13 @@ import com.neuray.wp.core.BaseController;
 import com.neuray.wp.entity.Result;
 import com.neuray.wp.entity.doctor.Doctor;
 import com.neuray.wp.core.LogicException;
+import com.neuray.wp.entity.doctor.DoctorPic;
 import com.neuray.wp.entity.doctor.DoctorTag;
 import com.neuray.wp.entity.user.UserLogin;
 import com.neuray.wp.service.doctor.DoctorService;
 import com.neuray.wp.core.RespBody;
 import com.neuray.wp.kits.ValidationKit;
+import com.neuray.wp.service.doctor.DoctorTagService;
 import com.neuray.wp.service.user.UserLoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.beetl.sql.core.engine.PageQuery;
@@ -35,10 +37,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import static com.neuray.wp.controller.SysUserController.PWD_SECURE_KEY;
 
@@ -54,8 +53,8 @@ public class DoctorController extends BaseController {
     private String picDoctorPath;
     @Autowired
     private UserLoginService userLoginService;
-//    @Autowired
-//    private DoctorTa
+    @Autowired
+    private DoctorTagService doctorTagService;
 
     /**
      * 条件查询
@@ -99,12 +98,12 @@ public class DoctorController extends BaseController {
         doctor.setUpBy(currLoginUser().getId());
         doctorService.insertAutoKey(doctor);
         List<String> tagId = doctor.getTagId();
-        for (int i = 0; i <tagId.size() ; i++) {
+        for (int i = 0; i < tagId.size(); i++) {
             DoctorTag doctorTag = new DoctorTag();
             doctorTag.setDoctorId(doctor.getId());
             doctorTag.setTagId(Long.parseLong(tagId.get(i).split(",")[0]));
             doctorTag.setType(tagId.get(i).split(",")[1]);
-
+            doctorTagService.insertAutoKey(doctorTag);
         }
         String account = checkAccount(9);
         UserLogin userLogin = new UserLogin();
@@ -113,6 +112,12 @@ public class DoctorController extends BaseController {
         userLogin.setStatus("00");
         userLogin.setEmail(doctor.getEmial());
         userLogin.setPwd(SecureUtil.hmacMd5(PWD_SECURE_KEY).digestHex(doctor.getPhone().substring(5, 10)));
+        List<String> doctorPic = doctor.getDoctorPic();
+        for (int i = 0; i < doctorPic.size(); i++) {
+            DoctorPic doctorPic1 = new DoctorPic();
+            doctorPic1.setType("00");
+
+        }
         respBody.setMsg("新增医生信息成功");
         return respBody;
     }
@@ -159,6 +164,21 @@ public class DoctorController extends BaseController {
         ValidationKit.validate(doctor);
         doctor.setUpBy(currLoginUser().getId());
         doctorService.update(doctor);
+        //查询出标签表集合，删除，重新添加
+        Map map = new HashMap();
+        map.put("doctorId", doctor.getId());
+        List<DoctorTag> list = doctorTagService.manyWithMap("doctor.doctorTag.sample", map);
+        for (int i = 0; i < list.size(); i++) {
+            doctorTagService.delByObject(list.get(i));
+        }
+        List<String> tagId = doctor.getTagId();
+        for (int i = 0; i < tagId.size(); i++) {
+            DoctorTag doctorTag = new DoctorTag();
+            doctorTag.setDoctorId(doctor.getId());
+            doctorTag.setTagId(Long.parseLong(tagId.get(i).split(",")[0]));
+            doctorTag.setType(tagId.get(i).split(",")[1]);
+            doctorTagService.insertAutoKey(doctorTag);
+        }
         respBody.setMsg("更新医生信息成功");
         return respBody;
     }

@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 
+import org.beetl.sql.core.annotatoin.AutoID;
 import org.beetl.sql.core.annotatoin.Table;
 import com.neuray.wp.core.BaseEntity;
 import com.neuray.wp.Consts;
@@ -67,7 +68,7 @@ public class Doctor extends BaseEntity {
     @NotBlank(message = "省必填")
     private String province;
 
-    @AssignID
+    @AutoID
     private Long id;
 
     //删除人
@@ -104,5 +105,6 @@ public class Doctor extends BaseEntity {
     private String emial;
     private String phone;
     private List<String> tagId;
+    private List<String> doctorPic;
 
 }

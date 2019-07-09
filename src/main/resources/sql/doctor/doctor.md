@@ -1,7 +1,10 @@
 sample
 ===
 
-	select #use("cols")#,(select SU_NAME from SYS_USER_T  where ID=doctor.DE_BY) as deByName,(select SU_NAME from SYS_USER_T  where ID=doctor.CR_BY) as crByName,(select SU_NAME from SYS_USER_T  where ID=doctor.UP_BY) as upByName from DOCTOR_T doctor where  #use("condition")#
+	select #use("cols")#,(select SU_NAME from SYS_USER_T  where ID=doctor.DE_BY) as deByName,
+	(select SU_NAME from SYS_USER_T  where ID=doctor.CR_BY) as crByName,
+	(select SU_NAME from SYS_USER_T  where ID=doctor.UP_BY) as upByName from DOCTOR_T doctor where  #use("condition")#
+	@orm.many({"id":"doctorId"},"doctor.doctorTag.sample","DoctorTag");
 
 sample$count
 ===
