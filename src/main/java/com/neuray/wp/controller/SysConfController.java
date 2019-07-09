@@ -17,7 +17,7 @@ import com.neuray.wp.core.RespBody;
 import com.neuray.wp.entity.Result;
 import com.neuray.wp.entity.SysConf;
 import com.neuray.wp.kits.ValidationKit;
-import com.neuray.wp.service.CacheService;
+import com.neuray.wp.service.RedisCacheService;
 import com.neuray.wp.service.SysConfService;
 import lombok.extern.slf4j.Slf4j;
 import org.beetl.sql.core.engine.PageQuery;
@@ -48,7 +48,7 @@ public class SysConfController extends BaseController {
     @Value("${pic.root.path}")
     private String picRootPath;
     @Autowired
-    private CacheService cacheService;
+    private RedisCacheService redisCacheService;
 
     /**
      * 分页
@@ -121,7 +121,7 @@ public class SysConfController extends BaseController {
             sysConf.setScVal(value);
             sysConfService.update(sysConf);
         }
-        cacheService.refreshSysConfCache();
+        redisCacheService.refreshSysConfCache();
         respBody.setCode(RespBody.SUCCESS);
         respBody.setMsg("保存成功");
         return respBody;

@@ -5,7 +5,7 @@
 
 package com.neuray.wp;
 import cn.hutool.core.io.FileUtil;
-import com.neuray.wp.service.CacheService;
+import com.neuray.wp.service.RedisCacheService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,12 +29,12 @@ public class AfterStartupRunner implements ApplicationRunner
     @Value("${pic.root.path}")
     private String picRootPath;
     @Autowired
-    private CacheService cacheService;
+    private RedisCacheService redisCacheService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        cacheService.refreshDictCache();
-        cacheService.refreshSysConfCache();
+        redisCacheService.refreshDictCache();
+        redisCacheService.refreshSysConfCache();
         if (FileUtil.exist(picRootPath)) {
             FileUtil.mkdir(picRootPath);
         }

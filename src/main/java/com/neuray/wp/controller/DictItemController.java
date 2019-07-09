@@ -14,7 +14,7 @@ import com.neuray.wp.core.RespBody;
 import com.neuray.wp.entity.Dict;
 import com.neuray.wp.entity.DictItem;
 import com.neuray.wp.kits.ValidationKit;
-import com.neuray.wp.service.CacheService;
+import com.neuray.wp.service.RedisCacheService;
 import com.neuray.wp.service.DictItemService;
 import com.neuray.wp.service.DictService;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,7 @@ public class DictItemController extends BaseController {
     @Autowired
     private DictItemService dictItemService;
     @Autowired
-    private CacheService cacheService;
+    private RedisCacheService redisCacheService;
 
     /**
      * @return java.util.List<com.neuray.wp.entity.DictItem>
@@ -111,7 +111,7 @@ public class DictItemController extends BaseController {
         dictItem.setCrBy(currLoginUser().getId());
         dictItem.setUpBy(currLoginUser().getId());
         dictItemService.insertAutoKey(dictItem);
-        cacheService.refreshDictCache();
+        redisCacheService.refreshDictCache();
         respBody.setMsg("新增字典条目成功");
         return respBody;
     }
@@ -142,7 +142,7 @@ public class DictItemController extends BaseController {
         }
         dictItem.setUpBy(currLoginUser().getId());
         dictItemService.updateTplById(dictItem);
-        cacheService.refreshDictCache();
+        redisCacheService.refreshDictCache();
         respBody.setMsg("更新字典条目成功");
         return respBody;
     }
@@ -163,7 +163,7 @@ public class DictItemController extends BaseController {
             dict.setDeBy(currLoginUser().getId());
             dictItemService.updateTplById(dict);
         }
-        cacheService.refreshDictCache();
+        redisCacheService.refreshDictCache();
         respBody.setMsg("删除数据字典成功");
         return respBody;
     }

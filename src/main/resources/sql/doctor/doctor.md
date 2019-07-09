@@ -5,6 +5,8 @@ sample
 	(select SU_NAME from SYS_USER_T  where ID=doctor.CR_BY) as crByName,
 	(select SU_NAME from SYS_USER_T  where ID=doctor.UP_BY) as upByName from DOCTOR_T doctor where  #use("condition")#
 	@orm.many({"id":"doctorId"},"doctor.doctorTag.sample","DoctorTag");
+	@orm.many({"id":"doctorId"},"doctor.doctorPic.sample","DoctorPic");
+	
 
 sample$count
 ===

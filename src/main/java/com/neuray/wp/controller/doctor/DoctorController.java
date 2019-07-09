@@ -8,15 +8,19 @@ package com.neuray.wp.controller.doctor;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.UUID;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.neuray.wp.core.BaseController;
+import com.neuray.wp.entity.FileMap;
 import com.neuray.wp.entity.Result;
 import com.neuray.wp.entity.doctor.Doctor;
 import com.neuray.wp.core.LogicException;
 import com.neuray.wp.entity.doctor.DoctorPic;
 import com.neuray.wp.entity.doctor.DoctorTag;
 import com.neuray.wp.entity.user.UserLogin;
+import com.neuray.wp.service.FileMapService;
+import com.neuray.wp.service.doctor.DoctorPicService;
 import com.neuray.wp.service.doctor.DoctorService;
 import com.neuray.wp.core.RespBody;
 import com.neuray.wp.kits.ValidationKit;
@@ -55,6 +59,10 @@ public class DoctorController extends BaseController {
     private UserLoginService userLoginService;
     @Autowired
     private DoctorTagService doctorTagService;
+    @Autowired
+    private FileMapService fileMapService;
+    @Autowired
+    private DoctorPicService doctorPicService;
 
     /**
      * 条件查询
@@ -105,51 +113,32 @@ public class DoctorController extends BaseController {
             doctorTag.setType(tagId.get(i).split(",")[1]);
             doctorTagService.insertAutoKey(doctorTag);
         }
-        String account = checkAccount(9);
+        String account = RandomUtil.randomString(9);
         UserLogin userLogin = new UserLogin();
         userLogin.setAccount(account);
         userLogin.setType("01");
         userLogin.setStatus("00");
         userLogin.setEmail(doctor.getEmial());
         userLogin.setPwd(SecureUtil.hmacMd5(PWD_SECURE_KEY).digestHex(doctor.getPhone().substring(5, 10)));
-        List<String> doctorPic = doctor.getDoctorPic();
+        userLoginService.insertAutoKey(userLogin);
+        List<String> doctorPic = doctor.getDoctorPicture();
         for (int i = 0; i < doctorPic.size(); i++) {
             DoctorPic doctorPic1 = new DoctorPic();
             doctorPic1.setType("00");
-
+            //根据文件名查询filemap
+            Map map = new HashMap();
+            map.put("fileId", doctorPic.get(i));
+            List<FileMap> fileMaps = fileMapService.manyWithMap("fileMap.sample", map);
+            if (fileMaps.size() > 0) {
+                FileMap fileMap = fileMaps.get(0);
+                doctorPic1.setDoctorId(doctor.getId());
+                doctorPic1.setPicId(fileMap.getId());
+                doctorPic1.setExt(fileMap.getExt());
+                doctorPicService.insertAutoKey(doctorPic1);
+            }
         }
         respBody.setMsg("新增医生信息成功");
         return respBody;
-    }
-
-    /**
-     * @return java.lang.String
-     * @Description 生成9位随机字符串
-     * @Param [length]
-     * @Author zzq
-     * @Date 2019/7/8 9:14
-     **/
-    public String checkAccount(int length) {
-        String str = getRandomString(length);
-        List<UserLogin> list = userLoginService.checkAccount(str, null);
-        if (list.size() > 0) {
-            str = checkAccount(length);
-            return "";
-        } else {
-            return str;
-        }
-    }
-
-    //length用户要求产生字符串的长度
-    public static String getRandomString(int length) {
-        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        Random random = new Random();
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < length; i++) {
-            int number = random.nextInt(62);
-            sb.append(str.charAt(number));
-        }
-        return sb.toString();
     }
 
     /**

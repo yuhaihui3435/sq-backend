@@ -7,7 +7,7 @@ package com.neuray.wp.entity;
 
 import com.neuray.wp.Consts;
 import com.neuray.wp.core.BaseEntity;
-import com.neuray.wp.service.CacheService;
+import com.neuray.wp.service.RedisCacheService;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;

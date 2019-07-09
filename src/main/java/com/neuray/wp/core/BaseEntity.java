@@ -9,7 +9,7 @@ import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.neuray.wp.entity.DictItem;
 import com.neuray.wp.kits.SpringKit;
-import com.neuray.wp.service.CacheService;
+import com.neuray.wp.service.RedisCacheService;
 import lombok.Data;
 import org.beetl.sql.core.TailBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,10 @@ import java.util.Map;
 @Data
 public  class BaseEntity extends TailBean implements Serializable {
     @JsonIgnore
-    private transient CacheService cacheService;
+    private transient RedisCacheService redisCacheService;
 
     public BaseEntity(){
-        cacheService= SpringKit.getBean(CacheService.class);
+        redisCacheService = SpringKit.getBean(RedisCacheService.class);
     }
 
     private Integer page;
@@ -52,6 +52,6 @@ public  class BaseEntity extends TailBean implements Serializable {
     }
 
     protected DictItem getDictItemById(Long diId){
-        return cacheService.getDictItemById(diId);
+        return redisCacheService.getDictItemById(diId);
     }
 }
