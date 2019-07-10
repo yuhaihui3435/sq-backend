@@ -41,6 +41,18 @@ public class DictItemController extends BaseController {
     private RedisCacheService redisCacheService;
 
     /**
+     * @return java.util.List<com.neuray.wp.entity.DictItem>
+     * @Description 条件查询
+     * @Param [condition]
+     * @Author zzq
+     * @Date 2019/7/8 10:09
+     **/
+    @RequestMapping("/query")
+    public List<DictItem> query(@RequestBody DictItem condition) {
+        return dictItemService.many("dictItem.sample", condition);
+    }
+
+    /**
      * 分页
      *
      * @param condition

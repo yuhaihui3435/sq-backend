@@ -2,6 +2,7 @@ sample
 ===
 
 	select #use("cols")# from DOCTOR_PIC_T doctorPic where  #use("condition")#
+	@orm.single({"picId":"id"},"com.neuray.wp.entity.FileMap");
 
 sample$count
 ===
@@ -19,7 +20,7 @@ updateSample
 condition
 ===
 
-	1 = 1 and DE_AT is null
+	1 = 1
 	@if(!isEmpty(type)){
 	 and doctorPic.TYPE=#type#
 	@}

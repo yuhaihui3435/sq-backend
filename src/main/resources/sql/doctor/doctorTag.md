@@ -2,6 +2,7 @@ sample
 ===
 
 	select #use("cols")# from DOCTOR_TAG_T doctorTag where  #use("condition")#
+	@orm.single({"tagId":"id"},"com.neuray.wp.entity.DictItem");
 
 sample$count
 ===
@@ -19,7 +20,7 @@ updateSample
 condition
 ===
 
-	1 = 1 and DE_AT is null
+	1 = 1
 	@if(!isEmpty(tagId)){
 	 and doctorTag.TAG_ID=#tagId#
 	@}
