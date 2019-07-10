@@ -168,6 +168,22 @@ public class DoctorController extends BaseController {
             doctorTag.setType(tagId.get(i).split(",")[1]);
             doctorTagService.insertAutoKey(doctorTag);
         }
+        List<String> doctorPic = doctor.getDoctorPicture();
+        for (int i = 0; i < doctorPic.size(); i++) {
+            DoctorPic doctorPic1 = new DoctorPic();
+            doctorPic1.setType("00");
+            //根据文件名查询filemap
+            Map map1 = new HashMap();
+            map1.put("fileId", doctorPic.get(i));
+            List<FileMap> fileMaps = fileMapService.manyWithMap("fileMap.sample", map1);
+            if (fileMaps.size() > 0) {
+                FileMap fileMap = fileMaps.get(0);
+                doctorPic1.setDoctorId(doctor.getId());
+                doctorPic1.setPicId(fileMap.getId());
+                doctorPic1.setExt(fileMap.getExt());
+                doctorPicService.insertAutoKey(doctorPic1);
+            }
+        }
         respBody.setMsg("更新医生信息成功");
         return respBody;
     }
