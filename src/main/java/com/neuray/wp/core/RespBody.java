@@ -57,19 +57,6 @@ public class RespBody<T> {
         this.msg = "";
     }
 
-    /**
-     * JSON返回数据容器
-     *
-     * @param msg  返回消息
-     * @param code 返回码
-     */
-    @Tolerate
-    public RespBody(String msg, int code) {
-
-        this.code = code;
-        this.msg = msg;
-    }
-
     public String getMsg() {
         return msg;
     }
@@ -90,7 +77,44 @@ public class RespBody<T> {
         return body;
     }
 
-    public void setBody(T content) {
-        this.body = content;
+    public void setBody(T body) {
+        this.body = body;
+    }
+
+    /**
+     * JSON返回数据容器
+     *
+     * @param msg  返回消息
+     * @param code 返回码
+     */
+    @Tolerate
+    public RespBody(String msg, int code) {
+
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public RespBody<T> error(String msg){
+        this.code=BUSINESS_ERROR;
+        this.msg=msg;
+        return this;
+    }
+    public RespBody<T> error(String msg,T body){
+        this.code=BUSINESS_ERROR;
+        this.msg=msg;
+        this.body=body;
+        return this;
+    }
+
+    public RespBody<T> success(String msg,T body){
+        this.code=SUCCESS;
+        this.msg=msg;
+        this.body=body;
+        return this;
+    }
+    public RespBody<T> success(String msg){
+        this.code=SUCCESS;
+        this.msg=msg;
+        return this;
     }
 }

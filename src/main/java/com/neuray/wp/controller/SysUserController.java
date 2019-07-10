@@ -48,7 +48,7 @@ import java.util.Map;
 @Slf4j
 public class SysUserController extends BaseController {
 
-    public static final String PWD_SECURE_KEY = "neuray2503@neuray.cn";
+
     @Value("${pic.user.path}")
     private String picUserPath;
     @Value("${pic.root.path}")
@@ -130,7 +130,7 @@ public class SysUserController extends BaseController {
         }
         sysUser.setCrBy(currLoginUser().getId());
         sysUser.setUpBy(currLoginUser().getId());
-        sysUser.setPwd(SecureUtil.hmacMd5(PWD_SECURE_KEY).digestHex(sysUser.getSuCode()));
+        sysUser.setPwd(SecureUtil.hmacMd5(Consts.PWD_SECURE_KEY).digestHex(sysUser.getSuCode()));
         sysUserService.insertAutoKey(sysUser);
         List<Integer> postIds = (ArrayList<Integer>) sysUser.get("posts");
         if (postIds != null) {
@@ -349,7 +349,7 @@ public class SysUserController extends BaseController {
     public RespBody pwdReset(@PathVariable("id") Long id) {
         SysUser sysUser = sysUserService.one(id);
         String randomPwd = RandomUtil.randomString(6);
-        sysUser.setPwd(SecureUtil.hmacMd5(PWD_SECURE_KEY).digestHex(randomPwd));
+        sysUser.setPwd(SecureUtil.hmacMd5(Consts.PWD_SECURE_KEY).digestHex(randomPwd));
         sysUser.setFirstLoginAt(null);
         sysUser.setUpBy(currLoginUser() != null ? currLoginUser().getId() : null);
         sysUserService.update(sysUser);
@@ -381,8 +381,8 @@ public class SysUserController extends BaseController {
         //判断密码是否填写
         if (StringUtils.isNotBlank(param.get("password")) && StringUtils.isNotBlank(param.get("newPassword")) && StringUtils.isNotBlank(param.get("passNewPassword"))) {
             //如果填写，比对密码是否是原密码
-            if (SecureUtil.hmacMd5(PWD_SECURE_KEY).digestHex(param.get("password")).equals(sysUser.getPwd())) {
-                sysUser.setPwd(SecureUtil.hmacMd5(PWD_SECURE_KEY).digestHex(param.get("newPassword")));
+            if (SecureUtil.hmacMd5(Consts.PWD_SECURE_KEY).digestHex(param.get("password")).equals(sysUser.getPwd())) {
+                sysUser.setPwd(SecureUtil.hmacMd5(Consts.PWD_SECURE_KEY).digestHex(param.get("newPassword")));
             } else {
                 respBody.setMsg("原密码不正确");
                 respBody.setCode(RespBody.BUSINESS_ERROR);

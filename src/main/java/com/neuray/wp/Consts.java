@@ -12,6 +12,17 @@ import java.math.BigDecimal;
 public interface Consts {
 
     String jwtKey="8886df7fc3a34e26a61c034d5ec8245d8886df7fc3a34e26a61c034d5ec8245da61c034d5ec8245d8886df7fc3a34e26a61c0";
+    String PWD_SECURE_KEY = "neuray2503@neuray.cn";
+    String MEMBER_LOCKED="member_locked_";
+    String MEMBER_LAST_LOGIN="member_last_login_";
+    String MEMBER_TRY_COUNT="member_try_count_";
+    String CURR_MEMBER="curr_member_";
+    Integer MEMBER_LOGIN_TRY_COUNT=3;
+    String MEMBER_TOKEN="memberToken";
+    String LIST_TPL="list_tpl";
+    String DETAIL_TPL="detail_tpl";
+    String SYS_CONF_AUTHOR="author";
+    String SYS_CONF_CONTENT="content";
 
     BigDecimal BYTES_TO_M=new BigDecimal("1024").multiply(new BigDecimal("1024"));
 
@@ -109,5 +120,41 @@ public interface Consts {
     }
     enum FILETYPE{
         PIC,FILE,DOC,PDF,EXCEL;
+    }
+
+    enum USERLOGIN_TYPE{
+        MEMBER("00","会员"),DOCTOR("01","医生");
+        private String code;
+        private String val;
+
+        USERLOGIN_TYPE(String code,String val){
+            this.code=code;
+            this.val=val;
+        }
+
+        public static String getVal(String code){
+            for (int i = 0; i < STATUS.values().length; i++) {
+                if(STATUS.values()[i].code.equals(code)){
+                    return STATUS.values()[i].val;
+                }
+            }
+            return null;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getVal() {
+            return val;
+        }
+
+        public void setVal(String val) {
+            this.val = val;
+        }
     }
 }

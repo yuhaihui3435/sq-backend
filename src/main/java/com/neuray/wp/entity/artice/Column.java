@@ -75,6 +75,8 @@ public class Column extends BaseEntity {
 
     private List<DictItem> tags;
 
+    private String url;
+
 //    public List<Map> getChildren(){
 //        List<Column> list= columnService.many("artice.column.sample",Column.builder().parentId(this.id).build());
 //        List<Map> result=new ArrayList<>();

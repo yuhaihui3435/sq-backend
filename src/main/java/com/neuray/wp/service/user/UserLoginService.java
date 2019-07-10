@@ -5,8 +5,10 @@
 package com.neuray.wp.service.user;
 
 import cn.hutool.core.util.StrUtil;
+import com.neuray.wp.Consts;
 import com.neuray.wp.core.BaseService;
 import com.neuray.wp.entity.user.UserLogin;
+import org.beetl.sql.core.query.LambdaQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -128,5 +130,17 @@ public class UserLoginService extends BaseService<UserLogin> {
         return null;
     }
 
+    /**
+     * 根据账号 手机号 email 匹配会员登录信息
+     * @param str
+     * @return
+     */
+    public UserLogin findByAccountOrTelOrEmail(String str){
+
+        LambdaQuery<UserLogin> query=this.sqlManager.lambdaQuery(UserLogin.class);
+        List<UserLogin> userLogins=query.andIsNull(UserLogin::getDeAt).and(query.condition().orEq(UserLogin::getAccount,str).orEq(UserLogin::getPhone,str).orEq(UserLogin::getEmail,str)
+        ).select();
+        return userLogins.size()==1?userLogins.get(0):null;
+    }
 
 }

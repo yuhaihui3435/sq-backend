@@ -9,12 +9,12 @@ sample$count
 
 cols
 ===
-	cln.ID,cln.DE_AT,cln.PARENT_ID,cln.DE_BY,cln.UP_AT,cln.CR_BY,cln.CR_AT,cln.UP_BY,cln.NAME,cln.ORDER,cln.KEYS,cln.DESCRIBE,cln.THUMBNAIL,cln.MGT_STYLE,cln.LIST_TPL,cln.DETAIL_TPL
+	cln.URL,cln.ID,cln.DE_AT,cln.PARENT_ID,cln.DE_BY,cln.UP_AT,cln.CR_BY,cln.CR_AT,cln.UP_BY,cln.NAME,cln.ORDER,cln.KEYS,cln.DESCRIBE,cln.THUMBNAIL,cln.MGT_STYLE,cln.LIST_TPL,cln.DETAIL_TPL
 
 updateSample
 ===
 
-	cln.ID=#id#,cln.DE_AT=#deAt#,cln.PARENT_ID=#parentId#,cln.DE_BY=#deBy#,cln.UP_AT=#upAt#,cln.CR_BY=#crBy#,cln.CR_AT=#crAt#,cln.UP_BY=#upBy#,cln.NAME=#name#,cln.ORDER=#order#,cln.KEYS=#keys#,cln.DESCRIBE=#describe#,cln.THUMBNAIL=#thumbnail#,cln.MGT_STYLE=#mgtStyle#,cln.LIST_TPL=#listTpl#,cln.DETAIL_TPL=#detailTpl#
+	cln.URL=#url#,cln.ID=#id#,cln.DE_AT=#deAt#,cln.PARENT_ID=#parentId#,cln.DE_BY=#deBy#,cln.UP_AT=#upAt#,cln.CR_BY=#crBy#,cln.CR_AT=#crAt#,cln.UP_BY=#upBy#,cln.NAME=#name#,cln.ORDER=#order#,cln.KEYS=#keys#,cln.DESCRIBE=#describe#,cln.THUMBNAIL=#thumbnail#,cln.MGT_STYLE=#mgtStyle#,cln.LIST_TPL=#listTpl#,cln.DETAIL_TPL=#detailTpl#
 
 condition
 ===
@@ -67,6 +67,9 @@ condition
     @}    
     @if(!isEmpty(detailTpl)){
      and cln.DETAIL_TPL=#detailTpl#
+    @} 
+    @if(!isEmpty(url)){
+     and cln.URL=#url#
     @} 
     
  

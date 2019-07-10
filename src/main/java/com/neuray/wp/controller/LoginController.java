@@ -137,7 +137,7 @@ public class LoginController extends BaseController {
         }
 
         Map<String, Object> map = new HashMap<>();
-        if (sysUser.getPwd().equals(SecureUtil.hmacMd5(SysUserController.PWD_SECURE_KEY).digestHex(ipPwd))) {
+        if (sysUser.getPwd().equals(SecureUtil.hmacMd5(Consts.PWD_SECURE_KEY).digestHex(ipPwd))) {
             //查询所有的关系数据，角色，机构，归属机构，职位，小组件关系，菜单权限，资源权限。
             sysUser = sysUserService.one("sysUser.selectContainRelation", SysUser.builder().id(sysUser.getId()).build());
             //查询归属机构信息

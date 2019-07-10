@@ -6,13 +6,16 @@
 package com.neuray.wp.controller.artice;
 
 
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
+import com.neuray.wp.Consts;
 import com.neuray.wp.core.BaseController;
 import com.neuray.wp.core.LogicException;
 import com.neuray.wp.core.RespBody;
 import com.neuray.wp.entity.artice.Column;
 import com.neuray.wp.entity.artice.ColumnTag;
 import com.neuray.wp.kits.ValidationKit;
+import com.neuray.wp.service.RedisCacheService;
 import com.neuray.wp.service.artice.ColumnService;
 import com.neuray.wp.service.artice.ColumnTagService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +39,8 @@ public class ColumnController extends BaseController {
     private ColumnService columnService;
     @Autowired
     private ColumnTagService columnTagService;
+    @Autowired
+    private RedisCacheService redisCacheService;
 
     /**
      * 条件查询
@@ -172,5 +178,7 @@ public class ColumnController extends BaseController {
         columnService.recursive(columns);
         return columns;
     }
+
+
 
 }
