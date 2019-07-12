@@ -13,7 +13,9 @@ import com.neuray.wp.service.artice.ColumnService;
 import com.neuray.wp.service.website.CarouselService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +29,7 @@ import java.util.Map;
  * @Description:
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/api")
 public class IndexController {
 
     @Autowired
@@ -43,21 +45,24 @@ public class IndexController {
      * @param response
      * @return
      */
-    public String index(HttpServletRequest request, HttpServletResponse response){
+    @PostMapping("/index")
+    @ResponseBody
+    public Object index(HttpServletRequest request, HttpServletResponse response){
         Map<String,Object> ret=new HashMap<>();
        //读取导航栏菜单
         List<Column> columns = columnService.many("artice.column.topLevelAllData", new Column());
         columnService.recursive(columns);
+        ret.put("columnList",columns);
        //读取每日名言
         SysConf sysConf=(SysConf) redisCacheService.findHVal(RedisCacheService.SYS_CONF_CACHE_NAME,RedisCacheService.SYS_CONF_CACHE_NAME+ Consts.SYS_CONF_AUTHOR);
         ret.put(Consts.SYS_CONF_AUTHOR,sysConf.getScVal());
         sysConf=(SysConf) redisCacheService.findHVal(RedisCacheService.SYS_CONF_CACHE_NAME,RedisCacheService.SYS_CONF_CACHE_NAME+ Consts.SYS_CONF_CONTENT);
         ret.put(Consts.SYS_CONF_CONTENT,sysConf.getScVal());
        //读取轮播数据
-        List<Carousel> carousels=carouselService.many("www.carousel.sample",Carousel.builder().status(Consts.STATUS.AVAILABLE.getCode()).build());
+        List<Carousel> carousels=carouselService.many("website.carousel.sample",Carousel.builder().status(Consts.STATUS.AVAILABLE.getCode()).build());
         ret.put("carouselList",carousels);
 
-        return "/index";
+        return ret;
     }
 
 

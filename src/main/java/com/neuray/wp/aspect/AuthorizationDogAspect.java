@@ -7,6 +7,7 @@ import com.neuray.wp.entity.SysResRight;
 import com.neuray.wp.exception.AuthorizationException;
 import com.neuray.wp.exception.LoginException;
 import com.neuray.wp.model.LoginUser;
+import com.neuray.wp.service.RedisCacheService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -39,7 +40,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class AuthorizationDogAspect {
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisCacheService redisCacheService;
 
 
     @Pointcut("@annotation(com.neuray.wp.annotation.AuthorizationDog)")
@@ -48,13 +49,11 @@ public class AuthorizationDogAspect {
 
     @Before("annotationPoinCut()")
     public void before(JoinPoint joinPoint) {
-//        System.out.println("之前输出2");
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
-        String token = (String) request.getAttribute("token");
+        String token =  request.getHeader("token");
         String uri = request.getRequestURI();
-
-        LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(LoginController.SYSUSER_LOGIN_CACHE_NAME + token);
+        LoginUser loginUser = (LoginUser) redisCacheService.findVal(LoginController.SYSUSER_LOGIN_CACHE_NAME + token);
 
         if (loginUser == null) {
             log.error("当前用户未登录");
@@ -94,8 +93,9 @@ public class AuthorizationDogAspect {
 //                }
             }
         }
-        if(!discharged.get())
+        if(!discharged.get()) {
             throw new AuthorizationException();
+        }
 
     }
 }

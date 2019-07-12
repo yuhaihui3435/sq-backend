@@ -47,7 +47,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Controller
 @Slf4j
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
     public static final String PREFIX_SMSCODE="SMSCODE_";

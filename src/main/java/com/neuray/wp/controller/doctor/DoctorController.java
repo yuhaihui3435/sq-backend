@@ -11,6 +11,7 @@ import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
+import com.neuray.wp.Consts;
 import com.neuray.wp.core.BaseController;
 import com.neuray.wp.entity.FileMap;
 import com.neuray.wp.entity.Result;
