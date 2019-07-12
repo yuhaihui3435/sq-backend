@@ -102,6 +102,13 @@ public class Doctor extends BaseEntity {
     @NotNull(message = "咨询价格必填")
     private Long price;
 
+    //首页显示-0:是,1:否
+//    @NotBlank(message = "首页显示必填")
+    private String indexShow;
+
+    //首页显示顺序
+    private Integer indexShowSeq;
+
     private String emial;
     private String phone;
     private List<String> tagId;

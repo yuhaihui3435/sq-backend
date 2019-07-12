@@ -123,5 +123,15 @@ public class Lesson extends BaseEntity {
     //授课老师
     @NotNull(message = "授课老师必填")
     private Long doctorId;
+    //宣传方式-1:图片,2:视频
+//    @NotBlank(message = "宣传方式必填")
+    private String publicizeType;
+
+    //首页显示-0:是,1:否
+//    @NotBlank(message = "首页显示必填")
+    private String indexShow;
+
+    //首页显示顺序
+    private Integer indexShowSeq;
 
 }

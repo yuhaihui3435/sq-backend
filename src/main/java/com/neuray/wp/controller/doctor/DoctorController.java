@@ -43,7 +43,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static com.neuray.wp.controller.SysUserController.PWD_SECURE_KEY;
+import static com.neuray.wp.Consts.PWD_SECURE_KEY;
 
 
 @RestController
