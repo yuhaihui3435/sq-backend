@@ -4,6 +4,7 @@ import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
 import com.neuray.wp.controller.LoginController;
 import com.neuray.wp.model.LoginUser;
+import com.neuray.wp.service.RedisCacheService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +36,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Value("${anonymous.access.paths}")
     private String anonymousAccessPaths;
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisCacheService redisCacheService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -43,6 +44,9 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         String curReqUri=request.getRequestURI();
+        if (curReqUri.startsWith("/api")) {
+            return true;
+        }
         List<String> stringList = StrUtil.split(anonymousAccessPaths, StrUtil.C_COMMA);
         boolean isPathIgnored = stringList.stream().anyMatch(p -> {
             return ReUtil.isMatch(p, curReqUri);
@@ -51,12 +55,10 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         String token = request.getHeader("token");
-        LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(LoginController.SYSUSER_LOGIN_CACHE_NAME + token);
+        LoginUser loginUser = (LoginUser) redisCacheService.findVal(LoginController.SYSUSER_LOGIN_CACHE_NAME + token);
         if (loginUser == null) {
             response.setStatus(401);
             return false;
-        } else {
-            request.setAttribute("token", token);
         }
         return true;
     }

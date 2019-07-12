@@ -11,6 +11,7 @@ import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
+import com.neuray.wp.Consts;
 import com.neuray.wp.core.BaseController;
 import com.neuray.wp.entity.FileMap;
 import com.neuray.wp.entity.Result;
@@ -43,7 +44,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static com.neuray.wp.controller.SysUserController.PWD_SECURE_KEY;
 
 
 @RestController
@@ -119,7 +119,7 @@ public class DoctorController extends BaseController {
         userLogin.setType("01");
         userLogin.setStatus("00");
         userLogin.setEmail(doctor.getEmial());
-        userLogin.setPwd(SecureUtil.hmacMd5(PWD_SECURE_KEY).digestHex(doctor.getPhone().substring(5, 10)));
+        userLogin.setPwd(SecureUtil.hmacMd5(Consts.PWD_SECURE_KEY).digestHex(doctor.getPhone().substring(5, 10)));
         userLoginService.insertAutoKey(userLogin);
         List<String> doctorPic = doctor.getDoctorPicture();
         for (int i = 0; i < doctorPic.size(); i++) {

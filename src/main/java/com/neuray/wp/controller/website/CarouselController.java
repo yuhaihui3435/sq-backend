@@ -54,7 +54,7 @@ public class CarouselController extends BaseController {
          */
         @PostMapping("/query")
         public List<Carousel> query(@RequestBody Carousel condition) {
-            return carouselService.many("www.carousel.sample", condition);
+            return carouselService.many("website.carousel.sample", condition);
         }
     /**
      *
@@ -69,7 +69,7 @@ public class CarouselController extends BaseController {
         pageQuery.setPageSize(condition.getRows());
         pageQuery.setOrderBy(condition.getOrderBy());
         pageQuery.setParas(condition);
-        pageQuery = carouselService.page("www.carousel.sample", pageQuery);
+        pageQuery = carouselService.page("website.carousel.sample", pageQuery);
         return pageQuery;
     }
 
@@ -135,7 +135,7 @@ public class CarouselController extends BaseController {
     */
     @PostMapping("/view/{id}")
     public Carousel view(@PathVariable("id") Long id) {
-        Carousel carousel=carouselService.one("www.carousel.sample",Carousel.builder().id(id).build());
+        Carousel carousel=carouselService.one("website.carousel.sample",Carousel.builder().id(id).build());
         return carousel;
     }
 
