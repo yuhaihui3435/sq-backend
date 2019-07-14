@@ -7,6 +7,7 @@ package com.neuray.wp.core;
 
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.neuray.wp.entity.DictItem;
 import com.neuray.wp.kits.SpringKit;
 import com.neuray.wp.service.RedisCacheService;
@@ -20,6 +21,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public  class BaseEntity extends TailBean implements Serializable {
     @JsonIgnore
     private transient RedisCacheService redisCacheService;

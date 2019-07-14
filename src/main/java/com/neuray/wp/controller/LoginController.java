@@ -51,8 +51,6 @@ public class LoginController extends BaseController {
     @Autowired
     private DefaultKaptcha defaultKaptcha;
     @Autowired
-    private RedisTemplate redisTemplate;
-    @Autowired
     private SysUserService sysUserService;
     @Autowired
     private DeptService deptService;
@@ -86,7 +84,7 @@ public class LoginController extends BaseController {
                     respBody.setMsg("验证码获取失败！");
                     return respBody;
                 }
-                String _vCode = (String) redisTemplate.opsForValue().get(KAPTCHA_CACHE_NAME_ + loginUser.getVerCodeUUID());
+                String _vCode = (String) redisCacheService.findVal(KAPTCHA_CACHE_NAME_ + loginUser.getVerCodeUUID());
                 if (StrUtil.isBlank(_vCode)) {
                     respBody.setCode(RespBody.BUSINESS_ERROR);
                     respBody.setMsg("验证码过期！");
@@ -121,7 +119,7 @@ public class LoginController extends BaseController {
             return respBody;
         }
 
-        String onlineUserToken = (String) redisTemplate.opsForValue().get(ONLINE_USER + sysUser.getId());//查看当前用户在线token
+        String onlineUserToken = (String) redisCacheService.findVal(ONLINE_USER + sysUser.getId());//查看当前用户在线token
         SysConf userOnlineTactics = (SysConf) redisCacheService.getSysConf("userOnlineTactics");
         if (userOnlineTactics.getScVal().equals("1")) {//先登录为主
             if (StrUtil.isNotBlank(onlineUserToken)) {
@@ -130,9 +128,9 @@ public class LoginController extends BaseController {
                 return respBody;
             }
         } else {//后登录为主
-            redisTemplate.delete(ONLINE_USER + sysUser.getId());//删除在线用户token
+            redisCacheService.delVal(ONLINE_USER + sysUser.getId());//删除在线用户token
             if (StrUtil.isNotBlank(onlineUserToken)) {
-                redisTemplate.delete(SYSUSER_LOGIN_CACHE_NAME + onlineUserToken);//删除当前用户的信息
+                redisCacheService.delVal(SYSUSER_LOGIN_CACHE_NAME + onlineUserToken);//删除当前用户的信息
             }
         }
 
@@ -194,16 +192,16 @@ public class LoginController extends BaseController {
             map.put("avatar", sysUser.getAvatar());
             map.put("userId", sysUser.getId());
             String token = JwtKit.createJWT(UUID.fastUUID().toString(), map, -1L);//生成jwt token
-            redisTemplate.opsForValue().set(ONLINE_USER + sysUser.getId(), token);
-            redisTemplate.opsForValue().set(SYSUSER_LOGIN_CACHE_NAME + token, loginUser);
+            redisCacheService.addVal(ONLINE_USER + sysUser.getId(), token);
+            redisCacheService.addVal(SYSUSER_LOGIN_CACHE_NAME + token, loginUser);
             SysConf userOnlineDuration = redisCacheService.getSysConf("userOnlineDuration");
             if (loginUser.getRememberMe() != null && loginUser.getRememberMe()) {
                 SysConf userRememberMeDuration = redisCacheService.getSysConf("userRememberMeDuration");
-                redisTemplate.expire(SYSUSER_LOGIN_CACHE_NAME + token, StrUtil.isBlank(userRememberMeDuration.getScVal()) ? Long.parseLong(userOnlineDuration.getScVal()) : Long.parseLong(userRememberMeDuration.getScVal()), TimeUnit.MINUTES);
-                redisTemplate.expire(ONLINE_USER + sysUser.getId(), StrUtil.isBlank(userRememberMeDuration.getScVal()) ? Long.parseLong(userOnlineDuration.getScVal()) : Long.parseLong(userRememberMeDuration.getScVal()), TimeUnit.MINUTES);
+                redisCacheService.expired(SYSUSER_LOGIN_CACHE_NAME + token, StrUtil.isBlank(userRememberMeDuration.getScVal()) ? Long.parseLong(userOnlineDuration.getScVal()) : Long.parseLong(userRememberMeDuration.getScVal()), TimeUnit.MINUTES);
+                redisCacheService.expired(ONLINE_USER + sysUser.getId(), StrUtil.isBlank(userRememberMeDuration.getScVal()) ? Long.parseLong(userOnlineDuration.getScVal()) : Long.parseLong(userRememberMeDuration.getScVal()), TimeUnit.MINUTES);
             } else {
-                redisTemplate.expire(SYSUSER_LOGIN_CACHE_NAME + token, Long.parseLong(userOnlineDuration.getScVal()), TimeUnit.MINUTES);
-                redisTemplate.expire(ONLINE_USER + sysUser.getId(), Long.parseLong(userOnlineDuration.getScVal()), TimeUnit.MINUTES);
+                redisCacheService.expired(SYSUSER_LOGIN_CACHE_NAME + token, Long.parseLong(userOnlineDuration.getScVal()), TimeUnit.MINUTES);
+                redisCacheService.expired(ONLINE_USER + sysUser.getId(), Long.parseLong(userOnlineDuration.getScVal()), TimeUnit.MINUTES);
             }
             Map<String, Object> ret = new HashMap<>();
             ret.put("token", token);
@@ -225,11 +223,11 @@ public class LoginController extends BaseController {
         String token = request.getHeader("token");
         RespBody respBody = new RespBody();
         if (StrUtil.isNotBlank(token)) {
-            LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(SYSUSER_LOGIN_CACHE_NAME + token);
+            LoginUser loginUser = (LoginUser) redisCacheService.findVal(SYSUSER_LOGIN_CACHE_NAME + token);
             if (loginUser != null) {
-                redisTemplate.delete(ONLINE_USER + loginUser.getId());
+                redisCacheService.delVal(ONLINE_USER + loginUser.getId());
             }
-            redisTemplate.delete(SYSUSER_LOGIN_CACHE_NAME + token);
+            redisCacheService.delVal(SYSUSER_LOGIN_CACHE_NAME + token);
         }
         respBody.setMsg("退出系统成功！");
         return respBody;
@@ -245,8 +243,8 @@ public class LoginController extends BaseController {
         RespBody respBody = new RespBody();
         String uuid = IdUtil.simpleUUID();
         String vCode = RandomUtil.randomString(4);
-        redisTemplate.opsForValue().set(KAPTCHA_CACHE_NAME_ + uuid, vCode);
-        redisTemplate.expire(KAPTCHA_CACHE_NAME_ + uuid, 1, TimeUnit.MINUTES);
+        redisCacheService.addVal(KAPTCHA_CACHE_NAME_ + uuid, vCode);
+        redisCacheService.expired(KAPTCHA_CACHE_NAME_ + uuid, 1, TimeUnit.MINUTES);
         respBody.setBody(uuid);
         return respBody;
     }
@@ -260,7 +258,7 @@ public class LoginController extends BaseController {
      */
     @GetMapping("/createKaptchaImg")
     public void createCaptcha(HttpServletResponse response, @RequestParam String uuid) throws IOException {
-        String vCode = (String) redisTemplate.opsForValue().get(KAPTCHA_CACHE_NAME_ + uuid);
+        String vCode = (String) redisCacheService.findVal(KAPTCHA_CACHE_NAME_ + uuid);
         BufferedImage bufferedImage = defaultKaptcha.createImage(vCode);
         // Set to expire far in the past.
         response.setDateHeader("Expires", 0);
