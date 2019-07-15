@@ -16,14 +16,13 @@ public abstract class BaseController {
 
     @Autowired
     protected RedisCacheService redisCacheService;
-    @Autowired
-    private RedisTemplate redisTemplate;
+
 
     protected LoginUser currLoginUser(){
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
-        String token=(String)request.getAttribute("token");
-        LoginUser loginUser=(LoginUser) redisTemplate.opsForValue().get(LoginController.SYSUSER_LOGIN_CACHE_NAME+token);
+        String token=(String)request.getHeader("token");
+        LoginUser loginUser=(LoginUser) redisCacheService.findVal(LoginController.SYSUSER_LOGIN_CACHE_NAME+token);
         return loginUser;
     }
 
