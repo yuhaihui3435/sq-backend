@@ -46,6 +46,25 @@ public interface Consts {
     }
 
     /**
+     * 是否
+     */
+    enum YESORNO{
+        YES("0"),NO("1");
+        private String val;
+        YESORNO(String val){
+            this.val=val;
+        }
+
+        public String getVal() {
+            return val;
+        }
+
+        public void setVal(String val) {
+            this.val = val;
+        }
+    }
+
+    /**
      * 数据状态
      */
     enum STATUS{
@@ -156,5 +175,39 @@ public interface Consts {
         public void setVal(String val) {
             this.val = val;
         }
+    }
+
+    /**
+     * 数据状态
+     */
+    enum LESSON_STATUS{
+        READY("00","未开始"),PROCESSING("01","进行中"),FINISHED("02","已完结"),;
+
+        private String code;
+        private String val;
+
+        LESSON_STATUS(String code,String val){
+            this.code=code;
+            this.val=val;
+        }
+
+        public static String getVal(String code){
+            for (int i = 0; i < STATUS.values().length; i++) {
+                if(STATUS.values()[i].code.equals(code)){
+                    return STATUS.values()[i].val;
+                }
+            }
+            return null;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+
+        public String getVal() {
+            return val;
+        }
+
     }
 }
