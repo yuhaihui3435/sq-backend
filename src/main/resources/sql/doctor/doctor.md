@@ -6,7 +6,7 @@ sample
 	(select SU_NAME from SYS_USER_T  where ID=doctor.UP_BY) as upByName from DOCTOR_T doctor where  #use("condition")#
 	@orm.many({"id":"doctorId"},"doctor.doctorTag.sample","DoctorTag");
 	@orm.many({"id":"doctorId"},"doctor.doctorPic.sample","DoctorPic");
-	
+	@orm.single({"loginId":"id"},"com.neuray.wp.entity.user.UserLogin");
 
 sample$count
 ===
@@ -86,11 +86,23 @@ condition
 	 and doctor.PRICE=#price#
 	@}
 	@if(!isEmpty(indexShow)){
-            	 and doctor.INDEX_SHOW=#indexShow#
-            	@}
-            	@if(!isEmpty(indexShowSeq)){
-                	 and doctor.INDEX_SHOW_SEQ=#indexShowSeq#
-                	@}
-
-
+      and doctor.INDEX_SHOW=#indexShow#
+    @}
+    @if(!isEmpty(indexShowSeq)){
+      and doctor.INDEX_SHOW_SEQ=#indexShowSeq#
+    @}
+    @if(!isEmpty(userLogin.status)){
+      and doctor.userLogin.STATUS=#userLogin.status#
+    @}
+    @if(!isEmpty(userLogin.account)){
+      and doctor.userLogin.ACCOUNT=#userLogin.account#
+    @}
+    @if(!isEmpty(userLogin.phone)){
+      and doctor.userLogin.PHONE=#userLogin.phone#
+    @}
+    @if(!isEmpty(userLogin.email)){
+      and doctor.userLogin.EMAIL=#userLogin.email#
+    @}
+    
+    
 

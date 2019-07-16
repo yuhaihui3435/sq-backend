@@ -5,8 +5,10 @@
 package com.neuray.wp.service.artice;
 
 import cn.hutool.core.util.StrUtil;
+import com.neuray.wp.Consts;
 import com.neuray.wp.core.BaseService;
 import com.neuray.wp.entity.artice.Artice;
+import org.beetl.sql.core.query.LambdaQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,5 +59,17 @@ public class ArticeService extends BaseService<Artice> {
         return null;
     }
 
+    /**
+     * 查询首页显示的文章
+     * @param size
+     * @return
+     */
+    public List<Artice> findByTopShow(int size,Long columnId){
+        if(columnId==null) {
+            return sqlManager.lambdaQuery(Artice.class).andEq(Artice::getPublishStatus, Consts.STATUS.AVAILABLE.getCode()).andIsNull(Artice::getDeAt).andEq(Artice::getTopShow, Consts.YESORNO.YES.getVal()).asc(Artice::getTop).limit(0, size).select();
+        }else{
+            return sqlManager.lambdaQuery(Artice.class).andEq(Artice::getColumnId,columnId).andEq(Artice::getPublishStatus, Consts.STATUS.AVAILABLE.getCode()).andIsNull(Artice::getDeAt).andEq(Artice::getTopShow, Consts.YESORNO.YES.getVal()).asc(Artice::getTop).limit(0, size).select();
+        }
+    }
 
 }

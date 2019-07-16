@@ -119,4 +119,6 @@ public class Artice extends BaseEntity {
 
     private String origin;//来源
 
+    private String topShow;
+
 }

@@ -5,6 +5,7 @@
 package com.neuray.wp.entity.doctor;
 
 
+import com.neuray.wp.entity.user.UserLogin;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
@@ -113,5 +114,7 @@ public class Doctor extends BaseEntity {
     private String phone;
     private List<String> tagId;
     private List<String> doctorPicture;
+
+    private UserLogin userLogin;
 
 }

@@ -13,6 +13,7 @@ import lombok.experimental.Tolerate;
  * JSON返回数据容器
  */
 @Builder
+@Data
 public class RespBody<T> {
 
     /**
@@ -27,10 +28,6 @@ public class RespBody<T> {
      * JSON返回码：系统错误
      */
     public static final int SYS_ERROR = 1002;
-    /**
-     * 微服务错误
-     */
-    public static final int MICRO_SERVICES_ERROR = 1003;
 
     /**
      * 返回消息
@@ -57,64 +54,24 @@ public class RespBody<T> {
         this.msg = "";
     }
 
-    public String getMsg() {
-        return msg;
+    public static RespBody error(){
+        return RespBody.builder().code(BUSINESS_ERROR).msg("操作失败").build();
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public static RespBody error(String msg){
+        return RespBody.builder().code(BUSINESS_ERROR).msg(msg).build();
+    }
+    public static RespBody error(String msg,Object body){
+        return RespBody.builder().code(BUSINESS_ERROR).msg(msg).body(body).build();
     }
 
-    public int getCode() {
-        return code;
+    public static RespBody success(String msg,Object body){
+        return RespBody.builder().code(SUCCESS).msg(msg).body(body).build();
     }
-
-    public void setCode(int code) {
-        this.code = code;
+    public static RespBody success(String msg){
+        return RespBody.builder().code(SUCCESS).msg(msg).build();
     }
-
-    public T getBody() {
-        return body;
-    }
-
-    public void setBody(T body) {
-        this.body = body;
-    }
-
-    /**
-     * JSON返回数据容器
-     *
-     * @param msg  返回消息
-     * @param code 返回码
-     */
-    @Tolerate
-    public RespBody(String msg, int code) {
-
-        this.code = code;
-        this.msg = msg;
-    }
-
-    public RespBody<T> error(String msg){
-        this.code=BUSINESS_ERROR;
-        this.msg=msg;
-        return this;
-    }
-    public RespBody<T> error(String msg,T body){
-        this.code=BUSINESS_ERROR;
-        this.msg=msg;
-        this.body=body;
-        return this;
-    }
-
-    public RespBody<T> success(String msg,T body){
-        this.code=SUCCESS;
-        this.msg=msg;
-        this.body=body;
-        return this;
-    }
-    public RespBody<T> success(String msg){
-        this.code=SUCCESS;
-        this.msg=msg;
-        return this;
+    public static RespBody success(){
+        return RespBody.builder().code(SUCCESS).msg("操作成功").build();
     }
 }

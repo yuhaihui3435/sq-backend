@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
     public Object handleMissingServletRequestParameterException(HttpServletRequest request, MissingServletRequestParameterException error) {
         log.error("缺少请求参数 ${}", error.getMessage());
         if(ReqKit.isAjaxRequest(request)) {
-            return new RespBody("缺少请求参数>>" + error.getMessage(), RespBody.BUSINESS_ERROR);
+            return  RespBody.error("缺少请求参数>>" + error.getMessage());
         }
 
         return new ModelAndView(DEFAULT_ERROR_VIEW, "errorInfo", errorInfoBuilder.getErrorInfo(request, error));
@@ -71,7 +71,7 @@ public class GlobalExceptionHandler {
     public Object handleBusinessException(HttpServletRequest request,LogicException e){
         log.error("系统业务操作失败：异常编号 {} 异常信息 {}",e.getErrCode(),e.getErrMsg());
         if(ReqKit.isAjaxRequest(request)) {
-            return new RespBody(e.getPrettyExceptionMsg(), RespBody.SYS_ERROR);
+            return  RespBody.error(e.getPrettyExceptionMsg());
         }
         return new ModelAndView(DEFAULT_ERROR_VIEW, "errorInfo", errorInfoBuilder.getErrorInfo(request, e));
     }
@@ -92,7 +92,7 @@ public class GlobalExceptionHandler {
         }
         log.error("数据校验失败原因:"+errorMesssage);
         if(ReqKit.isAjaxRequest(request)) {
-            return new RespBody(errorMesssage, RespBody.SYS_ERROR);
+            return  RespBody.error(errorMesssage);
         }
         return new ModelAndView(DEFAULT_ERROR_VIEW, "errorInfo", errorInfoBuilder.getErrorInfo(request, e));
     }
@@ -106,7 +106,7 @@ public class GlobalExceptionHandler {
         sb.append(fieldError.getField()).append("=[").append(fieldError.getRejectedValue()).append("]")
                 .append(fieldError.getDefaultMessage());
         if(ReqKit.isAjaxRequest(request)) {
-            return new RespBody(sb.toString(), RespBody.SYS_ERROR);
+            return  RespBody.error(sb.toString());
         }
         return new ModelAndView(DEFAULT_ERROR_VIEW, "errorInfo", errorInfoBuilder.getErrorInfo(request, e));
     }
@@ -117,7 +117,7 @@ public class GlobalExceptionHandler {
     public Object handleValidationException(HttpServletRequest request,ValidationException e) {
         log.error("数据校验：校验未通过，校验结果为>>{}",e.getMessage());
         if(ReqKit.isAjaxRequest(request)) {
-            return new RespBody(e.getMessage(), RespBody.SYS_ERROR);
+            return  RespBody.error(e.getMessage());
         }
         return new ModelAndView(DEFAULT_ERROR_VIEW, "errorInfo", errorInfoBuilder.getErrorInfo(request, e));
     }
@@ -133,7 +133,7 @@ public class GlobalExceptionHandler {
         log.error("系统错误：异常信息为>>{}",e.getMessage());
         e.printStackTrace();
         if(ReqKit.isAjaxRequest(request)) {
-            return new RespBody("系统未知错误了，请联系管理员！", RespBody.SYS_ERROR);
+            return  RespBody.error("系统未知错误了，请联系管理员！");
         }
         return new ModelAndView(DEFAULT_ERROR_VIEW, "errorInfo", errorInfoBuilder.getErrorInfo(request, e));
     }
@@ -148,7 +148,7 @@ public class GlobalExceptionHandler {
     public Object handleMultipartException(HttpServletRequest request,MultipartException e){
         log.error("上传文件过大");
         if(ReqKit.isAjaxRequest(request)) {
-            return new RespBody("上传的文件过大，单个文件不要超过" + max_file_size + ",一次上传不能超过" + max_request_size, RespBody.SYS_ERROR);
+            return  RespBody.error("上传的文件过大，单个文件不要超过" + max_file_size + ",一次上传不能超过" + max_request_size);
         }
         return new ModelAndView(DEFAULT_ERROR_VIEW, "errorInfo", errorInfoBuilder.getErrorInfo(request, e));
     }
@@ -157,7 +157,7 @@ public class GlobalExceptionHandler {
         log.error("未登录，请重新登录");
         if(ReqKit.isAjaxRequest(request)) {
             response.setStatus(401);
-            return new RespBody("身份失效，请重新登陆", RespBody.SYS_ERROR);
+            return  RespBody.error("身份失效，请重新登陆");
 
         }
         return new ModelAndView(DEFAULT_ERROR_VIEW, "errorInfo", errorInfoBuilder.getErrorInfo(request, e));
@@ -168,7 +168,7 @@ public class GlobalExceptionHandler {
         log.error("没有访问权限");
         if(ReqKit.isAjaxRequest(request)) {
             response.setStatus(403);
-            return new RespBody("您没有访问权限", RespBody.SYS_ERROR);
+            return  RespBody.error("您没有访问权限");
         }
         return new ModelAndView(DEFAULT_ERROR_VIEW, "errorInfo", errorInfoBuilder.getErrorInfo(request, authorizationExcetpion));
     }
