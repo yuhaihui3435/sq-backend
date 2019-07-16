@@ -19,7 +19,7 @@ updateSample
 condition
 ===
 
-	1 = 1 and DE_AT is null
+	1 = 1 
 	@if(!isEmpty(describe)){
 	 and links.DESCRIBE=#describe#
 	@}
