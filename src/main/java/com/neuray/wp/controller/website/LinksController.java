@@ -68,7 +68,6 @@ public class LinksController extends BaseController {
         PageQuery pageQuery = new PageQuery();
         pageQuery.setPageNumber(condition.getPage());
         pageQuery.setPageSize(condition.getRows());
-        condition.setDescribe("link");
         pageQuery.setParas(condition);
         pageQuery = linksService.page("website.links.sample", pageQuery);
         return pageQuery;
@@ -90,7 +89,6 @@ public class LinksController extends BaseController {
             respBody.setMsg("链接名称已存在");
             return respBody;
         }
-        links.setDescribe("link");
         linksService.insertAutoKey(links);
         respBody.setMsg("新增友情链接成功");
         return respBody;

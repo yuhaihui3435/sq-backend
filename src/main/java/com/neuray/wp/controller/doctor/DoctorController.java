@@ -169,6 +169,11 @@ public class DoctorController extends BaseController {
             doctorTag.setType(tagId.get(i).split(",")[1]);
             doctorTagService.insertAutoKey(doctorTag);
         }
+        //查询出所有医生个人相册，删除
+        List<DoctorPic> doctorPicList = doctorPicService.manyWithMap("doctor.doctorPic.sample", map);
+        for (int i = 0; i < doctorPicList.size(); i++) {
+            doctorPicService.delByObject(doctorPicList.get(i));
+        }
         List<String> doctorPic = doctor.getDoctorPicture();
         for (int i = 0; i < doctorPic.size(); i++) {
             DoctorPic doctorPic1 = new DoctorPic();
