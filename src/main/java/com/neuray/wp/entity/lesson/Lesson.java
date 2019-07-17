@@ -133,6 +133,10 @@ public class Lesson extends BaseEntity {
 
     //首页显示顺序
     private Integer indexShowSeq;
+    /**
+     * 简介
+     */
+    private String summary;
 
     //简介
     private String summary;

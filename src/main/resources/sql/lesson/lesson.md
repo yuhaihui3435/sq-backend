@@ -14,7 +14,7 @@ cols
 updateSample
 ===
 
-	lesson.SUMMARY,lesson.PUBLICIZE_TYPE=#publicizeType#,lesson.INDEX_SHOW=#indexShow#,lesson.INDEX_SHOW_SEQ=#indexShowSeq#,lesson.LESSON_DAYS=#lessonDays#,lesson.LESSON_END_AT=#lessonEndAt#,lesson.CR_AT=#crAt#,lesson.NAME=#name#,lesson.STATUS=#status#,lesson.PROVICE=#provice#,lesson.CITY=#city#,lesson.AREA=#area#,lesson.PRICE=#price#,lesson.ID=#id#,lesson.DE_BY=#deBy#,lesson.SITE=#site#,lesson.UP_AT=#upAt#,lesson.DESCRIBLE=#describle#,lesson.DE_AT=#deAt#,lesson.CR_BY=#crBy#,lesson.PUBLICIZE=#publicize#,lesson.UP_BY=#upBy#,lesson.LESSON_AT=#lessonAt#,lesson.LESSON_STATUS=#lessonStatus#,lesson.THE_WAY=#theWay#,lesson.DOCTOR_ID=#doctorId#
+	lesson.SUMMARY=#summary#,lesson.PUBLICIZE_TYPE=#publicizeType#,lesson.INDEX_SHOW=#indexShow#,lesson.INDEX_SHOW_SEQ=#indexShowSeq#,lesson.LESSON_DAYS=#lessonDays#,lesson.LESSON_END_AT=#lessonEndAt#,lesson.CR_AT=#crAt#,lesson.NAME=#name#,lesson.STATUS=#status#,lesson.PROVICE=#provice#,lesson.CITY=#city#,lesson.AREA=#area#,lesson.PRICE=#price#,lesson.ID=#id#,lesson.DE_BY=#deBy#,lesson.SITE=#site#,lesson.UP_AT=#upAt#,lesson.DESCRIBLE=#describle#,lesson.DE_AT=#deAt#,lesson.CR_BY=#crBy#,lesson.PUBLICIZE=#publicize#,lesson.UP_BY=#upBy#,lesson.LESSON_AT=#lessonAt#,lesson.LESSON_STATUS=#lessonStatus#,lesson.THE_WAY=#theWay#,lesson.DOCTOR_ID=#doctorId#
 
 condition
 ===
@@ -97,9 +97,6 @@ condition
         	@if(!isEmpty(indexShowSeq)){
             	 and lesson.INDEX_SHOW_SEQ=#indexShowSeq#
             	@}
-            	@if(!isEmpty(summary)){
-                            	 and lesson.SUMMARY=#summary#
-                            	@}
 
 
 

@@ -22,9 +22,9 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-public class SqlManageConfig {
+public class SqlManagerConfig {
     @Bean
-    public SqlManagerFactoryBean sqlManagerFactoryBean(@Qualifier("beetlSqlDataSource") BeetlSqlDataSource beetlSqlDataSource) {
+    public SqlManagerFactoryBean sqlManagerFactoryBean(BeetlSqlDataSource beetlSqlDataSource) {
         SqlManagerFactoryBean sqlManagerFactoryBean = new SqlManagerFactoryBean();
         sqlManagerFactoryBean.setCs(beetlSqlDataSource);
         sqlManagerFactoryBean.setDbStyle(new MySqlStyle());
@@ -35,14 +35,7 @@ public class SqlManageConfig {
         return sqlManagerFactoryBean;
     }
 
-    @Bean(name = "beetlSqlScannerConfigurer")
-    public BeetlSqlScannerConfigurer getBeetlSqlScannerConfigurer() {
-        BeetlSqlScannerConfigurer conf = new BeetlSqlScannerConfigurer();
-        conf.setBasePackage("com.neuray.wp.dao");
-        conf.setDaoSuffix("Dao");
-        conf.setSqlManagerFactoryBeanName("sqlManagerFactoryBean");
-        return conf;
-    }
+
 
     public class DelSuffixConversion extends NameConversion {
         @Override
