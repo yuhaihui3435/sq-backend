@@ -26,12 +26,12 @@ sample$count
 
 cols
 ===
-	artice.topShow,artice.ORIGIN,artice.ID,artice.READING_TIME,artice.EFFECT,artice.COLUMN_ID,artice.TPL_NAME,artice.TITLE,artice.AUTHOR,artice.EXPIRED,artice.UP_BY,artice.SUMMARY_EN,artice.DETAIL,artice.PUBLISH_STATUS,artice.DE_AT,artice.COVER_PIC,artice.REPORT_STATUS,artice.CR_BY,artice.CR_AT,artice.DE_BY,artice.UP_AT,artice.TOP,artice.LEAVE_MSG_STATUS,artice.TITLE_EN,artice.DETAIL_EN,artice.SUMMARY
+	artice.TOP_SHOW,artice.ORIGIN,artice.ID,artice.READING_TIME,artice.EFFECT,artice.COLUMN_ID,artice.TPL_NAME,artice.TITLE,artice.AUTHOR,artice.EXPIRED,artice.UP_BY,artice.SUMMARY_EN,artice.DETAIL,artice.PUBLISH_STATUS,artice.DE_AT,artice.COVER_PIC,artice.REPORT_STATUS,artice.CR_BY,artice.CR_AT,artice.DE_BY,artice.UP_AT,artice.TOP,artice.LEAVE_MSG_STATUS,artice.TITLE_EN,artice.DETAIL_EN,artice.SUMMARY
 
 updateSample
 ===
 
-	artice.topShow=#topShow#,artice.ORIGIN=#origin#,artice.ID=#id#,artice.READING_TIME=#readingTime#,artice.EFFECT=#effect#,artice.COLUMN_ID=#columnId#,artice.TPL_NAME=#tplName#,artice.TITLE=#title#,artice.AUTHOR=#author#,artice.EXPIRED=#expired#,artice.UP_BY=#upBy#,artice.SUMMARY_EN=#summaryEn#,artice.DETAIL=#detail#,artice.PUBLISH_STATUS=#publishStatus#,artice.DE_AT=#deAt#,artice.COVER_PIC=#coverPic#,artice.REPORT_STATUS=#reportStatus#,artice.CR_BY=#crBy#,artice.CR_AT=#crAt#,artice.DE_BY=#deBy#,artice.UP_AT=#upAt#,artice.TOP=#top#,artice.LEAVE_MSG_STATUS=#leaveMsgStatus#,artice.TITLE_EN=#titleEn#,artice.DETAIL_EN=#detailEn#,artice.SUMMARY=#summary#
+	artice.TOP_SHOW=#topShow#,artice.ORIGIN=#origin#,artice.ID=#id#,artice.READING_TIME=#readingTime#,artice.EFFECT=#effect#,artice.COLUMN_ID=#columnId#,artice.TPL_NAME=#tplName#,artice.TITLE=#title#,artice.AUTHOR=#author#,artice.EXPIRED=#expired#,artice.UP_BY=#upBy#,artice.SUMMARY_EN=#summaryEn#,artice.DETAIL=#detail#,artice.PUBLISH_STATUS=#publishStatus#,artice.DE_AT=#deAt#,artice.COVER_PIC=#coverPic#,artice.REPORT_STATUS=#reportStatus#,artice.CR_BY=#crBy#,artice.CR_AT=#crAt#,artice.DE_BY=#deBy#,artice.UP_AT=#upAt#,artice.TOP=#top#,artice.LEAVE_MSG_STATUS=#leaveMsgStatus#,artice.TITLE_EN=#titleEn#,artice.DETAIL_EN=#detailEn#,artice.SUMMARY=#summary#
 
 condition
 ===
