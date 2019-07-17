@@ -5,8 +5,11 @@
 
 package com.neuray.wp;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.ArrayUtil;
 import com.neuray.wp.service.RedisCacheService;
 import lombok.extern.slf4j.Slf4j;
+import org.beetl.sql.core.SQLManager;
+import org.beetl.sql.core.db.TableDesc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
