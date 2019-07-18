@@ -102,6 +102,8 @@ public class ArticeController extends BaseController {
             respBody.setMsg("已存在");
             return respBody;
         }
+
+        artice.setAuthor(StrUtil.isBlank(artice.getAuthor())?currLoginUser().getDetail().getSuName():artice.getAuthor());
         artice.setCrBy(currLoginUser().getId());
         artice.setUpBy(currLoginUser().getId());
         articeService.insertAutoKey(artice);

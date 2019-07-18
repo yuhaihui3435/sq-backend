@@ -210,4 +210,9 @@ public interface Consts {
         }
 
     }
+
+    enum LINKS_TYPE{
+        link,certificate
+    }
+
 }

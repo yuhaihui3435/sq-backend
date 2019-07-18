@@ -65,6 +65,7 @@ public class ArticeService extends BaseService<Artice> {
      * @return
      */
     public List<Artice> findByTopShow(int size,Long columnId){
+
         if(columnId==null) {
             return sqlManager.lambdaQuery(Artice.class).andEq(Artice::getPublishStatus, Consts.STATUS.AVAILABLE.getCode()).andIsNull(Artice::getDeAt).andEq(Artice::getTopShow, Consts.YESORNO.YES.getVal()).asc(Artice::getTop).limit(0, size).select();
         }else{

@@ -134,8 +134,7 @@ public class IndexController {
     @ResponseBody
     public Object index04(@RequestParam(defaultValue = "6") int size) {
         Map<String, Object> ret = new HashMap<>();
-
-
+        ret.put("certificateData",linksService.findBySize(size,Consts.LINKS_TYPE.certificate.name()));
         return ret;
     }
 
@@ -148,7 +147,7 @@ public class IndexController {
     @ResponseBody
     public Object index05(@RequestParam(defaultValue = "6") int size) {
         Map<String, Object> ret = new HashMap<>();
-        ret.put("linksData",linksService.all(0,size));
+        ret.put("linksData",linksService.findBySize(size,Consts.LINKS_TYPE.link.name()));
         return ret;
     }
 

@@ -52,7 +52,7 @@ public class Artice extends BaseEntity {
     @NotBlank(message = "标题必填")
     private String title;
 
-    private Long author;
+    private String author;
 
     private Date expired;
 
