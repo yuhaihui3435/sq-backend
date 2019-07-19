@@ -138,7 +138,5 @@ public class Lesson extends BaseEntity {
      */
     private String summary;
 
-    //简介
-    private String summary;
 
 }
