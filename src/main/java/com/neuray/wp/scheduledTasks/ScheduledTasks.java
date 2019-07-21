@@ -1,4 +1,4 @@
-package com.neuray.wp.scheduledTasks;
+package com.neuray.wp.ScheduledTasks;
 
 import com.neuray.wp.entity.lesson.Lesson;
 import com.neuray.wp.service.lesson.LessonService;
