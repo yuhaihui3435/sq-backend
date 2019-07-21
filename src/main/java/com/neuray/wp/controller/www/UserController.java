@@ -291,5 +291,9 @@ public class UserController {
         return RespBody.builder().build().success("详细信息更新成功");
     }
 
+    @PostMapping("/info")
+    public UserInfo getUserInfo(@RequestParam String userId){
+        return userInfoService.one(userId);
+    }
 
 }
