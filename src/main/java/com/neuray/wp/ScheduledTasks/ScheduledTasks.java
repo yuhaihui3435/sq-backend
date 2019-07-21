@@ -22,8 +22,8 @@ public class ScheduledTasks {
     @Autowired
     private LessonService lessonService;
 
-//    @Scheduled(cron = "0 0 1 * * ?")  //cron接受cron表达式，根据cron表达式确定定时规则
-    @Scheduled(cron = "*/30 * * * * ?")  //cron接受cron表达式，根据cron表达式确定定时规则
+    @Scheduled(cron = "0 0 1 * * ?")  //cron接受cron表达式，根据cron表达式确定定时规则
+//    @Scheduled(cron = "*/30 * * * * ?")  //cron接受cron表达式，根据cron表达式确定定时规则
     public void testCron() {
         System.out.println("次执行方法");
         //查询所有课程
