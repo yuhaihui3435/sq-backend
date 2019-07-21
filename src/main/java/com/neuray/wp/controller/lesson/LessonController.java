@@ -86,8 +86,8 @@ public class LessonController extends BaseController {
         lesson.setLessonDays(days);
         RespBody respBody = new RespBody();
         ValidationKit.validate(lesson);
-        lesson.setCrBy(currLoginUser().getId());
-        lesson.setUpBy(currLoginUser().getId());
+        lesson.setCrBy(currLoginUser()==null?null:currLoginUser().getId());
+        lesson.setUpBy(currLoginUser()==null?null:currLoginUser().getId());
         lessonService.insertAutoKey(lesson);
         respBody.setMsg("新增课程成功");
         return respBody;
@@ -105,7 +105,7 @@ public class LessonController extends BaseController {
         lesson.setLessonDays(days);
         RespBody respBody = new RespBody();
         ValidationKit.validate(lesson);
-        lesson.setUpBy(currLoginUser().getId());
+        lesson.setUpBy(currLoginUser()==null?null:currLoginUser().getId());
         lessonService.update(lesson);
         respBody.setMsg("更新课程成功");
         return respBody;
