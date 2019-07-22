@@ -24,7 +24,8 @@ public class DoctorService extends BaseService<Doctor> {
      * @return
      */
     public List<Doctor> findByIndexShow(int size){
-        Doctor param=Doctor.builder().userLogin(UserLogin.builder().status(Consts.STATUS.AVAILABLE.getCode()).build()).indexShow(Consts.YESORNO.YES.getVal()).build();
+//        Doctor param=Doctor.builder().userLogin(UserLogin.builder().status(Consts.STATUS.AVAILABLE.getCode()).build()).indexShow(Consts.YESORNO.YES.getVal()).build();
+        Doctor param=Doctor.builder().indexShow(Consts.YESORNO.YES.getVal()).build();
         param.setOrderBy("order by doctor.indexShowSeq asc");
         List<Doctor> ret=sqlManager.select("doctor.doctor.sample",Doctor.class,param,0,size);
         return ret;

@@ -118,7 +118,7 @@ public class IndexController {
      */
     @PostMapping("/index03")
     @ResponseBody
-    public Object index03(@RequestParam(defaultValue = "6") int size,@RequestParam long columnId) {
+    public Object index03(@RequestParam(defaultValue = "6") int size,@RequestParam(required = false) Long columnId) {
         Map<String, Object> ret = new HashMap<>();
         List<Artice> artices = articeService.findByTopShow(size,columnId);
         ret.put("articeData", artices);
