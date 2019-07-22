@@ -138,5 +138,10 @@ public class Lesson extends BaseEntity {
      */
     private String summary;
 
+//    授课教师
+    private String teacherName;
+
+    //课程状态查询条件
+    private List<String> lessonStatuses;
 
 }
