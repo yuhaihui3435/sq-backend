@@ -35,13 +35,13 @@ public class Artice extends BaseEntity {
 
     private Long readingTime;//读取时间
 
-    @NotNull(message = "生效时间必填")
+
     private Date effect;//有效时间
 
     @NotNull(message = "栏目必填")
     private Long columnId;//栏目id
 
-    @NotBlank(message = "模版名称必填")
+
     private String tplName;
 
     public String getTplNameStr() {
@@ -58,7 +58,7 @@ public class Artice extends BaseEntity {
 
     private Long upBy;
 
-    @NotBlank(message = "摘要英文必填")
+
     private String summaryEn;
 
     @NotBlank(message = "内容必填")
@@ -91,7 +91,7 @@ public class Artice extends BaseEntity {
 
     private Date upAt;
 
-    @NotNull(message = "置顶顺序必填")
+
     private Integer top;
 
     public String getTopStr() {
@@ -99,7 +99,7 @@ public class Artice extends BaseEntity {
         return ret;
     }
 
-    @NotBlank(message = "必填")
+
     private String leaveMsgStatus;
 
     public String getLeaveMsgStatusStr() {
@@ -107,10 +107,10 @@ public class Artice extends BaseEntity {
         return ret;
     }
 
-    @NotBlank(message = "必填")
+
     private String titleEn;
 
-    @NotBlank(message = "必填")
+
     private String detailEn;
 
     private String summary;

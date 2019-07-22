@@ -21,11 +21,11 @@ public class LessonService extends BaseService<Lesson> {
      * @return
      */
     public List<Lesson> findByIndexShow(int size){
-        return sqlManager.lambdaQuery(Lesson.class).andNotEq(Lesson::getLessonStatus,Consts.LESSON_STATUS.FINISHED.getCode()).andEq(Lesson::getIndexShow, Consts.YESORNO.YES.getVal()).andIsNotNull(Lesson::getDeAt).andEq(Lesson::getStatus,Consts.STATUS.AVAILABLE.getCode()).asc(Lesson::getIndexShowSeq).limit(0,size).select();
+        return sqlManager.lambdaQuery(Lesson.class).andNotEq(Lesson::getLessonStatus,Consts.LESSON_STATUS.FINISHED.getCode()).andEq(Lesson::getIndexShow, Consts.YESORNO.YES.getVal()).andIsNull(Lesson::getDeAt).andEq(Lesson::getStatus,Consts.STATUS.AVAILABLE.getCode()).asc(Lesson::getIndexShowSeq).limit(0,size).select();
     }
 
     public List<Lesson> findByNotIndexShow(int size){
-        return sqlManager.lambdaQuery(Lesson.class).andNotEq(Lesson::getLessonStatus,Consts.LESSON_STATUS.FINISHED.getCode()).andEq(Lesson::getIndexShow, Consts.YESORNO.YES.getVal()).andIsNotNull(Lesson::getDeAt).andEq(Lesson::getStatus,Consts.STATUS.AVAILABLE.getCode()).asc(Lesson::getIndexShowSeq).limit(0,size).select();
+        return sqlManager.lambdaQuery(Lesson.class).andNotEq(Lesson::getLessonStatus,Consts.LESSON_STATUS.FINISHED.getCode()).andEq(Lesson::getIndexShow, Consts.YESORNO.NO.getVal()).andIsNull(Lesson::getDeAt).andEq(Lesson::getStatus,Consts.STATUS.AVAILABLE.getCode()).asc(Lesson::getIndexShowSeq).limit(0,size).select();
     }
 
 }
