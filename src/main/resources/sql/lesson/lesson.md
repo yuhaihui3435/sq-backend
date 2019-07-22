@@ -9,17 +9,24 @@ sample$count
 
 cols
 ===
-	lesson.SUMMARY,lesson.PUBLICIZE_TYPE,lesson.INDEX_SHOW,lesson.INDEX_SHOW_SEQ,lesson.LESSON_END_AT,lesson.LESSON_DAYS,lesson.CR_AT,lesson.NAME,lesson.STATUS,lesson.PROVICE,lesson.CITY,lesson.AREA,lesson.PRICE,lesson.ID,lesson.DE_BY,lesson.SITE,lesson.UP_AT,lesson.DESCRIBLE,lesson.DE_AT,lesson.CR_BY,lesson.PUBLICIZE,lesson.UP_BY,lesson.LESSON_AT,lesson.LESSON_STATUS,lesson.THE_WAY,lesson.DOCTOR_ID
+	lesson.TEACHER_NAME,lesson.SUMMARY,lesson.PUBLICIZE_TYPE,lesson.INDEX_SHOW,lesson.INDEX_SHOW_SEQ,lesson.LESSON_END_AT,lesson.LESSON_DAYS,lesson.CR_AT,lesson.NAME,lesson.STATUS,lesson.PROVICE,lesson.CITY,lesson.AREA,lesson.PRICE,lesson.ID,lesson.DE_BY,lesson.SITE,lesson.UP_AT,lesson.DESCRIBLE,lesson.DE_AT,lesson.CR_BY,lesson.PUBLICIZE,lesson.UP_BY,lesson.LESSON_AT,lesson.LESSON_STATUS,lesson.THE_WAY,lesson.DOCTOR_ID
 
 updateSample
 ===
 
-	lesson.SUMMARY=#summary#,lesson.PUBLICIZE_TYPE=#publicizeType#,lesson.INDEX_SHOW=#indexShow#,lesson.INDEX_SHOW_SEQ=#indexShowSeq#,lesson.LESSON_DAYS=#lessonDays#,lesson.LESSON_END_AT=#lessonEndAt#,lesson.CR_AT=#crAt#,lesson.NAME=#name#,lesson.STATUS=#status#,lesson.PROVICE=#provice#,lesson.CITY=#city#,lesson.AREA=#area#,lesson.PRICE=#price#,lesson.ID=#id#,lesson.DE_BY=#deBy#,lesson.SITE=#site#,lesson.UP_AT=#upAt#,lesson.DESCRIBLE=#describle#,lesson.DE_AT=#deAt#,lesson.CR_BY=#crBy#,lesson.PUBLICIZE=#publicize#,lesson.UP_BY=#upBy#,lesson.LESSON_AT=#lessonAt#,lesson.LESSON_STATUS=#lessonStatus#,lesson.THE_WAY=#theWay#,lesson.DOCTOR_ID=#doctorId#
+	lesson.TEACHER_NAME=#teacherName#,lesson.SUMMARY=#summary#,lesson.PUBLICIZE_TYPE=#publicizeType#,lesson.INDEX_SHOW=#indexShow#,lesson.INDEX_SHOW_SEQ=#indexShowSeq#,lesson.LESSON_DAYS=#lessonDays#,lesson.LESSON_END_AT=#lessonEndAt#,lesson.CR_AT=#crAt#,lesson.NAME=#name#,lesson.STATUS=#status#,lesson.PROVICE=#provice#,lesson.CITY=#city#,lesson.AREA=#area#,lesson.PRICE=#price#,lesson.ID=#id#,lesson.DE_BY=#deBy#,lesson.SITE=#site#,lesson.UP_AT=#upAt#,lesson.DESCRIBLE=#describle#,lesson.DE_AT=#deAt#,lesson.CR_BY=#crBy#,lesson.PUBLICIZE=#publicize#,lesson.UP_BY=#upBy#,lesson.LESSON_AT=#lessonAt#,lesson.LESSON_STATUS=#lessonStatus#,lesson.THE_WAY=#theWay#,lesson.DOCTOR_ID=#doctorId#
 
 condition
 ===
 
 	1 = 1 and DE_AT is null
+	@if(!isEmpty(lessonStatuses)){
+	and lesson.LESSON_STATUS in (
+         @for(id in lessonStatuses){
+         #id#  #text(idLP.last?"":"," )#
+         @}
+         )
+         @}	
     @if(!isEmpty(lessonEndAt)){
      and lesson.LESSON_END_AT=#lessonEndAt#
     @}	
@@ -30,7 +37,7 @@ condition
 	 and lesson.CR_AT=#crAt#
 	@}
 	@if(!isEmpty(name)){
-	 and lesson.NAME=#name#
+	 and lesson.NAME like #'%'+name+'%'# 
 	@}
 	@if(!isEmpty(status)){
 	 and lesson.STATUS=#status#
@@ -97,6 +104,9 @@ condition
         	@if(!isEmpty(indexShowSeq)){
             	 and lesson.INDEX_SHOW_SEQ=#indexShowSeq#
             	@}
+            	@if(!isEmpty(teacherName)){
+                            	 and lesson.TEACHER_NAME=#teacherName#
+                            	@}
 
 
 
