@@ -103,8 +103,8 @@ public class DoctorController extends BaseController {
     public RespBody save(@RequestBody Doctor doctor) {
         RespBody respBody = new RespBody();
         ValidationKit.validate(doctor);
-        doctor.setCrBy(currLoginUser().getId());
-        doctor.setUpBy(currLoginUser().getId());
+//        doctor.setCrBy(currLoginUser().getId());
+//        doctor.setUpBy(currLoginUser().getId());
         doctorService.insertAutoKey(doctor);
         List<String> tagId = doctor.getTagId();
         for (int i = 0; i < tagId.size(); i++) {
@@ -152,7 +152,7 @@ public class DoctorController extends BaseController {
     public RespBody update(@RequestBody Doctor doctor) {
         RespBody respBody = new RespBody();
         ValidationKit.validate(doctor);
-        doctor.setUpBy(currLoginUser().getId());
+//        doctor.setUpBy(currLoginUser().getId());
         doctorService.update(doctor);
         //查询出标签表集合，删除，重新添加
         Map map = new HashMap();

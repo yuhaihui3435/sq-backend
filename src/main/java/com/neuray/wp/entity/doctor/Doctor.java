@@ -114,7 +114,9 @@ public class Doctor extends BaseEntity {
     private String phone;
     private List<String> tagId;
     private List<String> doctorPicture;
-
     private UserLogin userLogin;
+    private List<Long> tagCondition;
+    private Long priceSmall;
+    private Long priceLarge;
 
 }

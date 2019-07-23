@@ -5,18 +5,15 @@
 package com.neuray.wp.controller.www;
 
 import com.neuray.wp.entity.doctor.Doctor;
-import com.neuray.wp.entity.lesson.Lesson;
 import com.neuray.wp.service.doctor.DoctorService;
-import com.neuray.wp.service.lesson.LessonService;
 import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.print.Doc;
 
 /**
- * @Description 医生
+ * @Description 基础数据
  * @Param
  * @Author zzq
  * @Date 2019/7/21 15:37
@@ -42,8 +39,19 @@ public class ApiDoctorController {
         pageQuery.setPageSize(condition.getRows());
         pageQuery.setOrderBy(condition.getOrderBy());
         pageQuery.setParas(condition);
-        pageQuery = doctorService.page("doctor.doctor.sample", pageQuery);
+        pageQuery = doctorService.page("doctor.doctor.sampleApi", pageQuery);
         return pageQuery;
+    }
+
+    /**
+     * 详细
+     *
+     * @return
+     */
+    @PostMapping("/view")
+    public Doctor view(@RequestBody Doctor condition) {
+        Doctor doctor = doctorService.one("doctor.doctor.sample", condition);
+        return doctor;
     }
 
 }
