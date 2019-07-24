@@ -117,6 +117,8 @@ public class Artice extends BaseEntity {
 
     private List<Long> tagId;
 
+    private List<Long> columnIds;
+
     private String origin;//来源
 
     private String topShow;

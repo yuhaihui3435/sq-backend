@@ -141,7 +141,7 @@ public class ArticeController extends BaseController {
             respBody.setMsg("已存在");
             return respBody;
         }
-        artice.setUpBy(currLoginUser().getId());
+//        artice.setUpBy(currLoginUser().getId());
         articeService.update(artice);
         //查询所有关系，删除，重新增加
         Map map = new HashMap();

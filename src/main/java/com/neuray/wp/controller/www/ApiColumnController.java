@@ -4,14 +4,16 @@
 
 package com.neuray.wp.controller.www;
 
+import com.neuray.wp.entity.artice.Column;
 import com.neuray.wp.entity.lesson.Lesson;
+import com.neuray.wp.service.artice.ColumnService;
 import com.neuray.wp.service.lesson.LessonService;
 import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Description 栏目
@@ -20,8 +22,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Date 2019/7/21 15:37
  * @return
  **/
-@Controller
+@RestController
 @RequestMapping("/api/column")
 public class ApiColumnController {
+
+    @Autowired
+    private ColumnService columnService;
+
+    /**
+     * 顶级全数据查询，为树形渲染使用
+     *
+     * @return
+     */
+    @RequestMapping("/topLevelAllData")
+    public List<Column> topLevelAllData() {
+        List<Column> columns = columnService.many("artice.column.topLevelAllData", new Column());
+        columnService.recursive(columns);
+        return columns;
+    }
 
 }

@@ -7,6 +7,15 @@ sample
 	(select SU_NAME from SYS_USER_T  where ID=artice.DE_BY) as deByName 
 	from ARTICE_T artice LEFT JOIN artice_tag_t tag ON artice.ID=tag.ARTICE_ID where 
 	
+	@if(!isEmpty(columnIds)){
+            	 1=1 and artice.COLUMN_ID in (
+            	    @for(id in columnIds){
+                       #id#  #text(idLP.last?"":"," )#
+                    @}
+                 )
+                 and
+            @}
+	
 	@if(!isEmpty(tagId)){
         	 1=1 and tag.tag_id in (
         	    @for(id in tagId){

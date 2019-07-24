@@ -3,11 +3,11 @@ sample
 
 	select #use("cols")#,(select SU_NAME from SYS_USER_T  where ID=doctor.DE_BY) as deByName,
 	(select SU_NAME from SYS_USER_T  where ID=doctor.CR_BY) as crByName,
-	(select SU_NAME from SYS_USER_T  where ID=doctor.UP_BY) as upByName from 
-	DOCTOR_T 
-	doctor where  #use("condition")#
-	@orm.many({"id":"doctorId"},"doctor.doctorTag.sample","DoctorTag");
-	@orm.many({"id":"doctorId"},"doctor.doctorPic.sample","DoctorPic");
+	(select SU_NAME from SYS_USER_T  where ID=doctor.UP_BY) as upByName from DOCTOR_T doctor
+	 left join USER_LOGIN_T userLogin on doctor.LOGIN_ID=userLogin.id where #use("condition")#
+	
+	@orm.many({"id":"doctorId"},"doctor.doctor.selectDoctorPic","DoctorPic");
+	@orm.many({"id":"doctorId"},"doctor.doctor.selectDoctorTag","DoctorTag");
 	@orm.single({"loginId":"id"},"com.neuray.wp.entity.user.UserLogin");
 
 sampleApi
@@ -33,7 +33,7 @@ sampleApi
 
 sample$count
 ===
-    select count(1) from DOCTOR_T doctor where #use("condition")#
+    select count(1) from DOCTOR_T doctor left join USER_LOGIN_T userLogin on doctor.LOGIN_ID=userLogin.id where  #use("condition")#
 
 sampleApi$count
 ===
@@ -52,7 +52,7 @@ updateSample
 condition
 ===
 
-	1 = 1 and DE_AT is null
+	1 = 1 and doctor.DE_AT is null
 	@if(!isEmpty(site)){
 	 and doctor.SITE=#site#
 	@}
@@ -120,16 +120,16 @@ condition
       and doctor.INDEX_SHOW_SEQ=#indexShowSeq#
     @}
     @if(!isEmpty(userLogin.status)){
-      and doctor.userLogin.STATUS=#userLogin.status#
+      and userLogin.STATUS=#userLogin.status#
     @}
     @if(!isEmpty(userLogin.account)){
-      and doctor.userLogin.ACCOUNT=#userLogin.account#
+      and userLogin.ACCOUNT=#userLogin.account#
     @}
     @if(!isEmpty(userLogin.phone)){
-      and doctor.userLogin.PHONE=#userLogin.phone#
+      and userLogin.PHONE=#userLogin.phone#
     @}
     @if(!isEmpty(userLogin.email)){
-      and doctor.userLogin.EMAIL=#userLogin.email#
+      and userLogin.EMAIL=#userLogin.email#
     @}
     
 conditionApi
@@ -208,18 +208,16 @@ conditionApi
     @if(!isEmpty(indexShowSeq)){
       and doctor.INDEX_SHOW_SEQ=#indexShowSeq#
     @}
-    @if(!isEmpty(userLogin.status)){
-      and doctor.userLogin.STATUS=#userLogin.status#
-    @}
-    @if(!isEmpty(userLogin.account)){
-      and doctor.userLogin.ACCOUNT=#userLogin.account#
-    @}
-    @if(!isEmpty(userLogin.phone)){
-      and doctor.userLogin.PHONE=#userLogin.phone#
-    @}
-    @if(!isEmpty(userLogin.email)){
-      and doctor.userLogin.EMAIL=#userLogin.email#
-    @}
-    
     
 
+selectDoctorPic
+===
+
+	select * from DOCTOR_PIC_T doctorPic where  doctorPic.doctor_id=#doctorId# 
+	@orm.single({"picId":"id"},"com.neuray.wp.entity.FileMap");
+
+selectDoctorTag
+===
+
+	select * from DOCTOR_TAG_T doctorTag where  doctorTag.doctor_id=#doctorId# 
+	@orm.single({"tagId":"id"},"com.neuray.wp.entity.DictItem");
