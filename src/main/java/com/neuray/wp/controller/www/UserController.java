@@ -46,7 +46,7 @@ import java.util.concurrent.TimeUnit;
  * 版本:v1.0
  * @Description:
  */
-@Controller
+@RestController
 @Slf4j
 @RequestMapping("/api/user")
 public class UserController {
@@ -135,6 +135,32 @@ public class UserController {
         } else {
             return RespBody.builder().code(RespBody.BUSINESS_ERROR).msg("此手机号已注册").build();
         }
+    }
+
+    /**
+     * 发送短信验证码
+     *
+     * @param phone
+     * @return
+     */
+    @GetMapping("/sendSmsCodeSend/{phone}")
+    @ResponseBody
+    public RespBody<Object> sendSmsCodeSend(@PathVariable("phone") String phone) {
+        if (StrUtil.isBlank(phone)) {
+            return RespBody.builder().code(RespBody.BUSINESS_ERROR).msg("请填写手机号").build();
+        }
+        //缓存中检查是否存在验证码，有删掉
+        if (redisCacheService.exist(PREFIX_SMSCODE + phone)) {
+            redisCacheService.delVal(PREFIX_SMSCODE + phone);
+        }
+        //发送短信验证码
+        String code = RandomUtil.randomNumbers(4);
+        //发送验证码
+        smsService.sendSms(phone, code);
+        //缓存验证码
+        redisCacheService.addVal(PREFIX_SMSCODE + phone, code);
+        redisCacheService.expired(PREFIX_SMSCODE + phone, 30, TimeUnit.MINUTES);
+        return RespBody.builder().code(RespBody.SUCCESS).msg("验证码发送成功").build();
     }
 
     @PostMapping("/login")
@@ -228,6 +254,12 @@ public class UserController {
         }
     }
 
+    @PostMapping("/getLogin")
+    public Object getLogin(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        return redisCacheService.findVal(token);
+    }
+
     /**
      * 退出系统
      *
@@ -258,9 +290,10 @@ public class UserController {
     @PostMapping("/modifyPwd")
     @ResponseBody
     public RespBody modifyPwd(@RequestBody MemberLoginDto param, HttpServletRequest request) {
-        String token = CookieKit.getUid(request, Consts.MEMBER_TOKEN);
-        MemberLoginDto memberLoginDto = (MemberLoginDto) redisCacheService.findVal(token);
-        UserLogin userLogin = userLoginService.one(memberLoginDto.getUserLoginId());
+//        String token = CookieKit.getUid(request, Consts.MEMBER_TOKEN);
+//        MemberLoginDto memberLoginDto = (MemberLoginDto) redisCacheService.findVal(token);
+//        UserLogin userLogin = userLoginService.one(memberLoginDto.getUserLoginId());
+        UserLogin userLogin = userLoginService.one(param.getUserLoginId());
         String pwd = userLogin.getPwd();
         if (SecureUtil.hmacMd5(Consts.PWD_SECURE_KEY).digestHex(param.getPwd()).equals(pwd)) {
             userLogin.setPwd(SecureUtil.hmacMd5(Consts.PWD_SECURE_KEY).digestHex(param.getNewPwd()));
@@ -273,6 +306,48 @@ public class UserController {
     }
 
     /**
+     * @return com.neuray.wp.core.RespBody
+     * @Description
+     * @Param 修改手机号
+     * @Author zzq
+     * @Date 2019/7/26 8:49
+     **/
+    @PostMapping("/modifyPhone")
+    public RespBody modifyPhone(@RequestBody UserLogin userLogin, String smsCode) {
+        String str = (String) redisCacheService.findVal(PREFIX_SMSCODE + userLogin.getPhone());
+        if (StrUtil.isBlank(str)) {
+            return RespBody.builder().code(RespBody.BUSINESS_ERROR).msg("短信验证码过期").build();
+        } else if (!str.equals(smsCode)) {
+            return RespBody.builder().code(RespBody.BUSINESS_ERROR).msg("短信验证码不正确").build();
+        }
+        UserLogin userLogin1 = userLoginService.one(userLogin.getId());
+        userLogin1.setPhone(userLogin.getNewPhone());
+        userLoginService.update(userLogin1);
+        return RespBody.builder().code(RespBody.SUCCESS).msg("手机修改成功").build();
+    }
+
+    /**
+     * @return com.neuray.wp.core.RespBody
+     * @Description
+     * @Param 修改邮箱
+     * @Author zzq
+     * @Date 2019/7/26 8:49
+     **/
+    @PostMapping("/modifyEmail")
+    public RespBody modifyEmail(@RequestBody UserLogin userLogin, String smsCode) {
+        String str = (String) redisCacheService.findVal(PREFIX_SMSCODE + userLogin.getPhone());
+        if (StrUtil.isBlank(str)) {
+            return RespBody.builder().code(RespBody.BUSINESS_ERROR).msg("短信验证码过期").build();
+        } else if (!str.equals(smsCode)) {
+            return RespBody.builder().code(RespBody.BUSINESS_ERROR).msg("短信验证码不正确").build();
+        }
+        UserLogin userLogin1 = userLoginService.one(userLogin.getId());
+        userLogin1.setEmail(userLogin.getNewEmail());
+        userLoginService.update(userLogin1);
+        return RespBody.builder().code(RespBody.SUCCESS).msg("邮箱修改成功").build();
+    }
+
+    /**
      * 会员详细信息更新
      *
      * @param userInfo
@@ -281,7 +356,11 @@ public class UserController {
     @PostMapping("/modifyUserInfo")
     @ResponseBody
     public RespBody modifyUserInfo(@RequestBody UserInfo userInfo) {
-        userInfoService.update(userInfo);
+        if (userInfo.getId() != null) {
+            userInfoService.update(userInfo);
+        } else {
+            userInfoService.insertAutoKey(userInfo);
+        }
         return RespBody.builder().build().success("详细信息更新成功");
     }
 
@@ -303,4 +382,13 @@ public class UserController {
         return userInfoService.one(userId);
     }
 
+    @PostMapping("/userInfo")
+    public UserInfo queryUserInfo(@RequestBody UserInfo condition) {
+        return userInfoService.one("user.userInfo.sample", condition);
+    }
+
+    @PostMapping("/userLogin")
+    public UserLogin queryUserLogin(@RequestBody UserLogin condition) {
+        return userLoginService.one(condition.getId());
+    }
 }

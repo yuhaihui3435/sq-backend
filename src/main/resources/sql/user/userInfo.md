@@ -2,6 +2,7 @@ sample
 ===
 
 	select #use("cols")# from USER_INFO_T userInfo where  #use("condition")#
+	@orm.single({"loginId":"id"},"user.userInfo.selectUserLogin","UserLogin");
 
 sample$count
 ===
@@ -132,3 +133,9 @@ allCondition
     @if(!isEmpty(userLogin.status)){
      and userLogin.STATUS=#userLogin.status#
     @}  
+    
+    
+selectUserLogin
+===
+
+	select * from user_login_t userLogin where  userLogin.id=#id# 

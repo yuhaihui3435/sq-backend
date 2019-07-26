@@ -33,7 +33,7 @@ public class SMSService {
         request.setAction("SendSms");
         request.putQueryParameter("RegionId", "cn-hangzhou");
         request.putQueryParameter("PhoneNumbers", phone);
-//        request.putQueryParameter("SignName", "教思乐平台");
+        request.putQueryParameter("SignName", "深泉心理国际教育");
         request.putQueryParameter("TemplateCode", "SMS_169660540");
         request.putQueryParameter("TemplateParam", "{\"code\":\"" + content + "\"}");
         try {
