@@ -5,6 +5,7 @@
 package com.neuray.wp.controller.www;
 
 import com.neuray.wp.Consts;
+import com.neuray.wp.entity.SysConf;
 import com.neuray.wp.entity.artice.Artice;
 import com.neuray.wp.entity.doctor.Doctor;
 import com.neuray.wp.entity.lesson.Lesson;
@@ -148,6 +149,35 @@ public class IndexController {
     public Object index05(@RequestParam(defaultValue = "6") int size) {
         Map<String, Object> ret = new HashMap<>();
         ret.put("linksData",linksService.findBySize(size,Consts.LINKS_TYPE.link.name()));
+        return ret;
+    }
+
+    /**
+     * 读取系统配置
+     * @return
+     */
+    @PostMapping("/allConfig")
+    @ResponseBody
+    public Object allConfig(){
+        Map<String,Object> ret=new HashMap<>();
+        SysConf sysConf=redisCacheService.getSysConf("website_phone");
+        ret.put("websitePhone",sysConf!=null?sysConf.getScVal():"");
+        sysConf=redisCacheService.getSysConf("website_email");
+        ret.put("websiteEmail",sysConf!=null?sysConf.getScVal():"");
+        sysConf=redisCacheService.getSysConf("website_gghimg");
+        ret.put("websiteGghimg",sysConf!=null?sysConf.getScVal():"");
+        sysConf=redisCacheService.getSysConf("website_copyright");
+        ret.put("websiteCopyright",sysConf!=null?sysConf.getScVal():"");
+        sysConf=redisCacheService.getSysConf("website_desc");
+        ret.put("websiteDesc",sysConf!=null?sysConf.getScVal():"");
+        sysConf=redisCacheService.getSysConf("website_keys");
+        ret.put("websiteKeys",sysConf!=null?sysConf.getScVal():"");
+        sysConf=redisCacheService.getSysConf("website_url");
+        ret.put("websiteUrl",sysConf!=null?sysConf.getScVal():"");
+        sysConf=redisCacheService.getSysConf("website_title");
+        ret.put("websiteTitle",sysConf!=null?sysConf.getScVal():"");
+        sysConf=redisCacheService.getSysConf("website_log");
+        ret.put("websiteLogo",sysConf!=null?sysConf.getScVal():"");
         return ret;
     }
 
