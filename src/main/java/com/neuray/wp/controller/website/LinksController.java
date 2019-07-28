@@ -129,8 +129,8 @@ public class LinksController extends BaseController {
         }
         String[] idArray = StrUtil.split(param.get("ids"), ",");
         for (String id : idArray) {
-            Links links = linksService.one(Long.parseLong(id));
-            linksService.del(links);
+//            Links links = linksService.one(Long.parseLong(id));
+            linksService.del(Long.parseLong(id));
         }
         respBody.setMsg("删除友情链接成功");
         return respBody;

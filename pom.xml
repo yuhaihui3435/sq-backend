@@ -149,7 +149,12 @@
 			<artifactId>thymeleaf-spring5</artifactId>
 			<version>3.0.11.RELEASE</version>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.58</version>
+		</dependency>
 
 		<!-- 应用监控 -->
 		<dependency>
@@ -169,9 +174,9 @@
 			</activation>
 		</profile>
 		<profile>
-			<id>product</id><!-- 生产环境 -->
+			<id>pro</id><!-- 生产环境 -->
 			<properties>
-				<package.env>product</package.env>
+				<package.env>pro</package.env>
 			</properties>
 		</profile>
 		<profile>
