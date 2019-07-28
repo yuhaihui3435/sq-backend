@@ -35,7 +35,7 @@ public class Links extends BaseEntity {
     private String describe;
 
     //链接地址
-    @NotBlank(message = "链接地址必填")
+//    @NotBlank(message = "链接地址必填")
     private String url;
 
     @AssignID

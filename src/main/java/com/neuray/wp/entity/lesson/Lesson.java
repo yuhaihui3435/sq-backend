@@ -121,7 +121,7 @@ public class Lesson extends BaseEntity {
     }
 
     //授课老师
-    @NotNull(message = "授课老师必填")
+//    @NotNull(message = "授课老师必填")
     private Long doctorId;
     //宣传方式-1:图片,2:视频
 //    @NotBlank(message = "宣传方式必填")

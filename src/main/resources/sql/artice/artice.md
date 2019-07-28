@@ -26,12 +26,32 @@ sample
         @}
         
         #use("condition")#
-        @orm.many({"id":"articeId"},"artice.articeTag.sample","ArticeTag");
+        @orm.many({"id":"articeId"},"artice.artice.selectArticeTag","ArticeTag");
 
 
 sample$count
 ===
-    select count(1) from ARTICE_T artice where #use("condition")#
+    select count(1) 
+     from ARTICE_T artice LEFT JOIN artice_tag_t tag ON artice.ID=tag.ARTICE_ID where 
+     	
+     	@if(!isEmpty(columnIds)){
+                 	 1=1 and artice.COLUMN_ID in (
+                 	    @for(id in columnIds){
+                            #id#  #text(idLP.last?"":"," )#
+                         @}
+                      )
+                      and
+                 @}
+     	
+     	@if(!isEmpty(tagId)){
+             	 1=1 and tag.tag_id in (
+             	    @for(id in tagId){
+                        #id#  #text(idLP.last?"":"," )#
+                     @}
+                  )
+                  and
+             @}
+      #use("condition")#
 
 cols
 ===
@@ -128,5 +148,9 @@ condition
 	@}
 	order by artice.UP_AT desc
 
-
+selectArticeTag
+===
+    select articeTag.ID,articeTag.ARTICE_ID,articeTag.TAG_ID from ARTICE_TAG_T articeTag where 1 = 1
+     and articeTag.ARTICE_ID=#articeId#
+     @orm.single({"tagId":"id"},"com.neuray.wp.entity.DictItem");
 
