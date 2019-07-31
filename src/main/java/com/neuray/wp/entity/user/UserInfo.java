@@ -13,6 +13,7 @@ import org.beetl.sql.core.annotatoin.AssignID;
 import org.beetl.sql.core.annotatoin.Table;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 /*
  * 用户详细信息
@@ -37,7 +38,7 @@ public class UserInfo extends BaseEntity {
     //用户类型-00:普通用户,01:高级用户
     private String type;
 
-    private String birthday;
+    private Date birthday;
 
     //登录ID
     private Long loginId;
@@ -62,7 +63,7 @@ public class UserInfo extends BaseEntity {
     //行业
     private Long career;
 
-    @NotBlank(message = "必填")
+    @NotBlank(message = "昵称必填")
     private String nickname;
 
     private String city;

@@ -361,7 +361,7 @@ public class UserController {
         } else {
             userInfoService.insertAutoKey(userInfo);
         }
-        return RespBody.builder().build().success("详细信息更新成功");
+        return RespBody.success("详细信息更新成功");
     }
 
     /**
@@ -374,7 +374,7 @@ public class UserController {
     @ResponseBody
     public RespBody modifyUserInfo(@RequestBody Doctor doctor) {
         doctorService.update(doctor);
-        return RespBody.builder().build().success("详细信息更新成功");
+        return RespBody.success("详细信息更新成功");
     }
 
     @PostMapping("/info")
