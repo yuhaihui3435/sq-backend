@@ -5,6 +5,7 @@
 package com.neuray.wp.entity.user;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.neuray.wp.core.BaseEntity;
 import lombok.Builder;
 import lombok.Data;
@@ -38,6 +39,7 @@ public class UserInfo extends BaseEntity {
     //用户类型-00:普通用户,01:高级用户
     private String type;
 
+    @JSONField(format="yyyy-MM-dd")
     private Date birthday;
 
     //登录ID
