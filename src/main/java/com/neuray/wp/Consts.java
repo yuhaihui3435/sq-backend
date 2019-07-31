@@ -23,6 +23,7 @@ public interface Consts {
     String DETAIL_TPL="detail_tpl";
     String SYS_CONF_AUTHOR="author";
     String SYS_CONF_CONTENT="content";
+    String ACCESS_TOKEN="token";
 
     BigDecimal BYTES_TO_M=new BigDecimal("1024").multiply(new BigDecimal("1024"));
 

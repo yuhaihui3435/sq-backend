@@ -8,7 +8,6 @@ import com.neuray.wp.service.RedisCacheService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -43,10 +42,8 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (request.getMethod().equals(RequestMethod.OPTIONS.name())) {
             return true;
         }
-        String curReqUri=request.getRequestURI();
-        if (curReqUri.startsWith("/api")) {
-            return true;
-        }
+        String token = request.getHeader("token");
+        String curReqUri = request.getRequestURI();
         List<String> stringList = StrUtil.split(anonymousAccessPaths, StrUtil.C_COMMA);
         boolean isPathIgnored = stringList.stream().anyMatch(p -> {
             return ReUtil.isMatch(p, curReqUri);
@@ -54,7 +51,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (isPathIgnored) {
             return true;
         }
-        String token = request.getHeader("token");
         LoginUser loginUser = (LoginUser) redisCacheService.findVal(LoginController.SYSUSER_LOGIN_CACHE_NAME + token);
         if (loginUser == null) {
             response.setStatus(401);

@@ -130,6 +130,10 @@ public class CommonController extends BaseController {
     public void loadPic(@PathVariable("fileId") String fileId, HttpServletResponse response) {
         String orginName=fileId.replace(SUFFIX_THUMBNAIL,"");
         FileMap fileMap = fileMapService.tplOne(FileMap.builder().fileId(orginName).build());
+        if(fileMap==null){
+            log.error("图片不存在");
+            return;
+        }
         String path=null;
         if(StrUtil.containsAny(fileId,SUFFIX_THUMBNAIL)){
             String[] strs=StrUtil.split(fileMap.getPath(),StrUtil.DOT);

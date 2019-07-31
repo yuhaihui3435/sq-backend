@@ -71,7 +71,8 @@ public class GlobalExceptionHandler {
     public Object handleBusinessException(HttpServletRequest request,LogicException e){
         log.error("系统业务操作失败：异常编号 {} 异常信息 {}",e.getErrCode(),e.getErrMsg());
         if(ReqKit.isAjaxRequest(request)) {
-            return  RespBody.error(e.getPrettyExceptionMsg());
+
+            return  RespBody.error(e.getSimpleExceptionMsg());
         }
         return new ModelAndView(DEFAULT_ERROR_VIEW, "errorInfo", errorInfoBuilder.getErrorInfo(request, e));
     }

@@ -38,4 +38,8 @@ public class LogicException extends RuntimeException {
     public String getPrettyExceptionMsg() {
         return String.format("业务异常:编号>>【%s】,信息>>【%s】", this.errCode, this.errMsg);
     }
+
+    public String getSimpleExceptionMsg(){
+        return this.errMsg;
+    }
 }

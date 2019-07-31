@@ -10,6 +10,7 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.neuray.wp.Consts;
+import com.neuray.wp.annotation.CheckTokenDog;
 import com.neuray.wp.core.RespBody;
 import com.neuray.wp.entity.doctor.Doctor;
 import com.neuray.wp.entity.user.UserInfo;
@@ -253,10 +254,10 @@ public class UserController {
 
         }
     }
-
+    @CheckTokenDog
     @PostMapping("/getLogin")
     public Object getLogin(HttpServletRequest request) {
-        String token = request.getHeader("token");
+        String token = request.getHeader(Consts.ACCESS_TOKEN);
         return redisCacheService.findVal(token);
     }
 
@@ -266,6 +267,7 @@ public class UserController {
      * @param request
      * @return
      */
+    @CheckTokenDog
     @PostMapping("/logout")
     @ResponseBody
     public RespBody logout(HttpServletRequest request) {
@@ -287,6 +289,7 @@ public class UserController {
      * @param request
      * @return
      */
+    @CheckTokenDog
     @PostMapping("/modifyPwd")
     @ResponseBody
     public RespBody modifyPwd(@RequestBody MemberLoginDto param, HttpServletRequest request) {
@@ -312,8 +315,9 @@ public class UserController {
      * @Author zzq
      * @Date 2019/7/26 8:49
      **/
+    @CheckTokenDog
     @PostMapping("/modifyPhone")
-    public RespBody modifyPhone(@RequestBody UserLogin userLogin, String smsCode) {
+    public RespBody modifyPhone(@RequestBody UserLogin userLogin, String smsCode, HttpServletRequest request) {
         String str = (String) redisCacheService.findVal(PREFIX_SMSCODE + userLogin.getPhone());
         if (StrUtil.isBlank(str)) {
             return RespBody.builder().code(RespBody.BUSINESS_ERROR).msg("短信验证码过期").build();
@@ -323,6 +327,8 @@ public class UserController {
         UserLogin userLogin1 = userLoginService.one(userLogin.getId());
         userLogin1.setPhone(userLogin.getNewPhone());
         userLoginService.update(userLogin1);
+        String token=request.getHeader(Consts.ACCESS_TOKEN);
+        refreshUserLoginCache(token);
         return RespBody.builder().code(RespBody.SUCCESS).msg("手机修改成功").build();
     }
 
@@ -333,8 +339,9 @@ public class UserController {
      * @Author zzq
      * @Date 2019/7/26 8:49
      **/
+    @CheckTokenDog
     @PostMapping("/modifyEmail")
-    public RespBody modifyEmail(@RequestBody UserLogin userLogin, String smsCode) {
+    public RespBody modifyEmail(@RequestBody UserLogin userLogin, String smsCode, HttpServletRequest request) {
         String str = (String) redisCacheService.findVal(PREFIX_SMSCODE + userLogin.getPhone());
         if (StrUtil.isBlank(str)) {
             return RespBody.builder().code(RespBody.BUSINESS_ERROR).msg("短信验证码过期").build();
@@ -344,6 +351,8 @@ public class UserController {
         UserLogin userLogin1 = userLoginService.one(userLogin.getId());
         userLogin1.setEmail(userLogin.getNewEmail());
         userLoginService.update(userLogin1);
+        String token=request.getHeader(Consts.ACCESS_TOKEN);
+        refreshUserLoginCache(token);
         return RespBody.builder().code(RespBody.SUCCESS).msg("邮箱修改成功").build();
     }
 
@@ -353,15 +362,31 @@ public class UserController {
      * @param userInfo
      * @return
      */
+    @CheckTokenDog
     @PostMapping("/modifyUserInfo")
     @ResponseBody
-    public RespBody modifyUserInfo(@RequestBody UserInfo userInfo) {
+    public RespBody modifyUserInfo(@RequestBody UserInfo userInfo,HttpServletRequest request) {
         if (userInfo.getId() != null) {
+            userInfoService.checkNickName(userInfo.getNickname(),userInfo.getId());
             userInfoService.update(userInfo);
         } else {
+            userInfoService.checkNickName(userInfo.getNickname(),userInfo.getId());
             userInfoService.insertAutoKey(userInfo);
         }
+        String token=request.getHeader(Consts.ACCESS_TOKEN);
+        refreshUserLoginCache(token);
         return RespBody.success("详细信息更新成功");
+    }
+
+
+    private void refreshUserLoginCache(String token){
+        MemberLoginDto memberLoginDto=(MemberLoginDto)redisCacheService.findVal(token);
+        Long userLoginId=memberLoginDto.getUserLoginId();
+        UserInfo ui=userInfoService.tplOne(UserInfo.builder().loginId(userLoginId).build());
+        UserLogin ul=userLoginService.one(userLoginId);
+        memberLoginDto.setUserLogin(ul);
+        memberLoginDto.setUserInfo(ui);
+        redisCacheService.addVal(token,memberLoginDto);
     }
 
     /**
@@ -370,23 +395,24 @@ public class UserController {
      * @param doctor
      * @return
      */
+    @CheckTokenDog
     @PostMapping("/modifyDoctorInfo")
     @ResponseBody
     public RespBody modifyUserInfo(@RequestBody Doctor doctor) {
         doctorService.update(doctor);
         return RespBody.success("详细信息更新成功");
     }
-
+    @CheckTokenDog
     @PostMapping("/info")
     public UserInfo getUserInfo(@RequestParam String userId) {
         return userInfoService.one(userId);
     }
-
+    @CheckTokenDog
     @PostMapping("/userInfo")
     public UserInfo queryUserInfo(@RequestBody UserInfo condition) {
         return userInfoService.one("user.userInfo.sample", condition);
     }
-
+    @CheckTokenDog
     @PostMapping("/userLogin")
     public UserLogin queryUserLogin(@RequestBody UserLogin condition) {
         return userLoginService.one(condition.getId());
