@@ -123,4 +123,8 @@ public class Artice extends BaseEntity {
 
     private String topShow;
 
+    private String language;
+
+    private String bigCoverPic;
+
 }
