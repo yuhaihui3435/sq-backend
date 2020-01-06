@@ -27,3 +27,7 @@
 
 
 /log/
+.DS_Store
+log/web.log
+.vscode/launch.json
+.vscode/settings.json
