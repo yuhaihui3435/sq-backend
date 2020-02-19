@@ -129,18 +129,18 @@ public class ArticeController extends BaseController {
     public RespBody update(@RequestBody Artice artice) {
         RespBody respBody = new RespBody();
         ValidationKit.validate(artice);
-        List<Artice> list = articeService.checkTitle(artice.getTitle(), artice.getId());
-        if (list != null && !list.isEmpty()) {
-            respBody.setCode(RespBody.BUSINESS_ERROR);
-            respBody.setMsg("已存在");
-            return respBody;
-        }
-        list = articeService.checkTitleEn(artice.getTitleEn(), artice.getId());
-        if (list != null && !list.isEmpty()) {
-            respBody.setCode(RespBody.BUSINESS_ERROR);
-            respBody.setMsg("已存在");
-            return respBody;
-        }
+        // List<Artice> list = articeService.checkTitle(artice.getTitle(), artice.getId());
+        // if (list != null && !list.isEmpty()) {
+        //     respBody.setCode(RespBody.BUSINESS_ERROR);
+        //     respBody.setMsg("已存在");
+        //     return respBody;
+        // }
+        // list = articeService.checkTitleEn(artice.getTitleEn(), artice.getId());
+        // if (list != null && !list.isEmpty()) {
+        //     respBody.setCode(RespBody.BUSINESS_ERROR);
+        //     respBody.setMsg("已存在");
+        //     return respBody;
+        // }
 //        artice.setUpBy(currLoginUser().getId());
         articeService.update(artice);
         //查询所有关系，删除，重新增加
@@ -261,7 +261,19 @@ public class ArticeController extends BaseController {
             return new Result(false, fileName);
         }
     }
-
+    @PostMapping("/copy")
+    public RespBody copy(@RequestBody Map data){
+        Integer targetColumnId=(Integer)data.get("targetColumnId");
+        Integer articleId=(Integer)data.get("articleId");
+        Artice article=articeService.one(articleId);
+        if(article.getColumnId().equals(targetColumnId)){
+            return RespBody.error("栏目下已存在此文章");
+        }
+        article.setId(null);
+        article.setColumnId(targetColumnId.longValue());
+        articeService.insert(article);
+        return RespBody.success();
+    }
     /**
      * 读取图片
      *

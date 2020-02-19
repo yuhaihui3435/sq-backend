@@ -73,4 +73,6 @@ public class UserLogin extends BaseEntity {
 
     private String wx;
 
+    private String xetUserId;
+
 }

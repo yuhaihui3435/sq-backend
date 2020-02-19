@@ -24,6 +24,8 @@ import com.neuray.wp.service.doctor.DoctorService;
 import com.neuray.wp.service.sms.SMSService;
 import com.neuray.wp.service.user.UserInfoService;
 import com.neuray.wp.service.user.UserLoginService;
+import com.neuray.wp.service.xet.XetService;
+
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.bcel.Const;
@@ -65,6 +67,8 @@ public class UserController {
     private DoctorService doctorService;
     @Autowired
     private SMSService smsService;
+    @Autowired
+    private XetService xetService;
 
     /**
      * 会员注册
@@ -104,6 +108,14 @@ public class UserController {
         userLogin.setStatus(Consts.STATUS.AVAILABLE.getCode());
         userLogin.setType(Consts.USERLOGIN_TYPE.MEMBER.getCode());
         userLoginService.insertAutoKey(userLogin);
+        //向小鹅通注册用户信息
+        String xetUserId=xetService.registerUser(userLogin);
+        if(StrUtil.isNotBlank(xetUserId)){
+            userLogin.setXetUserId(xetUserId);
+            userLoginService.update(userLogin);
+        }
+
+
         return RespBody.builder().code(RespBody.SUCCESS).msg("会员注册成功").build();
     }
 

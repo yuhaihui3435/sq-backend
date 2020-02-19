@@ -89,12 +89,17 @@ public class IndexController {
      */
     @PostMapping("/index01")
     @ResponseBody
-    public Object index01(@RequestParam(defaultValue = "3") int lSize, @RequestParam(defaultValue = "3") int rSize) {
+    public Object index01(@RequestParam(defaultValue = "3") int lSize, @RequestParam(defaultValue = "5") int rSize,@RequestParam Long lColumnId,@RequestParam Long rColumnId) {
         Map<String, Object> ret = new HashMap<>();
-        List<Lesson> lessons = lessonService.findByIndexShow(lSize);
-        ret.put("lessonLData", lessons);
-        lessons = lessonService.findByNotIndexShow(rSize);
-        ret.put("lessonRData", lessons);
+        // List<Lesson> lessons = lessonService.findByIndexShow(lSize);
+        // ret.put("lessonLData", lessons);
+        // lessons = lessonService.findByNotIndexShow(rSize);
+        // ret.put("lessonRData", lessons);
+        List<Artice> lList=articeService.findByTopColumn(lSize, lColumnId);
+
+        List<Artice> rList=articeService.findByTopShow(rSize, rColumnId);
+        ret.put("lData", lList);
+        ret.put("rData", rList);
         return ret;
     }
 
@@ -105,10 +110,14 @@ public class IndexController {
      */
     @PostMapping("/index02")
     @ResponseBody
-    public Object index02(@RequestParam(defaultValue = "3") int lSize) {
+    public Object index02(@RequestParam(defaultValue = "3") int lSize, @RequestParam(defaultValue = "5") int rSize,@RequestParam Long lColumnId,@RequestParam Long rColumnId) {
         Map<String, Object> ret = new HashMap<>();
-        List<Doctor> doctors = doctorService.findByIndexShow(lSize);
-        ret.put("doctorLData", doctors);
+        // List<Doctor> doctors = doctorService.findByIndexShow(lSize);
+        // ret.put("doctorLData", doctors);
+        List<Artice> lList=articeService.findByTopShow(lSize, lColumnId);
+        List<Artice> rList=articeService.findByTopShow(rSize, rColumnId);
+        ret.put("lData", lList);
+        ret.put("rData", rList);
         return ret;
     }
 
@@ -119,10 +128,10 @@ public class IndexController {
      */
     @PostMapping("/index03")
     @ResponseBody
-    public Object index03(@RequestParam(defaultValue = "6") int size,@RequestParam(required = false) Long columnId) {
+    public Object index03(@RequestParam(defaultValue = "3") int lSize, @RequestParam(defaultValue = "5") int rSize,@RequestParam Long lColumnId,@RequestParam Long rColumnId) {
         Map<String, Object> ret = new HashMap<>();
-        List<Artice> artices = articeService.findByTopShow(size,columnId);
-        ret.put("articeData", artices);
+        List<Artice> lList = articeService.findByTopColumn(lSize,lColumnId);
+        ret.put("lData", lList);
         return ret;
     }
 

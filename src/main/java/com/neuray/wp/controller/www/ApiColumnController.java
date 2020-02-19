@@ -41,4 +41,10 @@ public class ApiColumnController {
         return columns;
     }
 
+    @PostMapping("/view/{id}")
+    public Column view(@PathVariable("id") Long id){
+        return columnService.one(id);
+    }
+
+
 }

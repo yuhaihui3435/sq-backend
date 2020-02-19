@@ -4,6 +4,10 @@
 
 package com.neuray.wp.controller.www;
 
+import java.util.List;
+import java.util.Map;
+
+import com.neuray.wp.core.RespBody;
 import com.neuray.wp.entity.artice.Artice;
 import com.neuray.wp.service.artice.ArticeService;
 import org.beetl.sql.core.engine.PageQuery;
@@ -37,10 +41,13 @@ public class ApiArticleController {
         pageQuery.setPageNumber(condition.getPage());
         pageQuery.setPageSize(condition.getRows());
 //        pageQuery.setOrderBy(condition.getOrderBy());
+        condition.setPublishStatus("00");
         pageQuery.setParas(condition);
-        pageQuery = articeService.page("artice.artice.sample", pageQuery);
+        pageQuery = articeService.page("artice.artice.selectByField", pageQuery);
         return pageQuery;
     }
+
+
 
     /**
      * 详细
@@ -51,6 +58,15 @@ public class ApiArticleController {
     public Artice view(@RequestBody Artice condition) {
         Artice artice = articeService.one("artice.artice.sample", condition);
         return artice;
+    }
+    /**
+     * 推荐查询
+     * @param columnId
+     * @return
+     */
+    @PostMapping("/recommend/{columnId}/{articleId}")
+    public List<Artice> recommend(@PathVariable("columnId") Long columnId,@PathVariable("articleId") Long articleId){
+        return articeService.findRecommend(5, columnId,articleId);
     }
 
 }

@@ -15,7 +15,7 @@ updateSample
 ===
 
 	cln.URL=#url#,cln.ID=#id#,cln.DE_AT=#deAt#,cln.PARENT_ID=#parentId#,cln.DE_BY=#deBy#,cln.UP_AT=#upAt#,cln.CR_BY=#crBy#,cln.CR_AT=#crAt#,cln.UP_BY=#upBy#,cln.NAME=#name#,cln.ORDER=#order#,cln.KEYS=#keys#,cln.DESCRIBE=#describe#,cln.THUMBNAIL=#thumbnail#,cln.MGT_STYLE=#mgtStyle#,cln.LIST_TPL=#listTpl#,cln.DETAIL_TPL=#detailTpl#
-
+	
 condition
 ===
 
@@ -87,5 +87,43 @@ selectColumnTagDictItem
 -- 查询栏目关联的标签数据
     
     select di.*  from COLUMN_TAG_T ct left join DICT_ITEM_T di on ct.TAG_ID=di.id where ct.COLUMN_ID=#columnId#
-    
+	
+
+selectColumnAllParent
+===
+-- 根据id查询所有的上级，递归方式
+	select * from COLUMN_T where DE_AT is null and ID=#cId#
+	@orm.many({"id":"cId"},"artice.column.selectFromBottomLvl","Column",{"alias":"allParents"});
+
+selectFromBottomLvl
+===
+-- 从子栏目 向上递归查询
+
+	select T1.parent_id as id ,T1.name from (
+	select
+		\@r as _id,
+		(
+		select
+			\@r := parent_id
+		from
+			COLUMN_T
+		where
+			id = _id and DE_AT is null) as parent_id,
+			(
+		select
+			\@q := name
+		from
+			COLUMN_T
+		where
+			id = _id and DE_AT is null) as name,
+		\@l := \@l + 1 as lvl
+	from
+		(
+		select
+			\@r := #cId#,
+			\@l := 0) vars,
+		COLUMN_T h
+	where
+		\@r <> 0)T1 join COLUMN_T T2 on T1._id = T2.id  where T1.parent_id is not null
+
     

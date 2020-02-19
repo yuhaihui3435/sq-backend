@@ -107,6 +107,10 @@ public class Artice extends BaseEntity {
         return ret;
     }
 
+    public String getReqMemberStr(){
+        return "0".equals(this.reqMember)?"是":"否";
+    }
+
 
     private String titleEn;
 
@@ -126,5 +130,9 @@ public class Artice extends BaseEntity {
     private String language;
 
     private String bigCoverPic;
+
+    private String reqMember;
+
+    private String url;
 
 }

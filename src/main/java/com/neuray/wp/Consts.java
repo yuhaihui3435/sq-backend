@@ -26,6 +26,10 @@ public interface Consts {
     String ACCESS_TOKEN="token";
 
     BigDecimal BYTES_TO_M=new BigDecimal("1024").multiply(new BigDecimal("1024"));
+    String XET_ACCESS_TOKEN_KEY="ext_access_token_key";
+    String STR_SUCCESS="success";
+    String STR_OK="ok";
+    int XET_SUCCESS_CODE=0;
 
     /**
      * 启用状态

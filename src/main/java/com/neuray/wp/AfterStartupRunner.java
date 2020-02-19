@@ -7,6 +7,8 @@ package com.neuray.wp;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ArrayUtil;
 import com.neuray.wp.service.RedisCacheService;
+import com.neuray.wp.service.xet.XetService;
+
 import lombok.extern.slf4j.Slf4j;
 import org.beetl.sql.core.SQLManager;
 import org.beetl.sql.core.db.TableDesc;
@@ -33,6 +35,8 @@ public class AfterStartupRunner implements ApplicationRunner
     private String picRootPath;
     @Autowired
     private RedisCacheService redisCacheService;
+    @Autowired
+    private XetService xetService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -41,6 +45,11 @@ public class AfterStartupRunner implements ApplicationRunner
         if (FileUtil.exist(picRootPath)) {
             FileUtil.mkdir(picRootPath);
         }
+
+        // log.info("================开始加载小鹅通的AccessToken================");
+        // xetService.getXetAccessToken();
+        // log.info("================结束加载小鹅通的AccessToken================");
+        
         log.info("::::::::::::::::系统启动成功::::::::::::::::");
     }
 
